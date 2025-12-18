@@ -1,16 +1,147 @@
-# React + Vite
+# VIMS Admin Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vehicle Inspection Management System - Admin Portal
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The VIMS Admin Portal is a comprehensive web application for managing vehicle inspection operations, monitoring inspection centers, detecting fraud, and generating detailed reports and analytics.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### ✅ Implemented Features
 
-## Expanding the ESLint configuration
+- **Dashboard**
+  - Real-time metrics and KPIs
+  - Time range filtering
+  - Payment status filtering
+  - Interactive charts and visualizations
+  - System monitoring dashboard
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Fraud Detection**
+  - Geofence violation detection
+  - Vehicle presence violation detection
+  - Automatic notification generation
+  - Fraud trend analysis
+
+- **Notifications**
+  - In-app notification system
+  - Real-time fraud alerts
+  - Notification management (read/unread)
+  - Center-specific alert details
+
+- **Reports & Analytics**
+  - Overview dashboard with key metrics
+  - Fraud trend charts (7/30/90 days)
+  - Revenue reports with export
+  - Inspection analytics
+  - Fraud alerts listing
+  - Scheduled report management
+
+- **Security & Audit**
+  - Complete audit log trail
+  - Access log tracking
+  - Security alerts
+  - Security settings management
+  - CSV export functionality
+
+- **Center Management**
+  - Center registry
+  - Geo-fencing configuration
+  - Machine status monitoring
+  - Center detail management
+
+- **Inspection Operations**
+  - Detailed inspection view
+  - Machine test results
+  - Visual evidence with photos
+  - Video evidence playback
+  - Location verification
+  - Print functionality
+
+- **User Management**
+  - Role-based access control
+  - Regional scoping
+  - User administration
+
+## Technology Stack
+
+- **React 18+** - UI Framework
+- **Vite** - Build Tool
+- **Tailwind CSS** - Styling
+- **Recharts** - Data Visualization
+- **React Router** - Routing
+- **Lucide React** - Icons
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+```bash
+cd admin-portal
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+### Build
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+admin-portal/
+├── src/
+│   ├── components/      # Reusable components
+│   ├── context/         # React Context providers
+│   ├── data/            # Mock data
+│   ├── layouts/         # Layout components
+│   ├── pages/           # Page components
+│   ├── utils/            # Utility functions
+│   └── main.jsx         # Entry point
+├── public/              # Static assets
+└── package.json
+```
+
+## Key Modules
+
+### Dashboard
+Main dashboard with metrics, charts, and recent inspections.
+
+### Reports & Analytics
+Comprehensive reporting with fraud trends, revenue analysis, and scheduled reports.
+
+### Security
+Audit logs, access tracking, and security settings.
+
+### Center Management
+Manage inspection centers, configure geofencing, and monitor machine status.
+
+### Inspection Operations
+View and manage vehicle inspections with detailed evidence.
+
+## Documentation
+
+- [Database Schema & ER Diagram](./DATABASE_SCHEMA.md)
+- [Architecture Documentation](./ARCHITECTURE_DOCUMENTATION.md)
+
+## License
+
+Proprietary - Vehicle Inspection Management System
