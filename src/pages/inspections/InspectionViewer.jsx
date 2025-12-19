@@ -121,16 +121,16 @@ function InspectionViewer() {
             onClick={() => window.print()}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
           >
-            <Printer className="h-4 w-4" />
-            Print
-          </button>
+              <Printer className="h-4 w-4" />
+              Print
+            </button>
           <button
             onClick={() => {/* Handle download */}}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#005f40] text-white hover:bg-[#004d33] transition-colors"
           >
-            <Download className="h-4 w-4" />
-            Export
-          </button>
+              <Download className="h-4 w-4" />
+              Export
+            </button>
         </div>
       </div>
 
@@ -158,16 +158,16 @@ function InspectionViewer() {
             >
               Evidence
             </button>
-            <button
+              <button
               onClick={() => setActiveTab('report')}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'report'
                   ? 'border-[#005f40] text-[#005f40]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
               Report
-            </button>
+              </button>
           </nav>
         </div>
 
@@ -212,12 +212,12 @@ function InspectionViewer() {
                     <span className="text-sm text-gray-500">Lane</span>
                     <div className="text-sm font-medium text-gray-900">{inspection.center?.lane_id || 'N/A'}</div>
                   </div>
-                  <div>
-                    <span className="text-sm text-gray-500">Inspector</span>
+                      <div>
+                        <span className="text-sm text-gray-500">Inspector</span>
                     <div className="text-sm font-medium text-gray-900">
                       {inspection.staff?.inspector_user_id || inspection.meta?.inspectorName || 'N/A'}
                     </div>
-                  </div>
+                      </div>
                 </div>
               </div>
 
@@ -267,11 +267,11 @@ function InspectionViewer() {
                     <span className="text-sm text-gray-500">Confidence</span>
                     <div className="text-sm font-medium text-gray-900">
                       {inspection.geofence_compliance?.location_confidence || 'N/A'}
-                    </div>
                   </div>
                 </div>
               </div>
-              )}
+            </div>
+          )}
             </div>
           )}
 
@@ -311,9 +311,9 @@ function InspectionViewer() {
                 )}
               </div>
 
-              {/* Entry Video - Vehicle Entering Center */}
+              {/* Videos */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Entry Video</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Videos</h3>
                 <div className="bg-white border border-gray-200 rounded-lg p-4">
                   {inspection.evidence?.entry_video ? (
                     <div className="space-y-3">
@@ -334,7 +334,7 @@ function InspectionViewer() {
                           <span className="font-medium text-gray-900">{inspection.evidence?.entry_video?.description || 'Vehicle Entry Video'}</span>
                         </div>
                         <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-2">
-                          <div>
+                        <div>
                             <span className="font-medium">Captured:</span>{' '}
                             {inspection.evidence?.entry_video?.timestamp ? formatDate(inspection.evidence.entry_video.timestamp) : 'N/A'}
                           </div>
@@ -352,16 +352,15 @@ function InspectionViewer() {
                   ) : (
                     <div className="text-center py-8 text-gray-500">
                       <Video className="h-12 w-12 mx-auto mb-2 text-gray-400" />
-                      <p>No entry video available</p>
-                      <p className="text-xs mt-1">Video captured when vehicle enters inspection center</p>
+                      <p>No videos available</p>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Inspection Photos - Vehicle at Inspection Center */}
+              {/* Photos */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Inspection Photos</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Photos</h3>
                 {/* Visual Results Photos */}
                 {inspection.visualResults && inspection.visualResults.length > 0 ? (
                   <div className="space-y-4 mb-6">
@@ -382,14 +381,14 @@ function InspectionViewer() {
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-gray-400">
                                 <Camera className="h-8 w-8" />
-                              </div>
-                            )}
+            </div>
+          )}
                             <div className={`absolute top-2 right-2 text-white text-[10px] px-2 py-1 rounded ${
                               result.status === "Pass" ? "bg-green-500" : "bg-red-500"
                             }`}>
                               {result.status}
-                            </div>
-                          </div>
+                </div>
+                  </div>
                           <div className="p-3">
                             <p className="text-xs font-medium text-gray-900">
                               {result.item || `Visual Item ${idx + 1}`}
@@ -399,69 +398,60 @@ function InspectionViewer() {
                             }`}>
                               Status: {result.status}
                             </p>
-                          </div>
-                        </div>
+                  </div>
+                  </div>
                       ))}
-                    </div>
+                  </div>
                   </div>
                 ) : null}
                 {inspection.evidence?.inspection_photos && inspection.evidence.inspection_photos.length > 0 ? (
                   <div className="space-y-4">
-                    {/* Group photos by category */}
-                    {['inspection', 'machine_test', 'visual_inspection'].map((category) => {
-                      const categoryPhotos = inspection.evidence.inspection_photos.filter(p => p.category === category);
+                    {/* Only show visual_inspection category photos */}
+                    {(() => {
+                      const categoryPhotos = inspection.evidence.inspection_photos.filter(p => p.category === 'visual_inspection');
                       if (categoryPhotos.length === 0) return null;
                       
-                      const categoryLabels = {
-                        inspection: 'General Inspection',
-                        machine_test: 'Machine Test Photos',
-                        visual_inspection: 'Visual Inspection Photos',
-                      };
-                      
                       return (
-                        <div key={category}>
-                          <h4 className="text-sm font-semibold text-gray-700 mb-3">{categoryLabels[category]}</h4>
-                          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {categoryPhotos.map((photo, idx) => (
-                              <div key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
-                                <div className="aspect-video bg-gray-100 relative overflow-hidden">
-                                  {photo.url || photo.dataUrl ? (
-                                    <img
-                                      src={photo.url || photo.dataUrl}
-                                      alt={photo.item || `Inspection photo ${idx + 1}`}
-                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                                      onError={(e) => {
-                                        e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" font-family="sans-serif" font-size="18" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImage not available%3C/text%3E%3C/svg%3E';
-                                      }}
-                                    />
-                                  ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                      <Camera className="h-8 w-8" />
-                                    </div>
-                                  )}
-                                  <div className="absolute top-2 right-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded">
-                                    {photo.timestamp ? new Date(photo.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : ''}
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                          {categoryPhotos.map((photo, idx) => (
+                            <div key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
+                              <div className="aspect-video bg-gray-100 relative overflow-hidden">
+                                {photo.url || photo.dataUrl ? (
+                                  <img
+                                    src={photo.url || photo.dataUrl}
+                                    alt={photo.item || `Inspection photo ${idx + 1}`}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                    onError={(e) => {
+                                      e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" font-family="sans-serif" font-size="18" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImage not available%3C/text%3E%3C/svg%3E';
+                                    }}
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                    <Camera className="h-8 w-8" />
                                   </div>
-                                </div>
-                                <div className="p-3">
-                                  <p className="text-xs font-medium text-gray-900 line-clamp-2">
-                                    {photo.item || `Photo ${idx + 1}`}
-                                  </p>
-                                  {photo.description && (
-                                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{photo.description}</p>
-                                  )}
-                                  {photo.timestamp && (
-                                    <p className="text-xs text-gray-400 mt-1">
-                                      {formatDate(photo.timestamp)}
-                                    </p>
-                                  )}
+                                )}
+                                <div className="absolute top-2 right-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded">
+                                  {photo.timestamp ? new Date(photo.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : ''}
                                 </div>
                               </div>
-                            ))}
-                          </div>
-                        </div>
+                              <div className="p-3">
+                                <p className="text-xs font-medium text-gray-900 line-clamp-2">
+                                  {photo.item || `Photo ${idx + 1}`}
+                                </p>
+                                {photo.description && (
+                                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">{photo.description}</p>
+                                )}
+                                {photo.timestamp && (
+                                  <p className="text-xs text-gray-400 mt-1">
+                                    {formatDate(photo.timestamp)}
+                                  </p>
+                      )}
+                    </div>
+                  </div>
+                          ))}
+                </div>
                       );
-                    })}
+                    })()}
                     
                     {/* All photos grid (fallback if no category) */}
                     {inspection.evidence?.inspection_photos && inspection.evidence.inspection_photos.filter(p => !p.category || !['inspection', 'machine_test', 'visual_inspection'].includes(p.category)).length > 0 && (
@@ -511,69 +501,7 @@ function InspectionViewer() {
                     <p className="text-xs mt-1">Photos captured during inspection while vehicle is at the center</p>
                   </div>
                 )}
-                
-                {/* Video Evidence */}
-                {inspection.videoEvidence && (
-                  <div className="mt-6">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                      <Video className="h-5 w-5" />
-                      Inspection Video Evidence
-                    </h4>
-                    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                      <video
-                        src={inspection.videoEvidence?.url}
-                        controls
-                        className="w-full"
-                        style={{ maxHeight: '500px' }}
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                      <div className="p-4 bg-gray-50">
-                        <div className="flex items-center justify-between text-sm">
-                          <div>
-                            <p className="font-medium text-gray-900">Video Evidence</p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              Duration: {inspection.videoEvidence?.duration || 'N/A'} seconds
-                            </p>
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {inspection.videoEvidence?.timestamp ? formatDate(inspection.videoEvidence.timestamp) : ''}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
-
-              {/* Evidence Items List */}
-              {inspection.evidence?.evidence_items && inspection.evidence.evidence_items.length > 0 && (
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Evidence Items</h3>
-                <div className="space-y-2">
-                  {inspection.evidence.evidence_items.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <Camera className="h-5 w-5 text-gray-400" />
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {item.type} - {item.item_id}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {item.required ? 'Required' : 'Optional'}
-                          </div>
-                        </div>
-                      </div>
-                      {item.provided ? (
-                        <CheckCircle className="h-5 w-5 text-green-500" />
-                      ) : (
-                        <XCircle className="h-5 w-5 text-red-500" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              )}
               </>
               )}
             </div>
