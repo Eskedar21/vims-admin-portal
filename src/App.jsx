@@ -17,18 +17,15 @@ import CameraSettings from "./pages/centers/CameraSettings";
 import Configuration from "./pages/configuration/Configuration";
 import InspectionDetail from "./pages/inspections/InspectionDetail";
 import InspectionViewer from "./pages/inspections/InspectionViewer";
-import InspectionProgram from "./pages/inspections/InspectionProgram";
 import InspectionOperations from "./pages/operations/InspectionOperations";
 import OperationsCommandCenter from "./pages/operations/OperationsCommandCenter";
 import IncidentDetail from "./pages/operations/IncidentDetail";
 import Governance from "./pages/governance/Governance";
 import FeesPayments from "./pages/fees/FeesPayments";
-import Casework from "./pages/casework/Casework";
 import ReportsAnalytics from "./pages/reports/ReportsAnalytics";
 import ReportsAnalyticsEnhanced from "./pages/reports/ReportsAnalyticsEnhanced";
 import Security from "./pages/security/Security";
 import SecurityEnhanced from "./pages/security/SecurityEnhanced";
-import SystemAdministration from "./pages/system/SystemAdministration";
 import { CentersProvider } from "./context/CentersContext";
 import { NotificationProvider } from "./context/NotificationContext";
 
@@ -42,7 +39,6 @@ function App() {
             <Route path="/operations" element={<OperationsCommandCenter />} />
             <Route path="/operations/incidents/:id" element={<IncidentDetail />} />
             <Route path="/inspection-operations" element={<InspectionOperations />} />
-            <Route path="/inspection-program/*" element={<InspectionProgram />} />
             <Route path="/inspections/:id" element={<InspectionViewer />} />
             <Route path="/inspections/:id/legacy" element={<InspectionDetail />} />
             <Route path="/center-management" element={<CentersListEnhanced />} />
@@ -59,12 +55,10 @@ function App() {
             <Route path="/configuration/*" element={<Configuration />} />
             <Route path="/governance/*" element={<Governance />} />
             <Route path="/fees-payments/*" element={<FeesPayments />} />
-            <Route path="/casework/*" element={<Casework />} />
             <Route path="/administration" element={<UserManagementEnhanced />} />
             <Route path="/administration/legacy" element={<UserManagement />} />
             <Route path="/security" element={<SecurityEnhanced />} />
             <Route path="/security/legacy" element={<Security />} />
-            <Route path="/system-admin/*" element={<SystemAdministration />} />
           </Routes>
         </MainLayout>
       </NotificationProvider>

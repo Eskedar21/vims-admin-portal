@@ -60,24 +60,10 @@ export const PRIMARY_TOP_NAV = [
     ],
   },
   {
-    id: 'inspection-program',
-    label: 'Inspection Program',
-    icon: 'clipboard-list',
-    route: '/inspection-program',
-    roles: ALL_ROLES,
-  },
-  {
     id: 'governance',
     label: 'Governance',
     icon: 'building',
     route: '/governance',
-    roles: ALL_ROLES,
-  },
-  {
-    id: 'casework',
-    label: 'Inspection Records & Casework',
-    icon: 'file-text',
-    route: '/casework',
     roles: ALL_ROLES,
   },
   {
@@ -92,13 +78,6 @@ export const PRIMARY_TOP_NAV = [
     label: 'Security',
     icon: 'shield-check',
     route: '/security',
-    roles: ALL_ROLES,
-  },
-  {
-    id: 'system-admin',
-    label: 'System Administration',
-    icon: 'settings',
-    route: '/system-admin',
     roles: ALL_ROLES,
   },
 ];

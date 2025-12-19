@@ -1,19 +1,15 @@
 import { useState } from 'react';
-import { Building2, Users, Handshake, FileCheck, Search, Settings } from 'lucide-react';
+import { Building2, Users, Handshake } from 'lucide-react';
 import AdministrationUnits from './AdministrationUnits';
 import Assignments from './Assignments';
 import Institutions from './Institutions';
 import Relationships from './Relationships';
-import ChangeRequests from './ChangeRequests';
-import GovernanceReports from './GovernanceReports';
 
 const TABS = [
   { id: 'units', label: 'Administration Units', icon: Building2, component: AdministrationUnits },
   { id: 'assignments', label: 'Assignments', icon: Users, component: Assignments },
   { id: 'institutions', label: 'Institutions', icon: Building2, component: Institutions },
   { id: 'relationships', label: 'Relationships', icon: Handshake, component: Relationships },
-  { id: 'change-requests', label: 'Change Control', icon: FileCheck, component: ChangeRequests },
-  { id: 'reports', label: 'Search & Reports', icon: Search, component: GovernanceReports },
 ];
 
 function Governance() {
@@ -22,7 +18,7 @@ function Governance() {
   const ActiveComponent = TABS.find(tab => tab.id === activeTab)?.component || AdministrationUnits;
 
   return (
-    <div className="max-w-[1920px] mx-auto">
+    <div className="w-full">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">

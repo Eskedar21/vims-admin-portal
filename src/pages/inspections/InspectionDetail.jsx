@@ -57,7 +57,7 @@ const printStyles = `
   }
   .page-break {
     page-break-before: always !important;
-  }
+    }
   }
 `;
 
@@ -74,7 +74,7 @@ function InspectionDetail() {
 
   if (!inspection) {
     return (
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="w-full">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
           <p className="text-gray-600">Inspection not found.</p>
           <button
@@ -133,7 +133,7 @@ function InspectionDetail() {
   return (
     <>
       <style>{printStyles}</style>
-      <div className="max-w-7xl mx-auto w-full space-y-6">
+      <div className="w-full space-y-6">
         {/* Header Actions */}
         <div className="print-hide flex items-center justify-between bg-white rounded-xl border border-gray-200 p-4">
           <div>
@@ -622,7 +622,7 @@ function InspectionDetail() {
               <span>Payment: <strong>TeleBirr</strong></span>
               <span>Ref: <strong className="font-mono">TB{Date.now().toString().slice(-8)}</strong></span>
               <span>Amount: <strong className="text-green-700">ETB {inspection.amount || 402.50}</strong></span>
-            </div>
+        </div>
           )}
 
           <p className="text-center text-[8px] text-gray-400 mt-2 pt-1 border-t">(እባክዎ ከመጠቀምዎ በፊት ትክክለኛ መሆኑን ያረጋግጡ / PLEASE MAKE SURE THAT THIS IS THE CORRECT ISSUE BEFORE USE) • ገጽ 2 ከ 2</p>

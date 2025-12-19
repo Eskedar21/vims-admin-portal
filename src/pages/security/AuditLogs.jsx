@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Search, Filter, Download, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
+import { Search, Filter, Download, AlertCircle, CheckCircle, XCircle, Monitor, Globe, X } from 'lucide-react';
 import { mockAuditEvents, getEventTypeLabel, formatTimestamp } from '../../data/mockSecurityAudit';
 import { useAuth } from '../../context/AuthContext';
 
@@ -15,6 +15,7 @@ const DATA_CLASSIFICATIONS = ['Public', 'Internal', 'Restricted'];
 
 function AuditLogs() {
   const { user } = useAuth();
+  const [logSource, setLogSource] = useState('all'); // 'all', 'desktop-app', 'admin-portal'
   const [events] = useState(mockAuditEvents);
   const [filters, setFilters] = useState({
     event_type: 'all',
@@ -34,6 +35,11 @@ function AuditLogs() {
 
   const filteredEvents = useMemo(() => {
     let filtered = [...events];
+    
+    // Filter by source (desktop app or admin portal)
+    if (logSource !== 'all') {
+      filtered = filtered.filter(e => e.source === logSource);
+    }
     
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -82,7 +88,7 @@ function AuditLogs() {
     }
     
     return filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-  }, [events, filters, searchQuery]);
+  }, [events, filters, searchQuery, logSource]);
 
   const handleExport = () => {
     if (!exportPurpose.trim()) {
@@ -102,6 +108,22 @@ function AuditLogs() {
     setExportPurpose('');
   };
 
+  const handleClearFilters = () => {
+    setFilters({
+      event_type: 'all',
+      action: 'all',
+      target_type: 'all',
+      result: 'all',
+      data_classification: 'all',
+      date_from: '',
+      date_to: '',
+      actor_user_id: '',
+      target_id: '',
+    });
+    setSearchQuery('');
+    setLogSource('all');
+  };
+
   const getResultIcon = (result) => {
     return result === 'success' ? (
       <CheckCircle className="h-4 w-4 text-green-500" />
@@ -111,7 +133,7 @@ function AuditLogs() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="w-full space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Audit Logs</h1>
@@ -126,6 +148,46 @@ function AuditLogs() {
           <Download className="h-5 w-5" />
           Export Logs
         </button>
+      </div>
+
+      {/* Source Tabs */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div className="border-b border-gray-200">
+          <nav className="flex -mb-px">
+            <button
+              onClick={() => setLogSource('all')}
+              className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
+                logSource === 'all'
+                  ? 'border-[#009639] text-[#009639]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              All Logs
+            </button>
+            <button
+              onClick={() => setLogSource('desktop-app')}
+              className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
+                logSource === 'desktop-app'
+                  ? 'border-[#009639] text-[#009639]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Monitor className="h-5 w-5" />
+              Desktop App Actions
+            </button>
+            <button
+              onClick={() => setLogSource('admin-portal')}
+              className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
+                logSource === 'admin-portal'
+                  ? 'border-[#009639] text-[#009639]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Globe className="h-5 w-5" />
+              Admin Portal Actions
+            </button>
+          </nav>
+        </div>
       </div>
 
       {/* Info Banner */}
@@ -143,8 +205,8 @@ function AuditLogs() {
 
       {/* Search and Filters */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
-        <div className="mb-4">
-          <div className="relative">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
@@ -154,6 +216,13 @@ function AuditLogs() {
               className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
             />
           </div>
+          <button
+            onClick={handleClearFilters}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition flex items-center gap-2 whitespace-nowrap"
+          >
+            <X className="h-4 w-4" />
+            Clear Filters
+          </button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>

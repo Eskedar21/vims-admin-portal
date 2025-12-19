@@ -259,35 +259,76 @@ function Dashboard() {
       .slice(0, 10);
   }, [filteredCenters, filteredIncidents]);
 
-  // Trend chart data
+  // Trend chart data - handles all time ranges with appropriate granularity
   const trendData = useMemo(() => {
-    const days = dateRange === "Last 7 days" ? 7 : dateRange === "Last 30 days" ? 30 : 1;
     const data = [];
+    const now = new Date();
 
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      date.setHours(0, 0, 0, 0);
+    if (dateRange === "Today" || dateRange === "Yesterday") {
+      // For Today/Yesterday, show hourly data (24 hours)
+      const startDate = dateRange === "Today" 
+        ? new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
+        : new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0);
+      
+      for (let i = 0; i < 24; i++) {
+        const hourStart = new Date(startDate);
+        hourStart.setHours(i, 0, 0, 0);
+        const hourEnd = new Date(hourStart);
+        hourEnd.setHours(i + 1, 0, 0, 0);
 
-      const dayInspections = filteredInspections.filter((insp) => {
-        if (!insp.inspectionDate) return false;
-        const inspDate = new Date(insp.inspectionDate);
-        return inspDate >= date && inspDate < new Date(date.getTime() + 86400000);
-      });
+        const hourInspections = filteredInspections.filter((insp) => {
+          if (!insp.inspectionDate) return false;
+          const inspDate = new Date(insp.inspectionDate);
+          return inspDate >= hourStart && inspDate < hourEnd;
+        });
 
-      const passCount = dayInspections.filter((i) => i.status === "Passed").length;
-      const failCount = dayInspections.filter((i) => i.status === "Failed").length;
-      const revenue = dayInspections
-        .filter((i) => i.paymentStatus === "Paid")
-        .reduce((sum, i) => sum + (i.amount || 0), 0);
+        const passCount = hourInspections.filter((i) => i.status === "Passed").length;
+        const failCount = hourInspections.filter((i) => i.status === "Failed").length;
+        const revenue = hourInspections
+          .filter((i) => i.paymentStatus === "Paid")
+          .reduce((sum, i) => sum + (i.amount || 0), 0);
 
-      data.push({
-        date: date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-        inspections: dayInspections.length,
-        passed: passCount,
-        failed: failCount,
-        revenue,
-      });
+        data.push({
+          date: hourStart.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
+          fullDate: hourStart.toISOString(),
+          inspections: hourInspections.length,
+          passed: passCount,
+          failed: failCount,
+          revenue,
+        });
+      }
+    } else {
+      // For Last 7 days and Last 30 days, show daily data
+      const days = dateRange === "Last 7 days" ? 7 : 30;
+      
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        date.setHours(0, 0, 0, 0);
+        const nextDate = new Date(date);
+        nextDate.setDate(nextDate.getDate() + 1);
+
+        const dayInspections = filteredInspections.filter((insp) => {
+          if (!insp.inspectionDate) return false;
+          const inspDate = new Date(insp.inspectionDate);
+          return inspDate >= date && inspDate < nextDate;
+        });
+
+        const passCount = dayInspections.filter((i) => i.status === "Passed").length;
+        const failCount = dayInspections.filter((i) => i.status === "Failed").length;
+        const revenue = dayInspections
+          .filter((i) => i.paymentStatus === "Paid")
+          .reduce((sum, i) => sum + (i.amount || 0), 0);
+
+        data.push({
+          date: date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+          fullDate: date.toISOString(),
+          inspections: dayInspections.length,
+          passed: passCount,
+          failed: failCount,
+          revenue,
+        });
+      }
     }
 
     return data;
@@ -741,58 +782,139 @@ function Dashboard() {
         {/* Inspections Over Time */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">Inspections Over Time</h3>
-            <span className="text-xs text-gray-500">{dateRange}</span>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Inspections Over Time</h3>
+              <p className="text-xs text-gray-500 mt-1">{dateRange} • {trendData.length} {dateRange === "Today" || dateRange === "Yesterday" ? "hours" : "days"}</p>
+            </div>
+            <TrendingUp className="h-5 w-5 text-blue-600" />
           </div>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={trendData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-                <YAxis stroke="#6b7280" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    border: "1px solid #e5e7eb",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="inspections"
-                  stroke="#3b82f6"
-                  fill="#3b82f6"
-                  fillOpacity={0.2}
-                  strokeWidth={2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+          <div className="h-80">
+            {trendData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={trendData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorInspections" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                  <XAxis 
+                    dataKey="date" 
+                    stroke="#6b7280" 
+                    fontSize={11}
+                    tick={{ fill: '#6b7280' }}
+                    angle={dateRange === "Today" || dateRange === "Yesterday" ? -45 : 0}
+                    textAnchor={dateRange === "Today" || dateRange === "Yesterday" ? "end" : "middle"}
+                    height={dateRange === "Today" || dateRange === "Yesterday" ? 60 : 30}
+                  />
+                  <YAxis 
+                    stroke="#6b7280" 
+                    fontSize={11}
+                    tick={{ fill: '#6b7280' }}
+                    width={50}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    }}
+                    labelStyle={{ fontWeight: 600, marginBottom: 4 }}
+                    formatter={(value) => [value, "Inspections"]}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="inspections"
+                    stroke="#3b82f6"
+                    fill="url(#colorInspections)"
+                    strokeWidth={3}
+                    dot={{ fill: "#3b82f6", r: 4 }}
+                    activeDot={{ r: 6, stroke: "#3b82f6", strokeWidth: 2 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-400">
+                <div className="text-center">
+                  <Car className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No data available for this period</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Pass/Fail Trend */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">Pass/Fail Trend</h3>
-            <span className="text-xs text-gray-500">{dateRange}</span>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Pass/Fail Trend</h3>
+              <p className="text-xs text-gray-500 mt-1">{dateRange} • {trendData.length} {dateRange === "Today" || dateRange === "Yesterday" ? "hours" : "days"}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                <span className="text-xs text-gray-600">Pass</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <span className="text-xs text-gray-600">Fail</span>
+              </div>
+            </div>
           </div>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={trendData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-                <YAxis stroke="#6b7280" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    border: "1px solid #e5e7eb",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Bar dataKey="passed" fill="#10b981" name="Passed" />
-                <Bar dataKey="failed" fill="#ef4444" name="Failed" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="h-80">
+            {trendData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={trendData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                  <XAxis 
+                    dataKey="date" 
+                    stroke="#6b7280" 
+                    fontSize={11}
+                    tick={{ fill: '#6b7280' }}
+                    angle={dateRange === "Today" || dateRange === "Yesterday" ? -45 : 0}
+                    textAnchor={dateRange === "Today" || dateRange === "Yesterday" ? "end" : "middle"}
+                    height={dateRange === "Today" || dateRange === "Yesterday" ? 60 : 30}
+                  />
+                  <YAxis 
+                    stroke="#6b7280" 
+                    fontSize={11}
+                    tick={{ fill: '#6b7280' }}
+                    width={50}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    }}
+                    labelStyle={{ fontWeight: 600, marginBottom: 4 }}
+                  />
+                  <Bar 
+                    dataKey="passed" 
+                    fill="#10b981" 
+                    name="Passed"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Bar 
+                    dataKey="failed" 
+                    fill="#ef4444" 
+                    name="Failed"
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-400">
+                <div className="text-center">
+                  <CheckCircle2 className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No data available for this period</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

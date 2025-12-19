@@ -22,6 +22,28 @@ function AdministrationUnits() {
 
   const unitTree = useMemo(() => getAdminUnitTree(units), [units]);
 
+  // Compute available parents based on current form data and units state
+  // This ensures newly created units appear immediately in the dropdown
+  const availableParents = useMemo(() => {
+    const typeHierarchy = [
+      ADMIN_UNIT_TYPES.NATIONAL,
+      ADMIN_UNIT_TYPES.REGION,
+      ADMIN_UNIT_TYPES.ZONE,
+      ADMIN_UNIT_TYPES.SUB_CITY,
+      ADMIN_UNIT_TYPES.WOREDA,
+    ];
+    const currentIndex = typeHierarchy.indexOf(formData.admin_unit_type);
+    const parentType = currentIndex > 0 ? typeHierarchy[currentIndex - 1] : null;
+    
+    if (!parentType) return [];
+    
+    return units.filter(u => 
+      u.admin_unit_type === parentType && 
+      u.status === 'Active' &&
+      u.admin_unit_id !== editingUnit?.admin_unit_id
+    );
+  }, [units, formData.admin_unit_type, editingUnit?.admin_unit_id]);
+
   const toggleNode = (unitId) => {
     const newExpanded = new Set(expandedNodes);
     if (newExpanded.has(unitId)) {
@@ -118,24 +140,6 @@ function AdministrationUnits() {
     }
   };
 
-  const getAvailableParents = (currentType, currentId) => {
-    const typeHierarchy = [
-      ADMIN_UNIT_TYPES.NATIONAL,
-      ADMIN_UNIT_TYPES.REGION,
-      ADMIN_UNIT_TYPES.ZONE,
-      ADMIN_UNIT_TYPES.SUB_CITY,
-      ADMIN_UNIT_TYPES.WOREDA,
-    ];
-    const currentIndex = typeHierarchy.indexOf(currentType);
-    const parentType = currentIndex > 0 ? typeHierarchy[currentIndex - 1] : null;
-    
-    return units.filter(u => 
-      u.admin_unit_type === parentType && 
-      u.status === 'Active' &&
-      u.admin_unit_id !== currentId
-    );
-  };
-
   const renderTreeNode = (node, level = 0) => {
     const isExpanded = expandedNodes.has(node.admin_unit_id);
     const hasChildren = node.children && node.children.length > 0;
@@ -219,7 +223,7 @@ function AdministrationUnits() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="w-full space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -321,9 +325,9 @@ function AdministrationUnits() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
                   >
                     <option value="">Select parent unit...</option>
-                    {getAvailableParents(formData.admin_unit_type, editingUnit?.admin_unit_id).map(parent => (
+                    {availableParents.map(parent => (
                       <option key={parent.admin_unit_id} value={parent.admin_unit_id}>
-                        {parent.jurisdiction_path}
+                        {parent.jurisdiction_path || parent.admin_unit_name_en}
                       </option>
                     ))}
                   </select>
