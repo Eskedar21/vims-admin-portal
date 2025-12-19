@@ -338,6 +338,29 @@ function Dashboard() {
   const quickActions = useMemo(() => {
     const actions = [];
 
+    // Actions available to all authenticated users
+    actions.push({
+      id: "view_inspections",
+      label: "View Inspections",
+      icon: Car,
+      route: "/inspection-operations",
+    });
+
+    actions.push({
+      id: "view_centers",
+      label: "View Centers",
+      icon: Building2,
+      route: "/center-management",
+    });
+
+    actions.push({
+      id: "view_reports",
+      label: "View Reports",
+      icon: FileText,
+      route: "/reports/scorecard",
+    });
+
+    // Role-based actions
     if (hasPermission(user, "create_user")) {
       actions.push({
         id: "add_user",
@@ -352,8 +375,8 @@ function Dashboard() {
       actions.push({
         id: "create_center",
         label: "Create Inspection Center",
-        icon: Building2,
-        route: "/center-management",
+        icon: Plus,
+        route: "/center-management/create",
         permission: "create_center",
       });
     }
@@ -365,16 +388,6 @@ function Dashboard() {
         icon: Shield,
         route: "/security",
         permission: "view_audit",
-      });
-    }
-
-    if (hasPermission(user, "generate_report")) {
-      actions.push({
-        id: "generate_report",
-        label: "Generate Scheduled Report Now",
-        icon: FileText,
-        route: "/reports",
-        permission: "generate_report",
       });
     }
 
@@ -660,7 +673,8 @@ function Dashboard() {
                   <div
                     key={incident.id}
                     className={`p-3 rounded-lg border ${severityColors[incident.severity]} cursor-pointer hover:shadow-sm transition-shadow`}
-                    onClick={() => navigate(`/centers/${incident.scope?.centerId}`)}
+                    onClick={() => navigate(`/center-management/${incident.scope?.centerId}`)}
+                    title="Click to view center details"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -732,14 +746,14 @@ function Dashboard() {
           <div className="space-y-3">
             {centersRequiringAttention.map((center) => (
               <div
-                key={center.id}
+                key={center.id || center.center_id}
                 className="p-4 rounded-lg border border-gray-200 hover:shadow-sm transition-shadow cursor-pointer"
-                onClick={() => navigate(`/centers/${center.id}`)}
+                onClick={() => navigate(`/center-management/${center.id || center.center_id}`)}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="font-semibold text-gray-900">{center.name}</h3>
+                      <h3 className="font-semibold text-gray-900">{center.name || center.center_name_en}</h3>
                       <span className={`text-xs px-2 py-1 rounded ${
                         center.status === "Online" ? "bg-emerald-100 text-emerald-700" :
                         center.status === "Syncing" ? "bg-yellow-100 text-yellow-700" :
@@ -763,11 +777,13 @@ function Dashboard() {
                       <span className="text-xs font-medium text-gray-700">Score: {center.attentionScore}</span>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {center.topReasons.map((reason, idx) => (
-                        <span key={idx} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
-                          {reason}
-                        </span>
-                      ))}
+                      {center.topReasons
+                        .filter(reason => !reason.toLowerCase().includes('machine'))
+                        .map((reason, idx) => (
+                          <span key={idx} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
+                            {reason}
+                          </span>
+                        ))}
                     </div>
                   </div>
                 </div>
