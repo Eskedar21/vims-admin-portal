@@ -7,6 +7,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import UserManagementEnhanced from "./pages/admin/UserManagementEnhanced";
 import CenterList from "./pages/centers/CenterList";
 import CentersListEnhanced from "./pages/centers/CentersListEnhanced";
+import CreateCenter from "./pages/centers/CreateCenter";
 import CenterDetail from "./pages/centers/CenterDetail";
 import CenterProfile from "./pages/centers/CenterProfile";
 import DeviceRegistry from "./pages/centers/DeviceRegistry";
@@ -53,6 +54,7 @@ function App() {
                       <Route path="/inspections/:id" element={<InspectionViewer />} />
                       <Route path="/inspections/:id/legacy" element={<InspectionDetail />} />
                       <Route path="/center-management" element={<CentersListEnhanced />} />
+                      <Route path="/center-management/create" element={<CreateCenter />} />
                       <Route path="/center-management/:id" element={<CenterProfile />} />
                       <Route path="/center-management/:id/devices" element={<DeviceRegistry />} />
                       <Route path="/center-management/:id/cameras" element={<CameraRegistry />} />
@@ -61,14 +63,26 @@ function App() {
                       <Route path="/center-management/:id/device-location" element={<DeviceLocationCompliance />} />
                       <Route path="/center-management/:id/camera-settings" element={<CameraSettings />} />
                       <Route path="/center-management/:id/legacy" element={<CenterDetail />} />
-                      <Route path="/reports" element={<ReportsAnalyticsEnhanced />} />
+                      <Route path="/reports" element={<Navigate to="/reports/scorecard" replace />} />
+                      <Route path="/reports/scorecard" element={<ReportsAnalyticsEnhanced />} />
+                      <Route path="/reports/trends" element={<ReportsAnalyticsEnhanced />} />
+                      <Route path="/reports/operational" element={<ReportsAnalyticsEnhanced />} />
+                      <Route path="/reports/evidence" element={<ReportsAnalyticsEnhanced />} />
+                      <Route path="/reports/compliance" element={<ReportsAnalyticsEnhanced />} />
                       <Route path="/reports/legacy" element={<ReportsAnalytics />} />
                       <Route path="/configuration/*" element={<Configuration />} />
-                      <Route path="/governance/*" element={<Governance />} />
+                      <Route path="/governance" element={<Navigate to="/governance/units" replace />} />
+                      <Route path="/governance/units" element={<Governance />} />
+                      <Route path="/governance/assignments" element={<Governance />} />
+                      <Route path="/governance/institutions" element={<Governance />} />
+                      <Route path="/governance/relationships" element={<Governance />} />
                       <Route path="/fees-payments/*" element={<FeesPayments />} />
                       <Route path="/administration" element={<UserManagementEnhanced />} />
                       <Route path="/administration/legacy" element={<UserManagement />} />
-                      <Route path="/security" element={<SecurityEnhanced />} />
+                      <Route path="/security" element={<Navigate to="/security/all" replace />} />
+                      <Route path="/security/all" element={<SecurityEnhanced />} />
+                      <Route path="/security/desktop-app" element={<SecurityEnhanced />} />
+                      <Route path="/security/admin-portal" element={<SecurityEnhanced />} />
                       <Route path="/security/legacy" element={<Security />} />
                       <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>

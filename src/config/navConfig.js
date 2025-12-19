@@ -76,6 +76,13 @@ export const PRIMARY_TOP_NAV = [
     icon: 'chart-bar',
     route: '/reports',
     roles: ALL_ROLES,
+    children: [
+      { id: 'reports.scorecard', label: 'Executive Scorecard', route: '/reports/scorecard', roles: ALL_ROLES },
+      { id: 'reports.trends', label: 'Trend Analysis', route: '/reports/trends', roles: ALL_ROLES },
+      { id: 'reports.operational', label: 'Operational Reports', route: '/reports/operational', roles: ALL_ROLES },
+      { id: 'reports.evidence', label: 'Evidence Completeness', route: '/reports/evidence', roles: ALL_ROLES },
+      { id: 'reports.compliance', label: 'Compliance & Integrity', route: '/reports/compliance', roles: ALL_ROLES },
+    ],
   },
   {
     id: 'configuration',
@@ -95,6 +102,12 @@ export const PRIMARY_TOP_NAV = [
     icon: 'building',
     route: '/governance',
     roles: ADMIN_ROLES, // Only admins can manage governance
+    children: [
+      { id: 'governance.units', label: 'Administration Units', route: '/governance/units', roles: ADMIN_ROLES },
+      { id: 'governance.assignments', label: 'Assignments', route: '/governance/assignments', roles: ADMIN_ROLES },
+      { id: 'governance.institutions', label: 'Institutions', route: '/governance/institutions', roles: ADMIN_ROLES },
+      { id: 'governance.relationships', label: 'Relationships', route: '/governance/relationships', roles: ADMIN_ROLES },
+    ],
   },
   {
     id: 'admin',
@@ -109,6 +122,11 @@ export const PRIMARY_TOP_NAV = [
     icon: 'shield-check',
     route: '/security',
     roles: [...ADMIN_ROLES, ROLES.AUDIT_ADMIN], // Admins and audit admins
+    children: [
+      { id: 'security.all', label: 'All Logs', route: '/security/all', roles: [...ADMIN_ROLES, ROLES.AUDIT_ADMIN] },
+      { id: 'security.desktop', label: 'Desktop App Actions', route: '/security/desktop-app', roles: [...ADMIN_ROLES, ROLES.AUDIT_ADMIN] },
+      { id: 'security.admin', label: 'Admin Portal Actions', route: '/security/admin-portal', roles: [...ADMIN_ROLES, ROLES.AUDIT_ADMIN] },
+    ],
   },
 ];
 

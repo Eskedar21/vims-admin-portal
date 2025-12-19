@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Filter, Download, AlertCircle, CheckCircle, XCircle, Monitor, Globe, X } from 'lucide-react';
 import { mockAuditEvents, getEventTypeLabel, formatTimestamp } from '../../data/mockSecurityAudit';
 import { useAuth } from '../../context/AuthContext';
@@ -15,7 +16,27 @@ const DATA_CLASSIFICATIONS = ['Public', 'Internal', 'Restricted'];
 
 function AuditLogs() {
   const { user } = useAuth();
-  const [logSource, setLogSource] = useState('all'); // 'all', 'desktop-app', 'admin-portal'
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get log source from URL
+  const getLogSourceFromUrl = () => {
+    const path = location.pathname;
+    if (path === '/security/desktop-app' || path.startsWith('/security/desktop-app/')) {
+      return 'desktop-app';
+    }
+    if (path === '/security/admin-portal' || path.startsWith('/security/admin-portal/')) {
+      return 'admin-portal';
+    }
+    return 'all';
+  };
+
+  const [logSource, setLogSource] = useState(getLogSourceFromUrl());
+
+  // Update logSource when URL changes
+  useEffect(() => {
+    setLogSource(getLogSourceFromUrl());
+  }, [location.pathname]);
   const [events] = useState(mockAuditEvents);
   const [filters, setFilters] = useState({
     event_type: 'all',
@@ -155,7 +176,7 @@ function AuditLogs() {
         <div className="border-b border-gray-200">
           <nav className="flex -mb-px">
             <button
-              onClick={() => setLogSource('all')}
+              onClick={() => navigate('/security/all')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
                 logSource === 'all'
                   ? 'border-[#009639] text-[#009639]'
@@ -165,7 +186,7 @@ function AuditLogs() {
               All Logs
             </button>
             <button
-              onClick={() => setLogSource('desktop-app')}
+              onClick={() => navigate('/security/desktop-app')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
                 logSource === 'desktop-app'
                   ? 'border-[#009639] text-[#009639]'
@@ -176,7 +197,7 @@ function AuditLogs() {
               Desktop App Actions
             </button>
             <button
-              onClick={() => setLogSource('admin-portal')}
+              onClick={() => navigate('/security/admin-portal')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
                 logSource === 'admin-portal'
                   ? 'border-[#009639] text-[#009639]'

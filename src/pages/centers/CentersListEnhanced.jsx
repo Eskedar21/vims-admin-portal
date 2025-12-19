@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Filter, AlertCircle, CheckCircle, XCircle, TrendingUp, Plus, Upload, FileText, X, ChevronLeft, ChevronRight, RotateCcw, UserPlus, Settings } from 'lucide-react';
 import { mockCentersFull, getCenterJurisdictionPath, mockDevices } from '../../data/mockCentersInfrastructure';
 import { mockAdminUnits } from '../../data/mockGovernance';
@@ -15,6 +15,7 @@ const ITEMS_PER_PAGE = 30;
 
 function CentersListEnhanced() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [jurisdictionFilter, setJurisdictionFilter] = useState({ region: 'all', zone: 'all', subCity: 'all', woreda: 'all' });
@@ -30,11 +31,18 @@ function CentersListEnhanced() {
   const [userPage, setUserPage] = useState(1);
   const [machinePage, setMachinePage] = useState(1);
   const [createdCenters, setCreatedCenters] = useState(() => {
-    // Load from localStorage on mount
+    // Load from localStorage (database) on mount
     try {
       const stored = localStorage.getItem('createdCenters');
-      return stored ? JSON.parse(stored) : [];
+      const centers = stored ? JSON.parse(stored) : [];
+      // Sort by created_at timestamp (newest first) when loading from database
+      return centers.sort((a, b) => {
+        const aDate = new Date(a.created_at || a.updated_at || 0);
+        const bDate = new Date(b.created_at || b.updated_at || 0);
+        return bDate - aDate; // Newest first
+      });
     } catch (e) {
+      console.error('Failed to load centers from database:', e);
       return [];
     }
   });
@@ -55,11 +63,50 @@ function CentersListEnhanced() {
     }
   });
   
-  // Persist to localStorage whenever createdCenters changes
+  // Persist to localStorage (database) whenever createdCenters changes
   useEffect(() => {
-    localStorage.setItem('createdCenters', JSON.stringify(createdCenters));
+    try {
+      // Sort by created_at timestamp before saving to database
+      const sorted = [...createdCenters].sort((a, b) => {
+        const aDate = new Date(a.created_at || a.updated_at || 0);
+        const bDate = new Date(b.created_at || b.updated_at || 0);
+        return bDate - aDate; // Newest first
+      });
+      localStorage.setItem('createdCenters', JSON.stringify(sorted));
+    } catch (e) {
+      console.error('Failed to save centers to database:', e);
+    }
   }, [createdCenters]);
   
+  // Reload centers from database when returning from create page
+  useEffect(() => {
+    // Reload centers from localStorage when pathname changes to center-management
+    if (location.pathname === '/center-management') {
+      try {
+        const stored = localStorage.getItem('createdCenters');
+        if (stored) {
+          const centers = JSON.parse(stored);
+          // Sort by created_at timestamp (newest first)
+          const sorted = centers.sort((a, b) => {
+            const aDate = new Date(a.created_at || a.updated_at || 0);
+            const bDate = new Date(b.created_at || b.updated_at || 0);
+            return bDate - aDate; // Newest first
+          });
+          // Update state if different (to refresh the list)
+          const currentIds = createdCenters.map(c => c.center_id).sort().join(',');
+          const newIds = sorted.map(c => c.center_id).sort().join(',');
+          if (currentIds !== newIds || sorted.length !== createdCenters.length) {
+            setCreatedCenters(sorted);
+            setCurrentPage(1); // Reset to first page to show new center
+          }
+        }
+      } catch (e) {
+        console.error('Failed to reload centers from database:', e);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
   // Persist to localStorage whenever createdUsers changes
   useEffect(() => {
     localStorage.setItem('createdUsers', JSON.stringify(createdUsers));
@@ -167,7 +214,22 @@ function CentersListEnhanced() {
 
   // Combine mock centers with created centers
   const allCenters = useMemo(() => {
-    return [...mockCentersFull, ...createdCenters];
+    // Combine mock centers and created centers, then sort by created_at timestamp
+    const combined = [...mockCentersFull, ...createdCenters];
+    // Sort by created_at (newest first), with created centers prioritized
+    return combined.sort((a, b) => {
+      // Newly created centers first
+      const aIsNew = a.newlyCreated || createdCenters.some(cc => cc.center_id === a.center_id);
+      const bIsNew = b.newlyCreated || createdCenters.some(cc => cc.center_id === b.center_id);
+      
+      if (aIsNew && !bIsNew) return -1;
+      if (!aIsNew && bIsNew) return 1;
+      
+      // Both are new or both are old - sort by created_at
+      const aDate = new Date(a.created_at || a.updated_at || 0);
+      const bDate = new Date(b.created_at || b.updated_at || 0);
+      return bDate - aDate; // Newest first
+    });
   }, [createdCenters]);
 
   // Filter centers by scope
@@ -257,11 +319,11 @@ function CentersListEnhanced() {
       filtered = filtered.filter(c => c.status === 'Degraded' || c.status === 'Offline');
     }
 
-    // Sort newly created centers by creation date (newest first)
+    // Sort newly created centers by creation timestamp (newest first)
     newlyCreated.sort((a, b) => {
-      const aDate = new Date(a.created_at || 0);
-      const bDate = new Date(b.created_at || 0);
-      return bDate - aDate;
+      const aDate = new Date(a.created_at || a.updated_at || 0);
+      const bDate = new Date(b.created_at || b.updated_at || 0);
+      return bDate - aDate; // Newest first
     });
     
     // Sort filtered centers
@@ -839,7 +901,7 @@ function CentersListEnhanced() {
           </button>
           <button
             type="button"
-            onClick={handleOpenModal}
+            onClick={() => navigate('/center-management/create')}
             className="inline-flex items-center gap-2 rounded-lg bg-[#005f40] text-white text-sm font-medium px-5 py-2.5 hover:bg-[#004d33] transition-colors shadow-sm"
           >
             <Plus className="h-4 w-4" />

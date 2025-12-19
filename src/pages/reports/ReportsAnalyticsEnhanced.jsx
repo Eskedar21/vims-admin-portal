@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, useLocation, Routes, Route, Navigate } from 'react-router-dom';
 import { BarChart3, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import ExecutiveScorecard from './ExecutiveScorecard';
@@ -572,17 +573,37 @@ function ComplianceIntegrityReports() {
 
 
 const TABS = [
-  { id: 'scorecard', label: 'Executive Scorecard', icon: BarChart3, component: ExecutiveScorecard },
-  { id: 'trends', label: 'Trend Analysis', icon: TrendingUp, component: TrendAnalysis },
-  { id: 'operational', label: 'Operational Reports', icon: BarChart3, component: OperationalReports },
-  { id: 'evidence', label: 'Evidence Completeness', icon: CheckCircle, component: EvidenceCompletenessReports },
-  { id: 'compliance', label: 'Compliance & Integrity', icon: AlertCircle, component: ComplianceIntegrityReports },
+  { id: 'scorecard', label: 'Executive Scorecard', icon: BarChart3, route: '/reports/scorecard', component: ExecutiveScorecard },
+  { id: 'trends', label: 'Trend Analysis', icon: TrendingUp, route: '/reports/trends', component: TrendAnalysis },
+  { id: 'operational', label: 'Operational Reports', icon: BarChart3, route: '/reports/operational', component: OperationalReports },
+  { id: 'evidence', label: 'Evidence Completeness', icon: CheckCircle, route: '/reports/evidence', component: EvidenceCompletenessReports },
+  { id: 'compliance', label: 'Compliance & Integrity', icon: AlertCircle, route: '/reports/compliance', component: ComplianceIntegrityReports },
 ];
 
 function ReportsAnalyticsEnhanced() {
-  const [activeTab, setActiveTab] = useState('scorecard');
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const ActiveComponent = TABS.find(tab => tab.id === activeTab)?.component || ExecutiveScorecard;
+  // Get active tab from URL
+  const getActiveTab = () => {
+    const path = location.pathname;
+    // Handle base /reports route
+    if (path === '/reports' || path === '/reports/') {
+      return 'scorecard';
+    }
+    const tab = TABS.find(t => path === t.route || path.startsWith(t.route + '/'));
+    return tab ? tab.id : 'scorecard';
+  };
+
+  const activeTab = getActiveTab();
+
+  // Get the active component based on the current route
+  const getActiveComponent = () => {
+    const tab = TABS.find(t => t.id === activeTab);
+    return tab ? tab.component : ExecutiveScorecard;
+  };
+
+  const ActiveComponent = getActiveComponent();
 
   return (
     <div className="w-full">
@@ -602,12 +623,13 @@ function ReportsAnalyticsEnhanced() {
           <nav className="flex -mb-px overflow-x-auto">
             {TABS.map(tab => {
               const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => navigate(tab.route)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition whitespace-nowrap ${
-                    activeTab === tab.id
+                    isActive
                       ? 'border-[#009639] text-[#009639]'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}

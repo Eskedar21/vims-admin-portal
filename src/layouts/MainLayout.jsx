@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getNavForRole, ROLES, mapRoleIdToNavRole } from '../config/navConfig';
 import { useAuth } from '../context/AuthContext';
@@ -113,6 +113,23 @@ function MainLayout({ children }) {
   const userRole = user?.roleId ? mapRoleIdToNavRole(user.roleId) : ROLES.ADMIN;
   const navItems = getNavForRole(userRole);
 
+  // Auto-expand menus with active children
+  useEffect(() => {
+    navItems.forEach((item) => {
+      if (item.children && item.children.length > 0) {
+        const hasActiveChild = item.children.some(
+          child => location.pathname === child.route || location.pathname.startsWith(child.route + '/')
+        );
+        if (hasActiveChild) {
+          setExpandedMenus(prev => {
+            if (prev[item.id]) return prev; // Already expanded
+            return { ...prev, [item.id]: true };
+          });
+        }
+      }
+    });
+  }, [location.pathname, navItems]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -182,9 +199,24 @@ function MainLayout({ children }) {
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto py-4 px-2">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.route || location.pathname.startsWith(item.route + '/');
             const hasChildren = item.children && item.children.length > 0;
-            const isExpanded = expandedMenus[item.id];
+            // For items with children, only show as active if a child is active
+            // For items without children, check exact match or starts with
+            const isChildActive = hasChildren 
+              ? item.children.some(child => {
+                  // Exact match
+                  if (location.pathname === child.route) return true;
+                  // Path starts with child route (but not if child route is same as parent)
+                  if (child.route !== item.route && location.pathname.startsWith(child.route + '/')) return true;
+                  // Special case: if child route is same as parent route, only match exact
+                  if (child.route === item.route && location.pathname === child.route) return true;
+                  return false;
+                })
+              : false;
+            const isActive = hasChildren 
+              ? false // Parent with children is never active itself
+              : (location.pathname === item.route || location.pathname.startsWith(item.route + '/'));
+            const isExpanded = expandedMenus[item.id] || isChildActive; // Auto-expand if child is active
 
             return (
               <div key={item.id} className="mb-1">
@@ -223,7 +255,18 @@ function MainLayout({ children }) {
                 {hasChildren && isExpanded && !sidebarCollapsed && (
                   <div className="ml-4 mt-1 pl-4 border-l border-gray-200">
                     {item.children.map((child) => {
-                      const isChildActive = location.pathname === child.route || location.pathname.startsWith(child.route + '/');
+                      // More precise active state checking for child items
+                      let isChildActive = false;
+                      if (location.pathname === child.route) {
+                        // Exact match
+                        isChildActive = true;
+                      } else if (child.route === item.route) {
+                        // If child route is same as parent, only match exact
+                        isChildActive = location.pathname === child.route;
+                      } else {
+                        // For other children, check if path starts with child route
+                        isChildActive = location.pathname.startsWith(child.route + '/');
+                      }
                       return (
                         <button
                           key={child.id}
