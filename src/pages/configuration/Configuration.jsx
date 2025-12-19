@@ -26,12 +26,24 @@ function Configuration() {
   ];
 
   // Determine active tab based on current path
-  const activeTab = tabs.find(
-    (tab) => location.pathname === tab.path || location.pathname.startsWith(tab.path + "/")
-  )?.id || tabs[0].id;
+  const getActiveTab = () => {
+    const path = location.pathname;
+    // Check if path exactly matches a tab path
+    const exactMatch = tabs.find(tab => path === tab.path);
+    if (exactMatch) return exactMatch.id;
+    
+    // Check if path starts with a tab path (for nested routes)
+    const startsWithMatch = tabs.find(tab => tab.path !== "/configuration" && path.startsWith(tab.path));
+    if (startsWithMatch) return startsWithMatch.id;
+    
+    // Default to first tab if path is exactly "/configuration"
+    return tabs[0].id;
+  };
+  
+  const activeTab = getActiveTab();
 
   return (
-    <div className="max-w-7xl mx-auto w-full">
+    <div className="w-full">
       {/* Page Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Configuration</h1>
@@ -52,7 +64,7 @@ function Configuration() {
                   onClick={() => navigate(tab.path)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                     isActive
-                      ? "border-[#005f40] text-[#005f40]"
+                      ? "border-[#009639] text-[#009639]"
                       : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
                   }`}
                 >
