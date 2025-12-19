@@ -11,12 +11,48 @@ function CenterList() {
   const { centers, addCenter } = useCenters();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form, setForm] = useState({
+    // Basic Information
     name: "",
     region: "",
     status: "Online",
     lat: 9.1450, // Default to Addis Ababa
     lng: 38.7618,
     radius: 500,
+    
+    // Business Registration
+    tin: "",
+    vat: "",
+    principalRegistrationNo: "",
+    businessLicenseNo: "",
+    businessLicenseDateOfIssuance: "",
+    placeOfIssue: "",
+    dateOfIssue: "",
+    
+    // Owner/Company Information
+    ownerCompanyName: "",
+    nationality: "",
+    tradeName: "",
+    generalManagerName: "",
+    
+    // Location Details
+    zoneSubCity: "",
+    woreda: "",
+    kebele: "",
+    houseNo: "",
+    
+    // Contact Information
+    telephone: "",
+    fax: "",
+    email: "",
+    
+    // Business Details
+    fieldOfBusiness: "",
+    capitalInETB: "",
+    
+    // Additional
+    telebirrNumber: "",
+    cameraConfiguration: "",
+    commercialRegistrationProcedure: "",
   });
 
   const statusClass = (status) =>
@@ -37,12 +73,48 @@ function CenterList() {
 
   const handleOpenModal = () => {
     setForm({
+      // Basic Information
       name: "",
       region: "",
       status: "Online",
       lat: 9.1450,
       lng: 38.7618,
       radius: 500,
+      
+      // Business Registration
+      tin: "",
+      vat: "",
+      principalRegistrationNo: "",
+      businessLicenseNo: "",
+      businessLicenseDateOfIssuance: "",
+      placeOfIssue: "",
+      dateOfIssue: "",
+      
+      // Owner/Company Information
+      ownerCompanyName: "",
+      nationality: "",
+      tradeName: "",
+      generalManagerName: "",
+      
+      // Location Details
+      zoneSubCity: "",
+      woreda: "",
+      kebele: "",
+      houseNo: "",
+      
+      // Contact Information
+      telephone: "",
+      fax: "",
+      email: "",
+      
+      // Business Details
+      fieldOfBusiness: "",
+      capitalInETB: "",
+      
+      // Additional
+      telebirrNumber: "",
+      cameraConfiguration: "",
+      commercialRegistrationProcedure: "",
     });
     setIsModalOpen(true);
   };
@@ -57,6 +129,35 @@ function CenterList() {
       lat: form.lat,
       lng: form.lng,
       radius: form.radius,
+      // Business Registration
+      tin: form.tin,
+      vat: form.vat,
+      principalRegistrationNo: form.principalRegistrationNo,
+      businessLicenseNo: form.businessLicenseNo,
+      businessLicenseDateOfIssuance: form.businessLicenseDateOfIssuance,
+      placeOfIssue: form.placeOfIssue,
+      dateOfIssue: form.dateOfIssue,
+      // Owner/Company Information
+      ownerCompanyName: form.ownerCompanyName,
+      nationality: form.nationality,
+      tradeName: form.tradeName,
+      generalManagerName: form.generalManagerName,
+      // Location Details
+      zoneSubCity: form.zoneSubCity,
+      woreda: form.woreda,
+      kebele: form.kebele,
+      houseNo: form.houseNo,
+      // Contact Information
+      telephone: form.telephone,
+      fax: form.fax,
+      email: form.email,
+      // Business Details
+      fieldOfBusiness: form.fieldOfBusiness,
+      capitalInETB: form.capitalInETB,
+      // Additional
+      telebirrNumber: form.telebirrNumber,
+      cameraConfiguration: form.cameraConfiguration,
+      commercialRegistrationProcedure: form.commercialRegistrationProcedure,
     };
     addCenter(newCenter);
     setIsModalOpen(false);
@@ -162,10 +263,10 @@ function CenterList() {
       {/* Add Center Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-4xl rounded-xl bg-white shadow-2xl border border-gray-200 max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-6xl rounded-xl bg-white shadow-2xl border border-gray-200 max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-              <h2 className="text-xl font-semibold text-gray-900">Add New Center</h2>
+            <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 sticky top-0 bg-white z-10">
+              <h2 className="text-xl font-semibold text-gray-900">Create New Inspection Center</h2>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
@@ -178,85 +279,438 @@ function CenterList() {
             </div>
 
             {/* Modal Form */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Center Name */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Center Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-colors"
-                    placeholder="Enter center name"
-                  />
-                </div>
-
-                {/* Region */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Region *
-                  </label>
-                  <select
-                    required
-                    value={form.region}
-                    onChange={(e) => setForm({ ...form, region: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-colors"
-                  >
-                    <option value="">Select region</option>
-                    {REGIONS.map((region) => (
-                      <option key={region} value={region}>
-                        {region}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Status */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Status *
-                  </label>
-                  <select
-                    required
-                    value={form.status}
-                    onChange={(e) => setForm({ ...form, status: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-colors"
-                  >
-                    <option value="Online">Online</option>
-                    <option value="Offline">Offline</option>
-                  </select>
-                </div>
-
-                {/* Radius */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Geo-Fence Radius (Meters) *
-                  </label>
+            <form onSubmit={handleSubmit} className="p-6 space-y-8">
+              {/* Basic Information Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Basic Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Center Name *
+                    </label>
                     <input
-                      type="range"
-                      min="100"
-                      max="2000"
-                      step="50"
-                      value={form.radius}
-                      onChange={(e) => setForm({ ...form, radius: Number(e.target.value) })}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-900"
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter center name"
                     />
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">100 m</span>
-                      <span className="text-sm font-semibold text-gray-900">{form.radius} m</span>
-                      <span className="text-xs text-gray-500">2000 m</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Region *
+                    </label>
+                    <select
+                      required
+                      value={form.region}
+                      onChange={(e) => setForm({ ...form, region: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                    >
+                      <option value="">Select region</option>
+                      {REGIONS.map((region) => (
+                        <option key={region} value={region}>
+                          {region}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Status *
+                    </label>
+                    <select
+                      required
+                      value={form.status}
+                      onChange={(e) => setForm({ ...form, status: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                    >
+                      <option value="Online">Online</option>
+                      <option value="Offline">Offline</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Geo-Fence Radius (Meters) *
+                    </label>
+                    <div className="space-y-2">
+                      <input
+                        type="range"
+                        min="100"
+                        max="2000"
+                        step="50"
+                        value={form.radius}
+                        onChange={(e) => setForm({ ...form, radius: Number(e.target.value) })}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#005f40]"
+                      />
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-gray-500">100 m</span>
+                        <span className="text-sm font-semibold text-gray-900">{form.radius} m</span>
+                        <span className="text-xs text-gray-500">2000 m</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Map and Coordinates */}
+              {/* Business Registration Section */}
               <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Business Registration Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      TIN (Tax Identification Number) *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.tin}
+                      onChange={(e) => setForm({ ...form, tin: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter TIN"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      VAT Number
+                    </label>
+                    <input
+                      type="text"
+                      value={form.vat}
+                      onChange={(e) => setForm({ ...form, vat: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter VAT number"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Principal Registration No. *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.principalRegistrationNo}
+                      onChange={(e) => setForm({ ...form, principalRegistrationNo: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter principal registration number"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Business License No. *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.businessLicenseNo}
+                      onChange={(e) => setForm({ ...form, businessLicenseNo: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter business license number"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Business License Date of Issuance *
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={form.businessLicenseDateOfIssuance}
+                      onChange={(e) => setForm({ ...form, businessLicenseDateOfIssuance: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Place of Issue *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.placeOfIssue}
+                      onChange={(e) => setForm({ ...form, placeOfIssue: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter place of issue"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Date of Issue *
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={form.dateOfIssue}
+                      onChange={(e) => setForm({ ...form, dateOfIssue: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Commercial Registration & Business License Procedure
+                    </label>
+                    <textarea
+                      value={form.commercialRegistrationProcedure}
+                      onChange={(e) => setForm({ ...form, commercialRegistrationProcedure: e.target.value })}
+                      rows={3}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter commercial registration and business license procedure details"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Owner/Company Information Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Owner/Company Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Owner/Company Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.ownerCompanyName}
+                      onChange={(e) => setForm({ ...form, ownerCompanyName: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter owner or company name"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Nationality *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.nationality}
+                      onChange={(e) => setForm({ ...form, nationality: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter nationality"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Trade Name
+                    </label>
+                    <input
+                      type="text"
+                      value={form.tradeName}
+                      onChange={(e) => setForm({ ...form, tradeName: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter trade name"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      General Manager Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.generalManagerName}
+                      onChange={(e) => setForm({ ...form, generalManagerName: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter general manager name"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Location Details Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Location Details</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Zone / Sub City *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.zoneSubCity}
+                      onChange={(e) => setForm({ ...form, zoneSubCity: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter zone or sub city"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Woreda *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.woreda}
+                      onChange={(e) => setForm({ ...form, woreda: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter woreda"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Kebele *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.kebele}
+                      onChange={(e) => setForm({ ...form, kebele: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter kebele"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      House No. *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.houseNo}
+                      onChange={(e) => setForm({ ...form, houseNo: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter house number"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Information Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Contact Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Telephone No. *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={form.telephone}
+                      onChange={(e) => setForm({ ...form, telephone: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter telephone number"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Fax
+                    </label>
+                    <input
+                      type="text"
+                      value={form.fax}
+                      onChange={(e) => setForm({ ...form, fax: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter fax number"
+                    />
+                  </div>
+
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      E-mail *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter email address"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Business Details Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Business Details</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Field of Business *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.fieldOfBusiness}
+                      onChange={(e) => setForm({ ...form, fieldOfBusiness: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter field of business"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Capital in ETB *
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      min="0"
+                      step="0.01"
+                      value={form.capitalInETB}
+                      onChange={(e) => setForm({ ...form, capitalInETB: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter capital in ETB"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Information Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Additional Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Telebirr Number
+                    </label>
+                    <input
+                      type="text"
+                      value={form.telebirrNumber}
+                      onChange={(e) => setForm({ ...form, telebirrNumber: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter Telebirr number"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Camera Configuration
+                    </label>
+                    <input
+                      type="text"
+                      value={form.cameraConfiguration}
+                      onChange={(e) => setForm({ ...form, cameraConfiguration: e.target.value })}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      placeholder="Enter camera configuration details"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Map and Coordinates Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Geographic Location</h3>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Set Location on Map *
@@ -278,7 +732,7 @@ function CenterList() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                      Latitude
+                      Latitude *
                     </label>
                     <input
                       type="number"
@@ -286,13 +740,13 @@ function CenterList() {
                       required
                       value={form.lat}
                       onChange={(e) => setForm({ ...form, lat: Number(e.target.value) })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
                       placeholder="Enter latitude"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                      Longitude
+                      Longitude *
                     </label>
                     <input
                       type="number"
@@ -300,7 +754,7 @@ function CenterList() {
                       required
                       value={form.lng}
                       onChange={(e) => setForm({ ...form, lng: Number(e.target.value) })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
                       placeholder="Enter longitude"
                     />
                   </div>

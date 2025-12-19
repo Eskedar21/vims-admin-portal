@@ -1,159 +1,346 @@
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Building2, CheckCircle2, XCircle, DollarSign, Car, Search, Bell, Eye, Printer, ChevronLeft, ChevronRight, AlertTriangle, MapPin } from "lucide-react";
+import {
+  Building2,
+  CheckCircle2,
+  XCircle,
+  DollarSign,
+  Car,
+  Search,
+  Bell,
+  Eye,
+  Printer,
+  AlertTriangle,
+  MapPin,
+  Clock,
+  Users,
+  Settings,
+  FileText,
+  Shield,
+  Plus,
+  RefreshCw,
+  Calendar,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+} from "lucide-react";
 import { useCenters } from "../context/CentersContext";
 import { useNotifications } from "../context/NotificationContext";
 import { mockInspectionsExtended } from "../data/mockInspections";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
+import { mockIncidents, incidentTypeLabels, severityColors } from "../data/mockIncidents";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Area,
+  AreaChart,
+  BarChart,
+  Bar,
+} from "recharts";
 import { batchCheckInspections } from "../utils/fraudNotificationService";
+import { getUserScope, filterCentersByScope, filterInspectionsByScope, filterIncidentsByScope, hasPermission } from "../utils/scopeFilter";
+import { calculateAttentionScore, getJurisdictionPath } from "../utils/centerAttentionScore";
 
 function Dashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { centers } = useCenters();
   const { addNotification, notifications } = useNotifications();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentFilter, setPaymentFilter] = useState(false);
-  const itemsPerPage = 5;
 
-  // Role-based permissions
-  const canViewPII = user?.role?.toLowerCase() !== "viewer";
+  // User scope
+  const userScope = useMemo(() => getUserScope(user), [user]);
 
-  // Run fraud detection on inspections when component mounts or data changes
-  useEffect(() => {
-    // Add sample fraud notifications with center names and details
-    const sampleNotifications = [
-      {
-        type: "geofence",
-        title: "Geofence Violation - Bole Center 01",
-        message: "Inspection VIS-2025-0025 for vehicle ET 99999X was performed 1.2km outside the authorized geofence boundary. Location: 9.0806°N, 38.8578°E. Center boundary: 500m radius from 8.9806°N, 38.7578°E.",
-        severity: "high",
-        inspectionId: "VIS-2025-0025",
-        centerId: "CTR-001",
-        vehiclePlate: "ET 99999X",
-      },
-      {
-        type: "vehicle_presence",
-        title: "Vehicle Presence Violation - Adama Center",
-        message: "Inspection VIS-2025-0026 for vehicle ET 88888Y may have been performed without the vehicle being present. No machine test results recorded, no visual inspection photos captured. Inspector: Test Inspector 2.",
-        severity: "high",
-        inspectionId: "VIS-2025-0026",
-        centerId: "CTR-002",
-        vehiclePlate: "ET 88888Y",
-      },
-      {
-        type: "geofence",
-        title: "Geofence Violation - Hawassa Center",
-        message: "Inspection VIS-2025-0020 for vehicle ET 85216Z was performed 850m outside the authorized geofence. Inspection location exceeds the 600m radius limit. Immediate review required.",
-        severity: "high",
-        inspectionId: "VIS-2025-0020",
-        centerId: "CTR-004",
-        vehiclePlate: "ET 85216Z",
-      },
-    ];
+  // Global filters
+  const [dateRange, setDateRange] = useState("Today");
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedCenter, setSelectedCenter] = useState(null);
+  const [dataFreshness, setDataFreshness] = useState({
+    lastRefreshed: new Date(),
+    status: "Fresh",
+    sourceHealth: "OK",
+  });
 
-    // Add sample notifications if they don't already exist
-    sampleNotifications.forEach((sample) => {
-      const exists = notifications.some(
-        (n) => n.inspectionId === sample.inspectionId && n.type === sample.type
-      );
-      if (!exists) {
-        addNotification(sample);
-      }
-    });
+  // Filter data by scope
+  const scopedCenters = useMemo(() => filterCentersByScope(centers, userScope), [centers, userScope]);
+  const scopedInspections = useMemo(
+    () => filterInspectionsByScope(mockInspectionsExtended, userScope, centers),
+    [userScope, centers]
+  );
+  const scopedIncidents = useMemo(() => filterIncidentsByScope(mockIncidents, userScope), [userScope]);
 
-    // Only check recent inspections (last 7 days) to avoid spam
-    const recentInspections = mockInspectionsExtended.filter((inspection) => {
-      if (!inspection.inspectionDate) return false;
-      const inspectionDate = new Date(inspection.inspectionDate);
-      const now = new Date();
-      const daysDiff = Math.floor((now - inspectionDate) / (1000 * 60 * 60 * 24));
-      return daysDiff <= 7;
-    });
+  // Date range filtering
+  const getDateRangeFilter = () => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-    // Check for fraud violations and generate notifications
-    // Pass existing notifications to prevent duplicates
-    batchCheckInspections(recentInspections, centers, addNotification, notifications);
-  }, [centers, addNotification, notifications]);
+    switch (dateRange) {
+      case "Today":
+        return { start: today, end: now };
+      case "Yesterday":
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        return { start: yesterday, end: today };
+      case "Last 7 days":
+        const weekAgo = new Date(today);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        return { start: weekAgo, end: now };
+      case "Last 30 days":
+        const monthAgo = new Date(today);
+        monthAgo.setDate(monthAgo.getDate() - 30);
+        return { start: monthAgo, end: now };
+      default:
+        return { start: null, end: null };
+    }
+  };
 
-  // Calculate metrics
-  const metrics = useMemo(() => {
-    const totalInspections = mockInspectionsExtended.length;
-    const passCount = mockInspectionsExtended.filter((i) => i.status === "Passed").length;
-    const failCount = mockInspectionsExtended.filter((i) => i.status === "Failed").length;
-    const revenue = mockInspectionsExtended
-      .filter((i) => i.paymentStatus === "Paid")
-      .reduce((sum, i) => sum + (i.amount || 0), 0);
-    const pendingPayments = mockInspectionsExtended.filter(
-      (i) => i.paymentStatus === "Pending"
-    ).length;
-    const activeCenters = centers.filter((c) => c.status === "Online").length;
-    const regionsCount = new Set(centers.map((c) => c.region)).size;
-
-    return { totalInspections, passCount, failCount, revenue, pendingPayments, activeCenters, regionsCount, totalCenters: centers.length };
-  }, [centers]);
-
-  // Generate hourly chart data
-  const hourlyInspectionData = useMemo(() => {
-    const hours = Array.from({ length: 7 }, (_, i) => {
-      const hour = 8 + i; // 8 AM to 2 PM
-      const hourLabel = hour < 12 ? `${hour} AM` : hour === 12 ? "12 PM" : `${hour - 12} PM`;
-      const count = Math.floor(Math.random() * 8) + 2; // Random between 2-10
-      return { time: hourLabel, inspections: count };
-    });
-    return hours;
-  }, []);
-
-  const hourlyRevenueData = useMemo(() => {
-    return hourlyInspectionData.map((item) => ({
-      ...item,
-      revenue: item.inspections * (Math.random() * 200 + 300), // Random revenue per inspection
-    }));
-  }, [hourlyInspectionData]);
-
-  // Filter inspections based on search and payment status
+  const dateFilter = getDateRangeFilter();
   const filteredInspections = useMemo(() => {
-    let filtered = mockInspectionsExtended;
+    let filtered = scopedInspections;
 
-    // Filter by payment status if pending payments button is clicked
-    if (paymentFilter) {
-      filtered = filtered.filter((inspection) => inspection.paymentStatus === "Pending");
+    // Apply date filter
+    if (dateFilter.start && dateFilter.end) {
+      filtered = filtered.filter((insp) => {
+        if (!insp.inspectionDate) return false;
+        const inspDate = new Date(insp.inspectionDate);
+        return inspDate >= dateFilter.start && inspDate <= dateFilter.end;
+      });
     }
 
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (inspection) =>
-          inspection.vehicle.plate.toLowerCase().includes(query) ||
-          inspection.id.toLowerCase().includes(query) ||
-          inspection.meta.inspectorName.toLowerCase().includes(query)
-      );
+    // Apply region filter
+    if (selectedRegion) {
+      filtered = filtered.filter((insp) => {
+        const center = centers.find((c) => c.id === insp.meta?.centerId || c.name === insp.meta?.center);
+        return center?.region === selectedRegion;
+      });
+    }
+
+    // Apply center filter
+    if (selectedCenter) {
+      filtered = filtered.filter((insp) => {
+        const centerId = insp.meta?.centerId;
+        const centerName = insp.meta?.center;
+        return centerId === selectedCenter || centerName === selectedCenter;
+      });
     }
 
     return filtered;
-  }, [searchQuery, paymentFilter]);
+  }, [scopedInspections, dateFilter, selectedRegion, selectedCenter, centers]);
 
-  // Pagination
-  const totalPages = Math.ceil(filteredInspections.length / itemsPerPage);
-  const paginatedInspections = useMemo(() => {
-    const start = (currentPage - 1) * itemsPerPage;
-    return filteredInspections.slice(start, start + itemsPerPage);
-  }, [filteredInspections, currentPage]);
+  // Filter centers by region/center selection
+  const filteredCenters = useMemo(() => {
+    let filtered = scopedCenters;
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
+    if (selectedRegion) {
+      filtered = filtered.filter((c) => c.region === selectedRegion);
+    }
+
+    if (selectedCenter) {
+      filtered = filtered.filter((c) => c.id === selectedCenter || c.name === selectedCenter);
+    }
+
+    return filtered;
+  }, [scopedCenters, selectedRegion, selectedCenter]);
+
+  // Filter incidents by region/center selection
+  const filteredIncidents = useMemo(() => {
+    let filtered = scopedIncidents;
+
+    if (selectedRegion) {
+      filtered = filtered.filter((incident) => {
+        const center = centers.find((c) => c.id === incident.scope?.centerId);
+        return center?.region === selectedRegion;
+      });
+    }
+
+    if (selectedCenter) {
+      filtered = filtered.filter((incident) => {
+        return incident.scope?.centerId === selectedCenter;
+      });
+    }
+
+    return filtered;
+  }, [scopedIncidents, selectedRegion, selectedCenter, centers]);
+
+  // Calculate KPIs
+  const kpis = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayInspections = filteredInspections.filter((i) => {
+      if (!i.inspectionDate) return false;
+      const date = new Date(i.inspectionDate);
+      return date >= today;
     });
-  };
 
+    const last7Days = new Date();
+    last7Days.setDate(last7Days.getDate() - 7);
+    const last7DaysInspections = filteredInspections.filter((i) => {
+      if (!i.inspectionDate) return false;
+      return new Date(i.inspectionDate) >= last7Days;
+    });
+
+    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const mtdInspections = filteredInspections.filter((i) => {
+      if (!i.inspectionDate) return false;
+      return new Date(i.inspectionDate) >= monthStart;
+    });
+
+    const passCount = filteredInspections.filter((i) => i.status === "Passed").length;
+    const failCount = filteredInspections.filter((i) => i.status === "Failed").length;
+    const totalInspections = filteredInspections.length;
+    const passRate = totalInspections > 0 ? ((passCount / totalInspections) * 100).toFixed(1) : 0;
+
+    // Calculate average inspection cycle time from filtered inspections
+    const cycleTimes = filteredInspections
+      .filter((i) => i.cycleTimeSeconds)
+      .map((i) => i.cycleTimeSeconds / 60); // Convert to minutes
+    const avgCycleTime = cycleTimes.length > 0
+      ? Math.round(cycleTimes.reduce((sum, time) => sum + time, 0) / cycleTimes.length)
+      : 45; // Default to 45 if no data
+
+    const revenue = filteredInspections
+      .filter((i) => i.paymentStatus === "Paid")
+      .reduce((sum, i) => sum + (i.amount || 0), 0);
+
+    const todayRevenue = todayInspections
+      .filter((i) => i.paymentStatus === "Paid")
+      .reduce((sum, i) => sum + (i.amount || 0), 0);
+
+    const mtdRevenue = mtdInspections
+      .filter((i) => i.paymentStatus === "Paid")
+      .reduce((sum, i) => sum + (i.amount || 0), 0);
+
+    const activeCenters = filteredCenters.filter((c) => c.status === "Online").length;
+    const degradedCenters = filteredCenters.filter((c) => c.status === "Syncing" || c.status === "Degraded").length;
+    const offlineCenters = filteredCenters.filter((c) => c.status === "Offline").length;
+
+    return {
+      totalInspections: {
+        today: todayInspections.length,
+        last7Days: last7DaysInspections.length,
+        mtd: mtdInspections.length,
+        all: totalInspections,
+      },
+      passCount,
+      failCount,
+      retestDue: filteredInspections.filter((i) => i.type === "Re-inspection" && i.status === "Failed").length,
+      passRate: parseFloat(passRate),
+      avgCycleTime,
+      revenue: {
+        today: todayRevenue,
+        mtd: mtdRevenue,
+        all: revenue,
+      },
+      activeCenters,
+      totalCenters: filteredCenters.length,
+      degradedCenters,
+      offlineCenters,
+    };
+  }, [filteredInspections, filteredCenters]);
+
+  // Centers requiring attention
+  const centersRequiringAttention = useMemo(() => {
+    return filteredCenters
+      .map((center) => {
+        const { score, reasons } = calculateAttentionScore(center, filteredIncidents);
+        return {
+          ...center,
+          attentionScore: score,
+          topReasons: reasons,
+          lastUpdated: center.lastHeartbeat || new Date().toISOString(),
+        };
+      })
+      .filter((c) => c.attentionScore > 0)
+      .sort((a, b) => b.attentionScore - a.attentionScore)
+      .slice(0, 10);
+  }, [filteredCenters, filteredIncidents]);
+
+  // Trend chart data
+  const trendData = useMemo(() => {
+    const days = dateRange === "Last 7 days" ? 7 : dateRange === "Last 30 days" ? 30 : 1;
+    const data = [];
+
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      date.setHours(0, 0, 0, 0);
+
+      const dayInspections = filteredInspections.filter((insp) => {
+        if (!insp.inspectionDate) return false;
+        const inspDate = new Date(insp.inspectionDate);
+        return inspDate >= date && inspDate < new Date(date.getTime() + 86400000);
+      });
+
+      const passCount = dayInspections.filter((i) => i.status === "Passed").length;
+      const failCount = dayInspections.filter((i) => i.status === "Failed").length;
+      const revenue = dayInspections
+        .filter((i) => i.paymentStatus === "Paid")
+        .reduce((sum, i) => sum + (i.amount || 0), 0);
+
+      data.push({
+        date: date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+        inspections: dayInspections.length,
+        passed: passCount,
+        failed: failCount,
+        revenue,
+      });
+    }
+
+    return data;
+  }, [filteredInspections, dateRange]);
+
+  // Quick actions
+  const quickActions = useMemo(() => {
+    const actions = [];
+
+    if (hasPermission(user, "create_user")) {
+      actions.push({
+        id: "add_user",
+        label: "Add User",
+        icon: Users,
+        route: "/administration",
+        permission: "create_user",
+      });
+    }
+
+    if (hasPermission(user, "create_center")) {
+      actions.push({
+        id: "create_center",
+        label: "Create Inspection Center",
+        icon: Building2,
+        route: "/center-management",
+        permission: "create_center",
+      });
+    }
+
+    if (hasPermission(user, "view_audit")) {
+      actions.push({
+        id: "audit_logs",
+        label: "Open Audit Logs",
+        icon: Shield,
+        route: "/security",
+        permission: "view_audit",
+      });
+    }
+
+    if (hasPermission(user, "generate_report")) {
+      actions.push({
+        id: "generate_report",
+        label: "Generate Scheduled Report Now",
+        icon: FileText,
+        route: "/reports",
+        permission: "generate_report",
+      });
+    }
+
+    return actions;
+  }, [user]);
+
+  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("en-ET", {
       style: "decimal",
@@ -162,158 +349,406 @@ function Dashboard() {
     }).format(amount);
   };
 
+  // Format time
+  const formatTime = (dateString) => {
+    if (!dateString) return "Unknown";
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `${diffDays}d ago`;
+  };
+
+  // Auto-refresh data freshness
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDataFreshness({
+        lastRefreshed: new Date(),
+        status: "Fresh",
+        sourceHealth: "OK",
+      });
+    }, 30000); // Every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fraud detection
+  useEffect(() => {
+    const recentInspections = scopedInspections.filter((inspection) => {
+      if (!inspection.inspectionDate) return false;
+      const inspectionDate = new Date(inspection.inspectionDate);
+      const now = new Date();
+      const daysDiff = Math.floor((now - inspectionDate) / (1000 * 60 * 60 * 24));
+      return daysDiff <= 7;
+    });
+
+    batchCheckInspections(recentInspections, scopedCenters, addNotification, notifications);
+  }, [scopedInspections, scopedCenters, addNotification, notifications]);
+
+  // Get available regions for filter
+  const availableRegions = useMemo(() => {
+    return Array.from(new Set(scopedCenters.map((c) => c.region))).sort();
+  }, [scopedCenters]);
+
+  // Get available centers for filter
+  const availableCenters = useMemo(() => {
+    if (!selectedRegion) return scopedCenters;
+    return scopedCenters.filter((c) => c.region === selectedRegion);
+  }, [scopedCenters, selectedRegion]);
+
   return (
-    <div className="max-w-7xl mx-auto w-full space-y-6">
-      {/* Top Navigation Bar */}
+    <div className="w-full space-y-6 p-8">
+      {/* Page Header */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3 flex-1">
-          <div className="flex-1 max-w-md relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search Vehicle History"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-            />
-          </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Home Dashboard</h1>
+          <p className="text-sm text-gray-600 mt-1">
+            {userScope.type === "National" ? "National Overview" : `Scope: ${userScope.type} - ${userScope.value || "All"}`}
+          </p>
         </div>
         <div className="flex items-center gap-3">
-          {metrics.pendingPayments > 0 && (
-            <button 
-              onClick={() => {
-                setPaymentFilter(!paymentFilter);
-                setCurrentPage(1);
-              }}
-              className={`relative inline-flex items-center gap-2 rounded-lg border text-sm font-medium px-4 py-2.5 transition-colors ${
-                paymentFilter 
-                  ? "border-yellow-500 bg-yellow-50 text-yellow-700" 
-                  : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-              }`}
+          <div className="text-xs text-gray-500">
+            Last updated: {formatTime(dataFreshness.lastRefreshed.toISOString())}
+          </div>
+          <button
+            onClick={() => {
+              setDataFreshness({
+                lastRefreshed: new Date(),
+                status: "Fresh",
+                sourceHealth: "OK",
+              });
+            }}
+            className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+            title="Refresh"
+          >
+            <RefreshCw className="h-4 w-4 text-gray-600" />
+          </button>
+        </div>
+      </div>
+
+      {/* Global Filters */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+        <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-gray-500" />
+            <label className="text-sm font-medium text-gray-700">Date Range:</label>
+            <select
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value)}
+              className="rounded-lg border border-gray-300 bg-white text-sm px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
             >
-              <Bell className="h-4 w-4" />
-              Pending Payments
-              <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-yellow-500 text-white text-xs flex items-center justify-center font-semibold">
-                {metrics.pendingPayments}
-              </span>
-            </button>
+              <option>Today</option>
+              <option>Yesterday</option>
+              <option>Last 7 days</option>
+              <option>Last 30 days</option>
+            </select>
+          </div>
+
+          {userScope.type === "National" && (
+            <>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-gray-500" />
+                <label className="text-sm font-medium text-gray-700">Region:</label>
+                <select
+                  value={selectedRegion || ""}
+                  onChange={(e) => {
+                    setSelectedRegion(e.target.value || null);
+                    setSelectedCenter(null);
+                  }}
+                  className="rounded-lg border border-gray-300 bg-white text-sm px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+                >
+                  <option value="">All Regions</option>
+                  {availableRegions.map((region) => (
+                    <option key={region} value={region}>
+                      {region}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Building2 className="h-4 w-4 text-gray-500" />
+                <label className="text-sm font-medium text-gray-700">Center:</label>
+                <select
+                  value={selectedCenter || ""}
+                  onChange={(e) => setSelectedCenter(e.target.value || null)}
+                  disabled={!selectedRegion}
+                  className="rounded-lg border border-gray-300 bg-white text-sm px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                >
+                  <option value="">All Centers</option>
+                  {availableCenters.map((center) => (
+                    <option key={center.id} value={center.id}>
+                      {center.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
           )}
-          <select className="rounded-lg border border-gray-300 bg-white text-sm px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent">
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-            <option>This Year</option>
-          </select>
         </div>
       </div>
 
-      {/* Key Metrics Cards - Inspection Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">VEHICLES INSPECTED</p>
-              <p className="text-3xl font-bold text-gray-900">{metrics.totalInspections}</p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-blue-50 flex items-center justify-center">
-              <Car className="h-7 w-7 text-blue-600" />
-            </div>
+      {/* KPI Tiles */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Total Inspections */}
+        <div
+          className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow"
+          onClick={() => navigate("/inspection-operations")}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">TOTAL INSPECTIONS</p>
+            <Car className="h-5 w-5 text-blue-600" />
+          </div>
+          <p className="text-2xl font-bold text-gray-900">{kpis.totalInspections.all}</p>
+          <div className="flex items-center gap-2 mt-2 text-xs text-gray-600">
+            <span>Today: {kpis.totalInspections.today}</span>
+            <span>•</span>
+            <span>7D: {kpis.totalInspections.last7Days}</span>
+            <span>•</span>
+            <span>MTD: {kpis.totalInspections.mtd}</span>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">PASS COUNT</p>
-              <p className="text-3xl font-bold text-emerald-600">{metrics.passCount}</p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-emerald-50 flex items-center justify-center">
-              <CheckCircle2 className="h-7 w-7 text-emerald-600" />
-            </div>
+        {/* Pass Rate */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">PASS RATE</p>
+            <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+          </div>
+          <p className="text-2xl font-bold text-emerald-600">{kpis.passRate}%</p>
+          <div className="flex items-center gap-4 mt-2 text-xs text-gray-600">
+            <span>Pass: {kpis.passCount}</span>
+            <span>Fail: {kpis.failCount}</span>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">FAIL COUNT</p>
-              <p className="text-3xl font-bold text-red-600">{metrics.failCount}</p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-red-50 flex items-center justify-center">
-              <XCircle className="h-7 w-7 text-red-600" />
-            </div>
+        {/* Revenue */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">REVENUE (ETB)</p>
+            <DollarSign className="h-5 w-5 text-emerald-600" />
+          </div>
+          <p className="text-2xl font-bold text-emerald-600">{formatCurrency(kpis.revenue.all)}</p>
+          <div className="flex items-center gap-2 mt-2 text-xs text-gray-600">
+            <span>Today: {formatCurrency(kpis.revenue.today)}</span>
+            <span>•</span>
+            <span>MTD: {formatCurrency(kpis.revenue.mtd)}</span>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">REVENUE (ETB)</p>
-              <p className="text-3xl font-bold text-emerald-600">
-                {formatCurrency(metrics.revenue)}
-              </p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-emerald-50 flex items-center justify-center">
-              <DollarSign className="h-7 w-7 text-emerald-600" />
-            </div>
+        {/* Active Centers */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">ACTIVE CENTERS</p>
+            <Building2 className="h-5 w-5 text-blue-600" />
           </div>
-        </div>
-      </div>
-
-      {/* System KPIs - Centers & Regions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">TOTAL CENTERS</p>
-              <p className="text-3xl font-bold text-gray-900">{metrics.totalCenters}</p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-gray-100 flex items-center justify-center">
-              <Building2 className="h-7 w-7 text-gray-700" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">ACTIVE CENTERS</p>
-              <p className="text-3xl font-bold text-emerald-600">{metrics.activeCenters}</p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-emerald-50 flex items-center justify-center">
-              <CheckCircle2 className="h-7 w-7 text-emerald-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600 mb-1">REGIONS COVERED</p>
-              <p className="text-3xl font-bold text-blue-600">{metrics.regionsCount}</p>
-            </div>
-            <div className="h-14 w-14 rounded-xl bg-blue-50 flex items-center justify-center">
-              <MapPin className="h-7 w-7 text-blue-600" />
-            </div>
+          <p className="text-2xl font-bold text-gray-900">
+            {kpis.activeCenters} / {kpis.totalCenters}
+          </p>
+          <div className="flex items-center gap-2 mt-2 text-xs">
+            {kpis.offlineCenters > 0 && (
+              <span className="text-red-600">Offline: {kpis.offlineCenters}</span>
+            )}
+            {kpis.degradedCenters > 0 && (
+              <>
+                {kpis.offlineCenters > 0 && <span>•</span>}
+                <span className="text-yellow-600">Degraded: {kpis.degradedCenters}</span>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Trend Graphs */}
+      {/* Additional KPIs Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">AVG CYCLE TIME</p>
+            <Clock className="h-5 w-5 text-gray-600" />
+          </div>
+          <p className="text-2xl font-bold text-gray-900">{kpis.avgCycleTime} min</p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">RETEST DUE</p>
+            <AlertTriangle className="h-5 w-5 text-yellow-600" />
+          </div>
+          <p className="text-2xl font-bold text-yellow-600">{kpis.retestDue}</p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-medium text-gray-600">CRITICAL INCIDENTS</p>
+            <Bell className="h-5 w-5 text-red-600" />
+          </div>
+          <p className="text-2xl font-bold text-red-600">
+            {filteredIncidents.filter((i) => i.severity === "Critical").length}
+          </p>
+        </div>
+      </div>
+
+      {/* Live Incident Summary & Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Live Incident Summary */}
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Live Incident Summary</h2>
+            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Auto-refresh: 30s</span>
+          </div>
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {filteredIncidents.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-emerald-500" />
+                <p>No incidents detected</p>
+              </div>
+            ) : (
+              filteredIncidents
+                .sort((a, b) => {
+                  const severityOrder = { Critical: 4, High: 3, Medium: 2, Low: 1 };
+                  return severityOrder[b.severity] - severityOrder[a.severity];
+                })
+                .slice(0, 10)
+                .map((incident) => (
+                  <div
+                    key={incident.id}
+                    className={`p-3 rounded-lg border ${severityColors[incident.severity]} cursor-pointer hover:shadow-sm transition-shadow`}
+                    onClick={() => navigate(`/centers/${incident.scope?.centerId}`)}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-semibold">{incident.severity}</span>
+                          <span className="text-xs">•</span>
+                          <span className="text-xs">{incidentTypeLabels[incident.type] || incident.type}</span>
+                        </div>
+                        <p className="text-sm font-medium mb-1">{incident.scope?.centerName || "Unknown Center"}</p>
+                        <p className="text-xs opacity-90">{incident.description}</p>
+                        <div className="flex items-center gap-3 mt-2 text-xs opacity-75">
+                          <span>Affected: {incident.impactMetrics?.inspectionsAffectedCount || 0} inspections</span>
+                          <span>•</span>
+                          <span>{formatTime(incident.firstDetectedAt)}</span>
+                        </div>
+                      </div>
+                      <span className={`text-xs px-2 py-1 rounded ${incident.status === "Open" ? "bg-red-100 text-red-700" : "bg-gray-100 text-gray-700"}`}>
+                        {incident.status}
+                      </span>
+                    </div>
+                  </div>
+                ))
+            )}
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+          <div className="space-y-2">
+            {quickActions.length === 0 ? (
+              <p className="text-sm text-gray-500">No actions available</p>
+            ) : (
+              quickActions.map((action) => {
+                const Icon = action.icon;
+                return (
+                  <button
+                    key={action.id}
+                    onClick={() => navigate(action.route)}
+                    className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-colors text-left"
+                  >
+                    <Icon className="h-5 w-5 text-gray-600" />
+                    <span className="text-sm font-medium text-gray-700">{action.label}</span>
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Centers Requiring Attention */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Centers Requiring Attention</h2>
+          <button
+            onClick={() => navigate("/center-management")}
+            className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+          >
+            View All →
+          </button>
+        </div>
+        {centersRequiringAttention.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">
+            <CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-emerald-500" />
+            <p>All centers operating normally</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {centersRequiringAttention.map((center) => (
+              <div
+                key={center.id}
+                className="p-4 rounded-lg border border-gray-200 hover:shadow-sm transition-shadow cursor-pointer"
+                onClick={() => navigate(`/centers/${center.id}`)}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="font-semibold text-gray-900">{center.name}</h3>
+                      <span className={`text-xs px-2 py-1 rounded ${
+                        center.status === "Online" ? "bg-emerald-100 text-emerald-700" :
+                        center.status === "Syncing" ? "bg-yellow-100 text-yellow-700" :
+                        "bg-red-100 text-red-700"
+                      }`}>
+                        {center.status}
+                      </span>
+                      <span className="text-xs text-gray-500">{getJurisdictionPath(center)}</span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full ${
+                            center.attentionScore >= 70 ? "bg-red-500" :
+                            center.attentionScore >= 40 ? "bg-yellow-500" :
+                            "bg-blue-500"
+                          }`}
+                          style={{ width: `${center.attentionScore}%` }}
+                        />
+                      </div>
+                      <span className="text-xs font-medium text-gray-700">Score: {center.attentionScore}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {center.topReasons.map((reason, idx) => (
+                        <span key={idx} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
+                          {reason}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Trend Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Inspections Over Time */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-gray-900">Inspections Over Time</h3>
-            <span className="text-xs text-gray-500">Hourly</span>
+            <span className="text-xs text-gray-500">{dateRange}</span>
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={hourlyInspectionData}>
+              <AreaChart data={trendData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
+                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
                 <YAxis stroke="#6b7280" fontSize={12} />
                 <Tooltip
                   contentStyle={{
@@ -325,8 +760,8 @@ function Dashboard() {
                 <Area
                   type="monotone"
                   dataKey="inspections"
-                  stroke="#10b981"
-                  fill="#10b981"
+                  stroke="#3b82f6"
+                  fill="#3b82f6"
                   fillOpacity={0.2}
                   strokeWidth={2}
                 />
@@ -335,16 +770,17 @@ function Dashboard() {
           </div>
         </div>
 
+        {/* Pass/Fail Trend */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">Revenue Trend (ETB)</h3>
-            <span className="text-xs text-gray-500">Hourly</span>
+            <h3 className="text-sm font-semibold text-gray-900">Pass/Fail Trend</h3>
+            <span className="text-xs text-gray-500">{dateRange}</span>
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={hourlyRevenueData}>
+              <BarChart data={trendData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
+                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
                 <YAxis stroke="#6b7280" fontSize={12} />
                 <Tooltip
                   contentStyle={{
@@ -352,224 +788,11 @@ function Dashboard() {
                     border: "1px solid #e5e7eb",
                     borderRadius: "8px",
                   }}
-                  formatter={(value) => formatCurrency(value)}
                 />
-                <Area
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#f59e0b"
-                  fill="#f59e0b"
-                  fillOpacity={0.2}
-                  strokeWidth={2}
-                />
-              </AreaChart>
+                <Bar dataKey="passed" fill="#10b981" name="Passed" />
+                <Bar dataKey="failed" fill="#ef4444" name="Failed" />
+              </BarChart>
             </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
-      {/* Real-time Monitoring & Alerts */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Real-time System Monitoring</h2>
-          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Live</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-lg border border-gray-200 bg-gray-50">
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin className="h-4 w-4 text-blue-600" />
-              <span className="text-sm font-medium text-gray-900">Geofencing Status</span>
-            </div>
-            <p className="text-xs text-gray-600">
-              {centers.filter((c) => c.status === "Online").length} centers within valid zones
-            </p>
-          </div>
-          <div className="p-4 rounded-lg border border-gray-200 bg-gray-50">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="h-4 w-4 text-yellow-600" />
-              <span className="text-sm font-medium text-gray-900">Active Alerts</span>
-            </div>
-            <p className="text-xs text-gray-600">
-              {centers.filter((c) => c.status === "Offline").length} centers offline
-            </p>
-          </div>
-          <div className="p-4 rounded-lg border border-gray-200 bg-gray-50">
-            <div className="flex items-center gap-2 mb-2">
-              <Bell className="h-4 w-4 text-red-600" />
-              <span className="text-sm font-medium text-gray-900">System Alerts</span>
-            </div>
-            <p className="text-xs text-gray-600">Video streaming: Active | Storage: 1 year retention</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Inspections Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Inspections</h2>
-          <div className="flex-1 max-w-xs ml-4 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by Plate, ID, or Technician..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-            />
-          </div>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer">
-                  DATE & TIME ↓
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  PLATE
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  TYPE
-                </th>
-                {canViewPII && (
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    TECHNICIAN
-                  </th>
-                )}
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  RESULT
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  AMOUNT
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  PAYMENT
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  SYNC
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  ACTIONS
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {paginatedInspections.map((inspection) => (
-                <tr key={inspection.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {formatDate(inspection.inspectionDate)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {inspection.id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {inspection.vehicle.plate}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {inspection.vehicle.type}
-                  </td>
-                  {canViewPII && (
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                      {inspection.meta.inspectorName}
-                    </td>
-                  )}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
-                        inspection.status === "Passed"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {inspection.status === "Passed" ? (
-                        <CheckCircle2 className="h-3 w-3 mr-1" />
-                      ) : (
-                        <XCircle className="h-3 w-3 mr-1" />
-                      )}
-                      {inspection.status.toUpperCase()}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                    {formatCurrency(inspection.amount)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
-                        inspection.paymentStatus === "Paid"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {inspection.paymentStatus}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
-                        inspection.syncStatus === "Synced"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {inspection.syncStatus}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => navigate(`/inspections/${inspection.id}`)}
-                        className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors"
-                        title="View Details"
-                      >
-                        <Eye className="h-4 w-4" />
-                        <span>View</span>
-                      </button>
-                      <button
-                        onClick={() => {
-                          window.open(`/inspections/${inspection.id}`, '_blank');
-                          setTimeout(() => window.print(), 500);
-                        }}
-                        className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-800 transition-colors"
-                        title="Print"
-                      >
-                        <Printer className="h-4 w-4" />
-                        <span>Print</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination */}
-        <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-          <p className="text-sm text-gray-700">
-            Showing {Math.min((currentPage - 1) * itemsPerPage + 1, filteredInspections.length)}-
-            {Math.min(currentPage * itemsPerPage, filteredInspections.length)} of{" "}
-            {filteredInspections.length}
-          </p>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <span className="px-4 py-2 text-sm text-gray-700">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-              className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
           </div>
         </div>
       </div>

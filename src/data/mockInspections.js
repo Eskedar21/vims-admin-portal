@@ -1,7 +1,249 @@
 // Mock inspections data for Inspection Detail View
 // Based on User Story Admin-010 (Single Source of Truth)
 
-// Extended mock data for dashboard
+// Helper function to generate dates relative to today
+const getDateRelativeToToday = (daysAgo = 0, hoursAgo = 0) => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  date.setHours(date.getHours() - hoursAgo);
+  return date.toISOString();
+};
+
+// Helper function to get relevant inspection photo based on item type
+const getInspectionPhoto = (item) => {
+  const itemPhotoMap = {
+    "Tires": "/vec1.jpg",
+    "Windshield": "/vec2.jpg",
+    "Mirrors": "/vec3.jpg",
+    "Lights": "/vec4.jpg",
+    "Body Damage": "/vec5.jpeg",
+  };
+  // Use mapped photo or fallback to random image
+  const images = ["/vec1.jpg", "/vec2.jpg", "/vec3.jpg", "/vec4.jpg", "/vec5.jpeg", "/vec6.webp", "/vec8.jpg", "/vec9.avif", "/vec10.jpeg"];
+  return itemPhotoMap[item] || images[Math.floor(Math.random() * images.length)];
+};
+
+// Helper function to generate random date within a range
+const getRandomDate = (daysAgoMin, daysAgoMax) => {
+  const daysAgo = Math.floor(Math.random() * (daysAgoMax - daysAgoMin + 1)) + daysAgoMin;
+  const hoursAgo = Math.floor(Math.random() * 24);
+  return getDateRelativeToToday(daysAgo, hoursAgo);
+};
+
+// Generate realistic inspection data
+const generateInspection = (id, daysAgo, options = {}) => {
+  const makes = ["Toyota", "Isuzu", "Mercedes", "Honda", "Nissan", "Hyundai", "Mitsubishi", "Ford", "Volkswagen", "Mazda"];
+  const models = {
+    "Toyota": ["Hiace", "Corolla", "Camry", "Land Cruiser", "Rav4", "Yaris"],
+    "Isuzu": ["NPR", "NQR", "D-Max", "Trooper"],
+    "Mercedes": ["Actros", "Sprinter", "Atego", "Axor"],
+    "Honda": ["Civic", "Accord", "CR-V", "CBR"],
+    "Nissan": ["Patrol", "Navara", "Urvan", "Almera"],
+    "Hyundai": ["Tucson", "Santa Fe", "H100", "i10"],
+    "Mitsubishi": ["L200", "Pajero", "Canter"],
+    "Ford": ["Ranger", "Transit", "Everest"],
+    "Volkswagen": ["Amarok", "Transporter"],
+    "Mazda": ["BT-50", "CX-5", "Demio"]
+  };
+  const vehicleTypes = ["Passenger Car", "Mini Bus", "Cargo Truck", "Motorcycle", "SUV", "Pickup"];
+  const inspectionTypes = ["Initial Inspection", "Retest", "Re-inspection"];
+  const statuses = ["Passed", "Failed", "Pending"];
+  const centers = ["Bole Center 01", "Adama Center", "Hawassa Center", "Bahir Dar Center", "Mekelle Center", "Dire Dawa Center"];
+  const inspectors = ["Abebe Kebede", "Sara Tesfaye", "Dawit Haile", "Meron Tadesse", "Kebede Haile", "Tigist Worku", "Yonas Alemayehu", "Betty Assefa"];
+  
+  const make = options.make || makes[Math.floor(Math.random() * makes.length)];
+  const model = options.model || models[make][Math.floor(Math.random() * models[make].length)];
+  const vehicleType = options.vehicleType || vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
+  const status = options.status || statuses[Math.floor(Math.random() * statuses.length)];
+  const inspectionType = options.type || inspectionTypes[Math.floor(Math.random() * inspectionTypes.length)];
+  const center = options.center || centers[Math.floor(Math.random() * centers.length)];
+  const inspector = options.inspector || inspectors[Math.floor(Math.random() * inspectors.length)];
+  
+  const platePrefix = ["ET", "1", "2", "3", "4", "5"];
+  const plate = `${platePrefix[Math.floor(Math.random() * platePrefix.length)]} ${Math.floor(Math.random() * 90000) + 10000}${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`;
+  const vin = `${Math.floor(Math.random() * 10)}HGBH41JXMN${Math.floor(Math.random() * 900000) + 100000}`;
+  
+  const ownerNames = [
+    "Alemayehu Bekele", "Sara Tesfaye", "Dawit Haile", "Meron Tadesse", "Kebede Haile",
+    "Tigist Worku", "Yonas Alemayehu", "Betty Assefa", "Getachew Mekonnen", "Hirut Assefa",
+    "Solomon Gebre", "Marta Tadesse", "Daniel Yohannes", "Eden Tesfaye", "Bereket Haile"
+  ];
+  const ownerName = ownerNames[Math.floor(Math.random() * ownerNames.length)];
+  const phone = `+2519${Math.floor(Math.random() * 90000000) + 10000000}`;
+  const idNumber = `ET-${Math.floor(Math.random() * 9000000000) + 1000000000}`;
+  
+  const inspectionDate = getRandomDate(daysAgo, daysAgo);
+  const cycleTime = Math.floor(Math.random() * 20) + 35; // 35-55 minutes
+  
+  // Generate machine results based on status
+  const brakeVal = status === "Passed" ? Math.floor(Math.random() * 20) + 65 : Math.floor(Math.random() * 20) + 40;
+  const emissionVal = status === "Passed" ? (Math.random() * 2 + 1).toFixed(1) : (Math.random() * 2 + 4).toFixed(1);
+  const suspensionVal = status === "Passed" ? Math.floor(Math.random() * 20) + 65 : Math.floor(Math.random() * 20) + 45;
+  
+  const machineResults = [
+    {
+      test: "Brakes",
+      val: `${brakeVal}%`,
+      status: brakeVal >= 60 ? "Pass" : "Fail",
+      timestamp: inspectionDate,
+    },
+    {
+      test: "Emissions",
+      val: `${emissionVal}%`,
+      status: parseFloat(emissionVal) <= 3.5 ? "Pass" : "Fail",
+      timestamp: inspectionDate,
+    },
+    {
+      test: "Suspension",
+      val: `${suspensionVal}%`,
+      status: suspensionVal >= 60 ? "Pass" : "Fail",
+      timestamp: inspectionDate,
+    },
+  ];
+  
+  if (vehicleType !== "Motorcycle") {
+    machineResults.push({
+      test: "Headlights",
+      val: "Pass",
+      status: status === "Passed" ? "Pass" : (Math.random() > 0.7 ? "Pass" : "Fail"),
+      timestamp: inspectionDate,
+    });
+  }
+  
+  const visualResults = [
+    { item: "Tires", status: status === "Passed" ? "Pass" : (Math.random() > 0.6 ? "Pass" : "Fail"), photoUrl: getInspectionPhoto("Tires") },
+    { item: "Windshield", status: status === "Passed" ? "Pass" : (Math.random() > 0.7 ? "Pass" : "Fail"), photoUrl: getInspectionPhoto("Windshield") },
+    { item: "Mirrors", status: status === "Passed" ? "Pass" : (Math.random() > 0.8 ? "Pass" : "Fail"), photoUrl: getInspectionPhoto("Mirrors") },
+    { item: "Lights", status: status === "Passed" ? "Pass" : (Math.random() > 0.7 ? "Pass" : "Fail"), photoUrl: getInspectionPhoto("Lights") },
+    { item: "Body Damage", status: status === "Passed" ? "Pass" : (Math.random() > 0.6 ? "Pass" : "Fail"), photoUrl: getInspectionPhoto("Body Damage") },
+  ];
+  
+  const centerLocations = {
+    "Bole Center 01": { lat: 8.9806, lng: 38.7578 },
+    "Adama Center": { lat: 8.5400, lng: 39.2700 },
+    "Hawassa Center": { lat: 7.0621, lng: 38.4764 },
+    "Bahir Dar Center": { lat: 11.6000, lng: 37.3833 },
+    "Mekelle Center": { lat: 13.4969, lng: 39.4769 },
+    "Dire Dawa Center": { lat: 9.6000, lng: 41.8667 }
+  };
+  
+  const amount = vehicleType === "Motorcycle" ? 150 : vehicleType === "Cargo Truck" ? 500 : 350;
+  const paymentStatus = Math.random() > 0.2 ? "Paid" : "Pending";
+  const syncStatus = paymentStatus === "Paid" ? "Synced" : "Pending";
+  
+  // Add video evidence for inspection center (50% chance)
+  const hasVideoEvidence = Math.random() > 0.5;
+  const videoEvidence = hasVideoEvidence ? {
+    url: "/Download.mp4",
+    type: "inspection_video",
+    timestamp: inspectionDate,
+    duration: Math.floor(Math.random() * 120) + 60, // 60-180 seconds
+    description: "Vehicle inspection process at center",
+  } : null;
+  
+  // Add evidence data with photos and videos
+  const evidence = {
+    evidence_completeness_status: "Complete",
+    entry_video: {
+      url: "/Download.mp4",
+      thumbnail: getInspectionPhoto("Tires"),
+      description: "Vehicle entering inspection center",
+      timestamp: inspectionDate,
+      duration: Math.floor(Math.random() * 30) + 30, // 30-60 seconds
+    },
+    inspection_photos: visualResults.map((result, idx) => ({
+      url: result.photoUrl,
+      item: result.item,
+      category: idx < 2 ? "visual_inspection" : idx < 4 ? "machine_test" : "inspection",
+      timestamp: inspectionDate,
+      description: `${result.item} inspection check`,
+    })),
+    evidence_items: [
+      { type: "Photo", item_id: "TIRES_001", required: true, provided: true },
+      { type: "Photo", item_id: "WINDSHIELD_001", required: true, provided: true },
+      { type: "Photo", item_id: "LIGHTS_001", required: true, provided: true },
+      { type: "Video", item_id: "ENTRY_VIDEO_001", required: true, provided: true },
+      { type: "Video", item_id: "INSPECTION_VIDEO_001", required: false, provided: hasVideoEvidence },
+    ],
+  };
+  
+  return {
+    id,
+    vehicle: {
+      plate,
+      vin,
+      make,
+      model,
+      type: vehicleType,
+      owner: {
+        name: ownerName,
+        phone,
+        idNumber,
+      },
+    },
+    status,
+    paymentStatus,
+    syncStatus,
+    type: inspectionType,
+    amount,
+    inspectionDate,
+    cycleTimeSeconds: cycleTime * 60,
+    machineResults,
+    visualResults,
+    videoEvidence,
+    evidence,
+    meta: {
+      inspectorName: inspector,
+      center,
+      geoFenceStatus: "Valid",
+      location: centerLocations[center] || { lat: 8.9806, lng: 38.7578 },
+    },
+  };
+};
+
+// Generate extensive inspection data distributed across time ranges
+const generateExtensiveInspections = () => {
+  const inspections = [];
+  let idCounter = 2025;
+  
+  // Today: ~15 inspections
+  for (let i = 0; i < 15; i++) {
+    inspections.push(generateInspection(`VIS-2025-${String(idCounter++).padStart(4, '0')}`, 0));
+  }
+  
+  // Last 7 days: ~60 inspections (distributed across days)
+  for (let day = 1; day <= 7; day++) {
+    const count = day <= 3 ? 10 : 8; // More recent days have more inspections
+    for (let i = 0; i < count; i++) {
+      inspections.push(generateInspection(`VIS-2025-${String(idCounter++).padStart(4, '0')}`, day));
+    }
+  }
+  
+  // Last 30 days (days 8-30): ~180 inspections
+  for (let day = 8; day <= 30; day++) {
+    const count = day <= 15 ? 8 : 6; // Gradually decreasing
+    for (let i = 0; i < count; i++) {
+      inspections.push(generateInspection(`VIS-2025-${String(idCounter++).padStart(4, '0')}`, day));
+    }
+  }
+  
+  // Older than 30 days: ~300 inspections (distributed across months)
+  for (let day = 31; day <= 180; day += Math.floor(Math.random() * 3) + 1) {
+    inspections.push(generateInspection(`VIS-2025-${String(idCounter++).padStart(4, '0')}`, day));
+  }
+  
+  // Even older: ~200 inspections (6-12 months ago)
+  for (let day = 181; day <= 365; day += Math.floor(Math.random() * 2) + 1) {
+    inspections.push(generateInspection(`VIS-2025-${String(idCounter++).padStart(4, '0')}`, day));
+  }
+  
+  return inspections;
+};
+
+// Generate extensive inspections
+const generatedInspections = generateExtensiveInspections();
+
+// Extended mock data for dashboard - combine existing with generated
 export const mockInspectionsExtended = [
   {
     id: "VIS-2025-0023",
@@ -22,60 +264,134 @@ export const mockInspectionsExtended = [
     syncStatus: "Synced",
     type: "Initial Inspection",
     amount: 350,
-    inspectionDate: "2025-11-26T09:45:00Z",
+    inspectionDate: getDateRelativeToToday(0, 2), // Today, 2 hours ago
+    cycleTimeSeconds: 42 * 60, // 42 minutes
     machineResults: [
       {
         test: "Brakes",
         val: "78%",
         status: "Pass",
-        timestamp: "2025-11-26T09:45:00Z",
+        timestamp: getDateRelativeToToday(0, 2),
       },
       {
         test: "Emissions",
         val: "2.1%",
         status: "Pass",
-        timestamp: "2025-11-26T09:47:00Z",
+        timestamp: getDateRelativeToToday(0, 2),
       },
       {
         test: "Suspension",
         val: "82%",
         status: "Pass",
-        timestamp: "2025-11-26T09:49:00Z",
+        timestamp: getDateRelativeToToday(0, 2),
       },
       {
         test: "Headlights",
         val: "Pass",
         status: "Pass",
-        timestamp: "2025-11-26T09:51:00Z",
+        timestamp: getDateRelativeToToday(0, 2),
       },
     ],
     visualResults: [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
+    videoEvidence: {
+      url: "/Download.mp4",
+      type: "inspection_video",
+      timestamp: getDateRelativeToToday(0, 2),
+      duration: 120,
+      description: "Vehicle inspection process at inspection center",
+    },
+    evidence: {
+      evidence_completeness_status: "Complete",
+      entry_video: {
+        url: "/Download.mp4",
+        thumbnail: "/vec1.jpg",
+        timestamp: getDateRelativeToToday(0, 2),
+        duration: 45,
+        description: "Vehicle entering inspection center",
+      },
+      inspection_photos: [
+        {
+          item: "Front View",
+          url: "/vec1.jpg",
+          category: "inspection",
+          timestamp: getDateRelativeToToday(0, 2),
+          description: "Front view of vehicle at inspection center",
+        },
+        {
+          item: "Side View",
+          url: "/vec2.jpg",
+          category: "inspection",
+          timestamp: getDateRelativeToToday(0, 2),
+          description: "Side view of vehicle",
+        },
+        {
+          item: "Brake Test",
+          url: "/vec3.jpg",
+          category: "machine_test",
+          timestamp: getDateRelativeToToday(0, 2),
+          description: "Brake test machine reading",
+        },
+        {
+          item: "Emission Test",
+          url: "/vec4.jpg",
+          category: "machine_test",
+          timestamp: getDateRelativeToToday(0, 2),
+          description: "Emission test in progress",
+        },
+      ],
+      evidence_items: [
+        {
+          type: "Photo",
+          item_id: "FRONT_VIEW",
+          required: true,
+          provided: true,
+        },
+        {
+          type: "Photo",
+          item_id: "SIDE_VIEW",
+          required: true,
+          provided: true,
+        },
+        {
+          type: "Video",
+          item_id: "ENTRY_VIDEO",
+          required: true,
+          provided: true,
+        },
+        {
+          type: "Document",
+          item_id: "OWNERSHIP",
+          required: true,
+          provided: true,
+        },
+      ],
+    },
     meta: {
       inspectorName: "Abebe Kebede",
       center: "Bole Center 01",
@@ -102,52 +418,53 @@ export const mockInspectionsExtended = [
     syncStatus: "Synced",
     type: "Re-inspection",
     amount: 350,
-    inspectionDate: "2025-11-26T09:12:00Z",
+    inspectionDate: getDateRelativeToToday(0, 4), // Today, 4 hours ago
+    cycleTimeSeconds: 38 * 60, // 38 minutes
     machineResults: [
       {
         test: "Brakes",
         val: "45%",
         status: "Fail",
-        timestamp: "2025-11-26T09:12:00Z",
+        timestamp: getDateRelativeToToday(0, 4),
       },
       {
         test: "Emissions",
         val: "4.8%",
         status: "Fail",
-        timestamp: "2025-11-26T09:14:00Z",
+        timestamp: getDateRelativeToToday(0, 4),
       },
       {
         test: "Suspension",
         val: "52%",
         status: "Pass",
-        timestamp: "2025-11-26T09:16:00Z",
+        timestamp: getDateRelativeToToday(0, 4),
       },
     ],
     visualResults: [
       {
         item: "Tires",
         status: "Fail",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Fail",
-        photoUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Fail",
-        photoUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
     meta: {
@@ -176,54 +493,108 @@ export const mockInspectionsExtended = [
     syncStatus: "Pending",
     type: "Initial Inspection",
     amount: 500,
-    inspectionDate: "2025-11-26T08:55:00Z",
+    inspectionDate: getDateRelativeToToday(0, 5), // Today, 5 hours ago
+    cycleTimeSeconds: 50 * 60, // 50 minutes
     machineResults: [
       {
         test: "Brakes",
         val: "68%",
         status: "Pass",
-        timestamp: "2025-11-26T08:55:00Z",
+        timestamp: getDateRelativeToToday(0, 5),
       },
       {
         test: "Emissions",
         val: "3.5%",
         status: "Pass",
-        timestamp: "2025-11-26T08:57:00Z",
+        timestamp: getDateRelativeToToday(0, 5),
       },
       {
         test: "Suspension",
         val: "75%",
         status: "Pass",
-        timestamp: "2025-11-26T08:59:00Z",
+        timestamp: getDateRelativeToToday(0, 5),
       },
     ],
     visualResults: [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
+    evidence: {
+      evidence_completeness_status: "Complete",
+      entry_video: {
+        url: "/Download.mp4",
+        thumbnail: "/vec3.jpg",
+        timestamp: getDateRelativeToToday(0, 5),
+        duration: 52,
+        description: "Vehicle entering inspection center",
+      },
+      inspection_photos: [
+        {
+          item: "Front View",
+          url: "/vec3.jpg",
+          category: "inspection",
+          timestamp: getDateRelativeToToday(0, 5),
+          description: "Front view of vehicle",
+        },
+        {
+          item: "Rear View",
+          url: "/vec4.jpg",
+          category: "inspection",
+          timestamp: getDateRelativeToToday(0, 5),
+          description: "Rear view of vehicle",
+        },
+        {
+          item: "Suspension Test",
+          url: "/vec5.jpeg",
+          category: "machine_test",
+          timestamp: getDateRelativeToToday(0, 5),
+          description: "Suspension test machine",
+        },
+      ],
+      evidence_items: [
+        {
+          type: "Photo",
+          item_id: "FRONT_VIEW",
+          required: true,
+          provided: true,
+        },
+        {
+          type: "Photo",
+          item_id: "REAR_VIEW",
+          required: true,
+          provided: true,
+        },
+        {
+          type: "Video",
+          item_id: "ENTRY_VIDEO",
+          required: true,
+          provided: true,
+        },
+      ],
+    },
     meta: {
       inspectorName: "Abebe Kebede",
       center: "Bole Center 01",
@@ -250,54 +621,95 @@ export const mockInspectionsExtended = [
     syncStatus: "Synced",
     type: "Initial Inspection",
     amount: 350,
-    inspectionDate: "2025-11-25T16:30:00Z",
+    inspectionDate: getDateRelativeToToday(1, 0), // Yesterday
+    cycleTimeSeconds: 45 * 60, // 45 minutes
     machineResults: [
       {
         test: "Brakes",
         val: "72%",
         status: "Pass",
-        timestamp: "2025-11-25T16:30:00Z",
+        timestamp: getDateRelativeToToday(1, 0),
       },
       {
         test: "Emissions",
         val: "2.8%",
         status: "Pass",
-        timestamp: "2025-11-25T16:32:00Z",
+        timestamp: getDateRelativeToToday(1, 0),
       },
       {
         test: "Suspension",
         val: "80%",
         status: "Pass",
-        timestamp: "2025-11-25T16:34:00Z",
+        timestamp: getDateRelativeToToday(1, 0),
       },
     ],
     visualResults: [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
+    evidence: {
+      evidence_completeness_status: "Complete",
+      entry_video: {
+        url: "/Download.mp4",
+        thumbnail: "/vec6.webp",
+        timestamp: getDateRelativeToToday(1, 0),
+        duration: 48,
+        description: "Vehicle entering inspection center",
+      },
+      inspection_photos: [
+        {
+          item: "Front View",
+          url: "/vec6.webp",
+          category: "inspection",
+          timestamp: getDateRelativeToToday(1, 0),
+          description: "Front view of vehicle",
+        },
+        {
+          item: "Headlight Test",
+          url: "/vec8.jpg",
+          category: "machine_test",
+          timestamp: getDateRelativeToToday(1, 0),
+          description: "Headlight alignment test",
+        },
+      ],
+      evidence_items: [
+        {
+          type: "Photo",
+          item_id: "FRONT_VIEW",
+          required: true,
+          provided: true,
+        },
+        {
+          type: "Video",
+          item_id: "ENTRY_VIDEO",
+          required: true,
+          provided: true,
+        },
+      ],
+    },
     meta: {
       inspectorName: "Dawit Haile",
       center: "Hawassa Center",
@@ -324,46 +736,47 @@ export const mockInspectionsExtended = [
     syncStatus: "Synced",
     type: "Initial Inspection",
     amount: 150,
-    inspectionDate: "2025-11-25T15:20:00Z",
+    inspectionDate: getDateRelativeToToday(2, 0), // 2 days ago
+    cycleTimeSeconds: 48 * 60, // 48 minutes
     machineResults: [
       {
         test: "Brakes",
         val: "65%",
         status: "Pass",
-        timestamp: "2025-11-25T15:20:00Z",
+        timestamp: getDateRelativeToToday(2, 0),
       },
       {
         test: "Emissions",
         val: "1.8%",
         status: "Pass",
-        timestamp: "2025-11-25T15:22:00Z",
+        timestamp: getDateRelativeToToday(2, 0),
       },
     ],
     visualResults: [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
     meta: {
@@ -373,6 +786,8 @@ export const mockInspectionsExtended = [
       location: { lat: 8.5400, lng: 39.2700 },
     },
   },
+  // Add all generated inspections
+  ...generatedInspections,
 ];
 
 export const mockInspections = [
@@ -422,27 +837,27 @@ export const mockInspections = [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Fail",
-        photoUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Fail",
-        photoUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
     meta: {
@@ -496,27 +911,27 @@ export const mockInspections = [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: null,
+        photoUrl: getInspectionPhoto("Tires"),
       },
       {
         item: "Windshield",
         status: "Pass",
-        photoUrl: null,
+        photoUrl: getInspectionPhoto("Windshield"),
       },
       {
         item: "Mirrors",
         status: "Pass",
-        photoUrl: null,
+        photoUrl: getInspectionPhoto("Mirrors"),
       },
       {
         item: "Lights",
         status: "Pass",
-        photoUrl: null,
+        photoUrl: getInspectionPhoto("Lights"),
       },
       {
         item: "Body Damage",
         status: "Pass",
-        photoUrl: null,
+        photoUrl: getInspectionPhoto("Body Damage"),
       },
     ],
     meta: {
@@ -564,7 +979,7 @@ export const mockInspections = [
       {
         item: "Tires",
         status: "Pass",
-        photoUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        photoUrl: getInspectionPhoto("Tires"),
       },
     ],
     meta: {

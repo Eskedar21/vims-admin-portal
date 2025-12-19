@@ -33,7 +33,13 @@ export const mockCenters = [
 export const mockUser = {
   id: "admin-001",
   name: "Super Admin",
+  email: "admin@rsifs.gov.et",
   role: "Super Administrator", // Can be "Super Administrator", "Regional Admin", "Inspector", or "Viewer"
+  scopeType: "National", // National, Regional, Center
+  scopeValue: null, // Region name or Center ID/name
+  lastLoginAt: new Date().toISOString(),
+  timezone: "Africa/Addis_Ababa",
+  language: "EN", // EN or AM
 };
 
 

@@ -1,9 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Activity, Car, Building2, FileText, Settings, Shield, Users } from "lucide-react";
+import { LayoutDashboard, Car, Building2, FileText, Settings, Shield, Users } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/system-monitoring", label: "System Monitoring", icon: Activity },
   { to: "/inspection-operations", label: "Inspection Operations", icon: Car },
   { to: "/center-management", label: "Center Management", icon: Building2 },
   { to: "/reports", label: "Reports & Analytics", icon: FileText },
