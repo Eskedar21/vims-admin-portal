@@ -7,9 +7,39 @@ export const ROLES = {
   ADMIN: 'admin',
   SUPER_ADMIN: 'superAdmin',
   SYSTEM_ADMIN: 'systemAdmin',
+  SECURITY_ADMIN: 'securityAdmin',
+  AUDIT_ADMIN: 'auditAdmin',
+  REGIONAL_ADMIN: 'regionalAdmin',
+  ZONE_ADMIN: 'zoneAdmin',
+  CENTER_MANAGER: 'centerManager',
+  INSPECTOR: 'inspector',
+  RECEPTIONIST: 'receptionist',
+  VIEWER: 'viewer',
+  ENFORCEMENT_AGENT: 'enforcementAgent',
 };
 
+// Map role IDs to navigation roles
+export function mapRoleIdToNavRole(roleId) {
+  const roleMap = {
+    'superAdmin': ROLES.SUPER_ADMIN,
+    'securityAdmin': ROLES.SUPER_ADMIN, // Security admin has similar access
+    'auditAdmin': ROLES.SUPER_ADMIN, // Audit admin has similar access
+    'regionalAdmin': ROLES.REGIONAL_ADMIN,
+    'zoneAdmin': ROLES.REGIONAL_ADMIN,
+    'centerManager': ROLES.ADMIN,
+    'inspector': ROLES.ADMIN,
+    'receptionist': ROLES.ADMIN,
+    'viewer': ROLES.VIEWER,
+    'enforcementAgent': ROLES.ADMIN,
+  };
+  return roleMap[roleId] || ROLES.ADMIN;
+}
+
+// Define which roles can access which sections
 const ALL_ROLES = Object.values(ROLES);
+const ADMIN_ROLES = [ROLES.SUPER_ADMIN, ROLES.SECURITY_ADMIN, ROLES.AUDIT_ADMIN, ROLES.ADMIN];
+const VIEWER_ROLES = [ROLES.VIEWER];
+const OPERATIONAL_ROLES = [ROLES.REGIONAL_ADMIN, ROLES.ZONE_ADMIN, ROLES.CENTER_MANAGER, ROLES.INSPECTOR, ROLES.RECEPTIONIST];
 
 export const PRIMARY_TOP_NAV = [
   {
@@ -24,7 +54,7 @@ export const PRIMARY_TOP_NAV = [
     label: 'Operations Command Center',
     icon: 'activity',
     route: '/operations',
-    roles: ALL_ROLES,
+    roles: [...ADMIN_ROLES, ...OPERATIONAL_ROLES],
   },
   {
     id: 'inspection-operations',
@@ -38,7 +68,7 @@ export const PRIMARY_TOP_NAV = [
     label: 'Center Management',
     icon: 'building',
     route: '/center-management',
-    roles: ALL_ROLES,
+    roles: [...ADMIN_ROLES, ...OPERATIONAL_ROLES],
   },
   {
     id: 'reports',
@@ -52,11 +82,11 @@ export const PRIMARY_TOP_NAV = [
     label: 'Configuration',
     icon: 'settings',
     route: '/configuration',
-    roles: ALL_ROLES,
+    roles: ADMIN_ROLES, // Only admins can configure
     children: [
-      { id: 'config.standards', label: 'Test Standards', route: '/configuration', roles: ALL_ROLES },
-      { id: 'config.checklists', label: 'Visual Checklists', route: '/configuration/visual-checklists', roles: ALL_ROLES },
-      { id: 'config.fees', label: 'Fee & Payment', route: '/configuration/fee-structure', roles: ALL_ROLES },
+      { id: 'config.standards', label: 'Test Standards', route: '/configuration', roles: ADMIN_ROLES },
+      { id: 'config.checklists', label: 'Visual Checklists', route: '/configuration/visual-checklists', roles: ADMIN_ROLES },
+      { id: 'config.fees', label: 'Fee & Payment', route: '/configuration/fee-structure', roles: ADMIN_ROLES },
     ],
   },
   {
@@ -64,21 +94,21 @@ export const PRIMARY_TOP_NAV = [
     label: 'Governance',
     icon: 'building',
     route: '/governance',
-    roles: ALL_ROLES,
+    roles: ADMIN_ROLES, // Only admins can manage governance
   },
   {
     id: 'admin',
     label: 'Administration',
     icon: 'users',
     route: '/administration',
-    roles: ALL_ROLES,
+    roles: ADMIN_ROLES, // Only admins can manage users
   },
   {
     id: 'security',
     label: 'Security',
     icon: 'shield-check',
     route: '/security',
-    roles: ALL_ROLES,
+    roles: [...ADMIN_ROLES, ROLES.AUDIT_ADMIN], // Admins and audit admins
   },
 ];
 

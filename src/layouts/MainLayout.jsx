@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getNavForRole, ROLES } from '../config/navConfig';
+import { getNavForRole, ROLES, mapRoleIdToNavRole } from '../config/navConfig';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
 
@@ -102,14 +102,15 @@ const SyncBadge = ({ status }) => {
 function MainLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, logout: handleLogout } = useAuth();
   const { notifications, unreadCount, markAllAsRead } = useNotifications();
-  const [userRole] = useState(ROLES.ADMIN);
   const [syncStatus] = useState('online');
   const [showNotifications, setShowNotifications] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState({});
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
+  // Get user role from user object and map to navigation role
+  const userRole = user?.roleId ? mapRoleIdToNavRole(user.roleId) : ROLES.ADMIN;
   const navItems = getNavForRole(userRole);
 
   // Keyboard shortcuts
@@ -251,8 +252,8 @@ function MainLayout({ children }) {
           <button
             type="button"
             onClick={() => {
-              // Handle logout
-              console.log('Logout');
+              handleLogout();
+              navigate('/login');
             }}
             className={`mt-3 w-full flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 rounded-lg border border-red-200 hover:bg-red-50 transition ${
               sidebarCollapsed ? 'justify-center' : ''
