@@ -75,7 +75,7 @@ function Reconciliation() {
         </div>
         <button
           onClick={handleGenerate}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Calendar className="h-5 w-5" />
           Generate Report
@@ -90,7 +90,7 @@ function Reconciliation() {
             <select
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="today">Today</option>
               <option value="7d">Last 7 Days</option>
@@ -102,7 +102,7 @@ function Reconciliation() {
             <select
               value={centerFilter}
               onChange={(e) => setCenterFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Centers</option>
               {mockCentersFull.map(center => (
@@ -299,7 +299,7 @@ function Reconciliation() {
                     value={approvalNotes}
                     onChange={(e) => setApprovalNotes(e.target.value)}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     placeholder="Enter approval notes (required if variance exists)..."
                   />
                 </div>

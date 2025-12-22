@@ -123,7 +123,7 @@ function ChecklistLibrary() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Item
@@ -151,7 +151,7 @@ function ChecklistLibrary() {
             <select
               value={vehicleClassFilter}
               onChange={(e) => setVehicleClassFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Classes</option>
               {mockVehicleClasses.map(vc => (
@@ -166,7 +166,7 @@ function ChecklistLibrary() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Categories</option>
               {CATEGORIES.map(cat => (
@@ -299,7 +299,7 @@ function ChecklistLibrary() {
                 <select
                   value={formData.vehicle_class_id}
                   onChange={(e) => setFormData({ ...formData, vehicle_class_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select vehicle class...</option>
                   {mockVehicleClasses.map(vc => (
@@ -317,7 +317,7 @@ function ChecklistLibrary() {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {CATEGORIES.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -334,7 +334,7 @@ function ChecklistLibrary() {
                     type="text"
                     value={formData.item_label_en}
                     onChange={(e) => setFormData({ ...formData, item_label_en: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -345,7 +345,7 @@ function ChecklistLibrary() {
                     type="text"
                     value={formData.item_label_am}
                     onChange={(e) => setFormData({ ...formData, item_label_am: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -359,7 +359,7 @@ function ChecklistLibrary() {
                     type="text"
                     value={formData.fail_code}
                     onChange={(e) => setFormData({ ...formData, fail_code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     placeholder="EXT-WS-FAIL"
                   />
                 </div>
@@ -370,7 +370,7 @@ function ChecklistLibrary() {
                   <select
                     value={formData.severity_on_fail}
                     onChange={(e) => setFormData({ ...formData, severity_on_fail: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {SEVERITY_LEVELS.map(severity => (
                       <option key={severity} value={severity}>{severity}</option>
@@ -388,7 +388,7 @@ function ChecklistLibrary() {
                     type="number"
                     value={formData.sort_order}
                     onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) || 1 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -398,7 +398,7 @@ function ChecklistLibrary() {
                   <select
                     value={formData.approval_status}
                     onChange={(e) => setFormData({ ...formData, approval_status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {APPROVAL_STATUSES.map(status => (
                       <option key={status} value={status}>{status}</option>
@@ -413,7 +413,7 @@ function ChecklistLibrary() {
                     type="checkbox"
                     checked={formData.photo_required_on_fail}
                     onChange={(e) => setFormData({ ...formData, photo_required_on_fail: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Photo Required on Fail</span>
                 </label>
@@ -435,7 +435,7 @@ function ChecklistLibrary() {
               </button>
               <button
                 onClick={editingItem ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingItem ? 'Update' : 'Create'}
               </button>
@@ -448,6 +448,12 @@ function ChecklistLibrary() {
 }
 
 export default ChecklistLibrary;
+
+
+
+
+
+
 
 
 

@@ -109,7 +109,7 @@ function TeleBirrSetup() {
               });
               setShowCreateModal(true);
             }}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
           >
             <CreditCard className="h-5 w-5" />
             Setup TeleBirr
@@ -192,7 +192,7 @@ function TeleBirrSetup() {
               });
               setShowCreateModal(true);
             }}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
           >
             Setup TeleBirr Merchant
           </button>
@@ -222,7 +222,7 @@ function TeleBirrSetup() {
                   type="text"
                   value={formData.merchant_id}
                   onChange={(e) => setFormData({ ...formData, merchant_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -234,7 +234,7 @@ function TeleBirrSetup() {
                   type="text"
                   value={formData.merchant_code}
                   onChange={(e) => setFormData({ ...formData, merchant_code: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -246,7 +246,7 @@ function TeleBirrSetup() {
                   type="text"
                   value={formData.merchant_name}
                   onChange={(e) => setFormData({ ...formData, merchant_name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -258,7 +258,7 @@ function TeleBirrSetup() {
                   type="text"
                   value={formData.terminal_id}
                   onChange={(e) => setFormData({ ...formData, terminal_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -269,7 +269,7 @@ function TeleBirrSetup() {
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="Pending">Pending</option>
                   <option value="Active">Active</option>
@@ -289,7 +289,7 @@ function TeleBirrSetup() {
               </button>
               <button
                 onClick={handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Save Configuration
               </button>
@@ -302,6 +302,12 @@ function TeleBirrSetup() {
 }
 
 export default TeleBirrSetup;
+
+
+
+
+
+
 
 
 

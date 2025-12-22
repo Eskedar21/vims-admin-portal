@@ -108,7 +108,7 @@ function FeeStructure() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Fee Schedule
@@ -248,7 +248,7 @@ function FeeStructure() {
                 <select
                   value={formData.inspection_type_id}
                   onChange={(e) => setFormData({ ...formData, inspection_type_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select inspection type...</option>
                   {mockInspectionTypes.filter(t => t.enabled).map(type => (
@@ -266,7 +266,7 @@ function FeeStructure() {
                 <select
                   value={formData.vehicle_class_id}
                   onChange={(e) => setFormData({ ...formData, vehicle_class_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select vehicle class...</option>
                   {mockVehicleClasses.map(vc => (
@@ -287,7 +287,7 @@ function FeeStructure() {
                     step="0.01"
                     value={formData.base_fee_amount}
                     onChange={(e) => setFormData({ ...formData, base_fee_amount: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -297,7 +297,7 @@ function FeeStructure() {
                   <select
                     value={formData.currency}
                     onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="ETB">ETB</option>
                     <option value="USD">USD</option>
@@ -314,7 +314,7 @@ function FeeStructure() {
                     type="date"
                     value={formData.effective_from}
                     onChange={(e) => setFormData({ ...formData, effective_from: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -324,7 +324,7 @@ function FeeStructure() {
                   <select
                     value={formData.approval_status}
                     onChange={(e) => setFormData({ ...formData, approval_status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {APPROVAL_STATUSES.map(status => (
                       <option key={status} value={status}>{status}</option>
@@ -341,7 +341,7 @@ function FeeStructure() {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Additional notes about this fee schedule..."
                 />
               </div>
@@ -359,7 +359,7 @@ function FeeStructure() {
               </button>
               <button
                 onClick={editingSchedule ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingSchedule ? 'Update' : 'Create'}
               </button>

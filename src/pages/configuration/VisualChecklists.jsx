@@ -145,7 +145,7 @@ function VisualChecklists() {
                   onClick={() => handleClassChange(vehicleClass.class)}
                   className={`w-full px-4 py-3 text-left transition-colors ${
                     selectedClass === vehicleClass.class
-                      ? "bg-[#005f40] text-white"
+                      ? "bg-[#88bf47] text-white"
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -213,7 +213,7 @@ function VisualChecklists() {
                                       <div
                                         className={`w-11 h-6 rounded-full transition-colors ${
                                           item.photoRequiredOnFail
-                                            ? "bg-[#005f40]"
+                                            ? "bg-[#88bf47]"
                                             : "bg-[#fcd34d]"
                                         }`}
                                       >
@@ -262,11 +262,11 @@ function VisualChecklists() {
                                   handleAddItem(category.name);
                                 }
                               }}
-                              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                             />
                             <button
                               onClick={() => handleAddItem(category.name)}
-                              className="inline-flex items-center gap-2 rounded-lg bg-[#005f40] text-white text-sm font-medium px-4 py-2 hover:bg-[#004d33] transition-colors shadow-sm"
+                              className="inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white text-sm font-medium px-4 py-2 hover:bg-[#0fa84a] transition-colors shadow-sm"
                             >
                               <Plus className="h-4 w-4" />
                               Add Item

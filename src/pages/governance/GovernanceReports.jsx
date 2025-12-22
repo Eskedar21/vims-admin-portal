@@ -118,14 +118,14 @@ function GovernanceReports() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by name, code, type, or status..."
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
           </div>
           <select
             value={searchType}
             onChange={(e) => setSearchType(e.target.value)}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
           >
             <option value="all">All Types</option>
             <option value="units">Admin Units</option>
@@ -205,7 +205,7 @@ function GovernanceReports() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-gray-900">{report.count}</span>
-                  <button className="text-xs text-[#009639] hover:underline flex items-center gap-1">
+                  <button className="text-xs text-[#88bf47] hover:underline flex items-center gap-1">
                     View Details
                     <FileText className="h-3 w-3" />
                   </button>
@@ -242,7 +242,7 @@ function GovernanceReports() {
                         setExportReason('');
                         setSelectedReport(null);
                       }}
-                      className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2 text-sm"
+                      className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2 text-sm"
                     >
                       <Download className="h-4 w-4" />
                       Export
@@ -290,12 +290,12 @@ function GovernanceReports() {
                     value={exportReason}
                     onChange={(e) => setExportReason(e.target.value)}
                     placeholder="Export reason (required)..."
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                   <button
                     onClick={() => handleExport(selectedReport.id)}
                     disabled={!exportReason.trim()}
-                    className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <Download className="h-4 w-4" />
                     Export

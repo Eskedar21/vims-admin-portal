@@ -110,7 +110,7 @@ function GeofenceConfiguration() {
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
           >
             <MapPin className="h-5 w-5" />
             Edit Geofence
@@ -170,7 +170,7 @@ function GeofenceConfiguration() {
                       value={formData.geofence_type}
                       onChange={(e) => setFormData({ ...formData, geofence_type: e.target.value })}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639] disabled:bg-gray-100"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47] disabled:bg-gray-100"
                     >
                       <option value="Radius">Radius</option>
                       <option value="Polygon" disabled>Polygon (Future)</option>
@@ -188,7 +188,7 @@ function GeofenceConfiguration() {
                         value={formData.center_lat}
                         onChange={(e) => setFormData({ ...formData, center_lat: parseFloat(e.target.value) || 0 })}
                         disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639] disabled:bg-gray-100"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47] disabled:bg-gray-100"
                       />
                     </div>
                     <div>
@@ -201,7 +201,7 @@ function GeofenceConfiguration() {
                         value={formData.center_lon}
                         onChange={(e) => setFormData({ ...formData, center_lon: parseFloat(e.target.value) || 0 })}
                         disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639] disabled:bg-gray-100"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47] disabled:bg-gray-100"
                       />
                     </div>
                   </div>
@@ -223,7 +223,7 @@ function GeofenceConfiguration() {
                         });
                       }}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639] disabled:bg-gray-100"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47] disabled:bg-gray-100"
                     />
                     <p className="text-xs text-gray-500 mt-1">
                       Default radius is 50m. Yellow threshold is automatically set to 2x radius (100m).
@@ -280,7 +280,7 @@ function GeofenceConfiguration() {
                   </button>
                   <button
                     onClick={handleSave}
-                    className="flex-1 px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center justify-center gap-2"
                   >
                     <Save className="h-4 w-4" />
                     Save Geofence

@@ -313,7 +313,7 @@ function MapPickerWithDrawing({
           {!isDrawing ? (
             <button
               onClick={handleStartDrawing}
-              className="bg-[#005f40] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#004d33] shadow-lg"
+              className="bg-[#88bf47] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#0fa84a] shadow-lg"
             >
               Start Drawing
             </button>

@@ -293,7 +293,7 @@ function CenterList() {
                       required
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter center name"
                     />
                   </div>
@@ -306,7 +306,7 @@ function CenterList() {
                       required
                       value={form.region}
                       onChange={(e) => setForm({ ...form, region: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                     >
                       <option value="">Select region</option>
                       {REGIONS.map((region) => (
@@ -325,7 +325,7 @@ function CenterList() {
                       required
                       value={form.status}
                       onChange={(e) => setForm({ ...form, status: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                     >
                       <option value="Online">Online</option>
                       <option value="Offline">Offline</option>
@@ -344,7 +344,7 @@ function CenterList() {
                         step="50"
                         value={form.radius}
                         onChange={(e) => setForm({ ...form, radius: Number(e.target.value) })}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#005f40]"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#88bf47]"
                       />
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray-500">100 m</span>
@@ -369,7 +369,7 @@ function CenterList() {
                       required
                       value={form.tin}
                       onChange={(e) => setForm({ ...form, tin: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter TIN"
                     />
                   </div>
@@ -382,7 +382,7 @@ function CenterList() {
                       type="text"
                       value={form.vat}
                       onChange={(e) => setForm({ ...form, vat: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter VAT number"
                     />
                   </div>
@@ -396,7 +396,7 @@ function CenterList() {
                       required
                       value={form.principalRegistrationNo}
                       onChange={(e) => setForm({ ...form, principalRegistrationNo: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter principal registration number"
                     />
                   </div>
@@ -410,7 +410,7 @@ function CenterList() {
                       required
                       value={form.businessLicenseNo}
                       onChange={(e) => setForm({ ...form, businessLicenseNo: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter business license number"
                     />
                   </div>
@@ -424,7 +424,7 @@ function CenterList() {
                       required
                       value={form.businessLicenseDateOfIssuance}
                       onChange={(e) => setForm({ ...form, businessLicenseDateOfIssuance: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                     />
                   </div>
 
@@ -437,7 +437,7 @@ function CenterList() {
                       required
                       value={form.placeOfIssue}
                       onChange={(e) => setForm({ ...form, placeOfIssue: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter place of issue"
                     />
                   </div>
@@ -451,7 +451,7 @@ function CenterList() {
                       required
                       value={form.dateOfIssue}
                       onChange={(e) => setForm({ ...form, dateOfIssue: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                     />
                   </div>
 
@@ -463,7 +463,7 @@ function CenterList() {
                       value={form.commercialRegistrationProcedure}
                       onChange={(e) => setForm({ ...form, commercialRegistrationProcedure: e.target.value })}
                       rows={3}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter commercial registration and business license procedure details"
                     />
                   </div>
@@ -483,7 +483,7 @@ function CenterList() {
                       required
                       value={form.ownerCompanyName}
                       onChange={(e) => setForm({ ...form, ownerCompanyName: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter owner or company name"
                     />
                   </div>
@@ -497,7 +497,7 @@ function CenterList() {
                       required
                       value={form.nationality}
                       onChange={(e) => setForm({ ...form, nationality: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter nationality"
                     />
                   </div>
@@ -510,7 +510,7 @@ function CenterList() {
                       type="text"
                       value={form.tradeName}
                       onChange={(e) => setForm({ ...form, tradeName: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter trade name"
                     />
                   </div>
@@ -524,7 +524,7 @@ function CenterList() {
                       required
                       value={form.generalManagerName}
                       onChange={(e) => setForm({ ...form, generalManagerName: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter general manager name"
                     />
                   </div>
@@ -544,7 +544,7 @@ function CenterList() {
                       required
                       value={form.zoneSubCity}
                       onChange={(e) => setForm({ ...form, zoneSubCity: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter zone or sub city"
                     />
                   </div>
@@ -558,7 +558,7 @@ function CenterList() {
                       required
                       value={form.woreda}
                       onChange={(e) => setForm({ ...form, woreda: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter woreda"
                     />
                   </div>
@@ -572,7 +572,7 @@ function CenterList() {
                       required
                       value={form.kebele}
                       onChange={(e) => setForm({ ...form, kebele: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter kebele"
                     />
                   </div>
@@ -586,7 +586,7 @@ function CenterList() {
                       required
                       value={form.houseNo}
                       onChange={(e) => setForm({ ...form, houseNo: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter house number"
                     />
                   </div>
@@ -606,7 +606,7 @@ function CenterList() {
                       required
                       value={form.telephone}
                       onChange={(e) => setForm({ ...form, telephone: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter telephone number"
                     />
                   </div>
@@ -619,7 +619,7 @@ function CenterList() {
                       type="text"
                       value={form.fax}
                       onChange={(e) => setForm({ ...form, fax: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter fax number"
                     />
                   </div>
@@ -633,7 +633,7 @@ function CenterList() {
                       required
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter email address"
                     />
                   </div>
@@ -653,7 +653,7 @@ function CenterList() {
                       required
                       value={form.fieldOfBusiness}
                       onChange={(e) => setForm({ ...form, fieldOfBusiness: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter field of business"
                     />
                   </div>
@@ -669,7 +669,7 @@ function CenterList() {
                       step="0.01"
                       value={form.capitalInETB}
                       onChange={(e) => setForm({ ...form, capitalInETB: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter capital in ETB"
                     />
                   </div>
@@ -688,7 +688,7 @@ function CenterList() {
                       type="text"
                       value={form.telebirrNumber}
                       onChange={(e) => setForm({ ...form, telebirrNumber: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter Telebirr number"
                     />
                   </div>
@@ -701,7 +701,7 @@ function CenterList() {
                       type="text"
                       value={form.cameraConfiguration}
                       onChange={(e) => setForm({ ...form, cameraConfiguration: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter camera configuration details"
                     />
                   </div>
@@ -740,7 +740,7 @@ function CenterList() {
                       required
                       value={form.lat}
                       onChange={(e) => setForm({ ...form, lat: Number(e.target.value) })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter latitude"
                     />
                   </div>
@@ -754,7 +754,7 @@ function CenterList() {
                       required
                       value={form.lng}
                       onChange={(e) => setForm({ ...form, lng: Number(e.target.value) })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter longitude"
                     />
                   </div>

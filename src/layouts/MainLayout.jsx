@@ -170,14 +170,14 @@ function MainLayout({ children }) {
           >
             {!sidebarCollapsed && (
               <div className="flex flex-col leading-tight">
-                <span className="text-xl font-bold tracking-tight text-[#009639]">VIS</span>
+                <span className="text-xl font-bold tracking-tight text-[#88bf47]">VIS</span>
                 <span className="text-[9px] text-gray-500 -mt-0.5">
-                  powered by <span className="font-semibold text-[#007A2F]">Ethiotelecom</span>
+                  powered by <span className="font-semibold text-[#0fa84a]">Ethiotelecom</span>
                 </span>
               </div>
             )}
             {sidebarCollapsed && (
-              <span className="text-xl font-bold text-[#009639]">V</span>
+              <span className="text-xl font-bold text-[#88bf47]">V</span>
             )}
           </button>
           <button
@@ -231,7 +231,7 @@ function MainLayout({ children }) {
                   }}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                     isActive && !hasChildren
-                      ? 'bg-[#009639] text-white'
+                      ? 'bg-[#88bf47] text-white'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                   title={sidebarCollapsed ? item.label : ''}
@@ -274,7 +274,7 @@ function MainLayout({ children }) {
                           onClick={() => navigate(child.route)}
                           className={`w-full text-left px-3 py-2 text-sm rounded-lg transition ${
                             isChildActive
-                              ? 'bg-[#009639]/10 text-[#009639] font-medium'
+                              ? 'bg-[#88bf47]/10 text-[#88bf47] font-medium'
                               : 'text-gray-600 hover:bg-gray-50'
                           }`}
                         >
@@ -369,7 +369,7 @@ function MainLayout({ children }) {
 
             {/* User Profile */}
             <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-              <div className="w-8 h-8 rounded-full bg-[#009639]/10 flex items-center justify-center text-[#009639]">
+              <div className="w-8 h-8 rounded-full bg-[#88bf47]/10 flex items-center justify-center text-[#88bf47]">
                 {ICONS.user}
               </div>
               <div className="text-left">

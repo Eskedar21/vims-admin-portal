@@ -236,7 +236,7 @@ function InspectionOperations() {
           <title>Inspection ${inspection.id}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
-            h1 { color: #005f40; }
+            h1 { color: #88bf47; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
             th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
@@ -339,7 +339,7 @@ function InspectionOperations() {
                 placeholder="Search by plate, VIN, or owner name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
               />
             </div>
           </div>
@@ -349,7 +349,7 @@ function InspectionOperations() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
             >
               <option value="all">All Status</option>
               <option value="Passed">Passed</option>
@@ -363,7 +363,7 @@ function InspectionOperations() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
             >
               <option value="all">All Types</option>
               <option value="Initial">Initial</option>
@@ -381,7 +381,7 @@ function InspectionOperations() {
             <select
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+              className="px-3 py-1.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
             >
               <option value="all">All Time</option>
               <option value="today">Today</option>
@@ -429,7 +429,7 @@ function InspectionOperations() {
             <button
               onClick={handleExport}
               disabled={filteredInspections.length === 0}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#005f40] text-white text-sm font-medium px-4 py-2 hover:bg-[#004d33] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white text-sm font-medium px-4 py-2 hover:bg-[#0fa84a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               title="Export inspections to CSV"
             >
               <Download className="h-4 w-4" />
@@ -530,7 +530,7 @@ function InspectionOperations() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => navigate(`/inspections/${inspection.id}`)}
-                          className="p-2 text-[#005f40] hover:bg-green-50 rounded-lg transition-colors"
+                          className="p-2 text-[#88bf47] hover:bg-green-50 rounded-lg transition-colors"
                           title="View Details"
                         >
                           <Eye className="h-4 w-4" />
@@ -583,7 +583,7 @@ function InspectionOperations() {
                       onClick={() => setCurrentPage(pageNum)}
                       className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                         currentPage === pageNum
-                          ? 'bg-[#005f40] text-white'
+                          ? 'bg-[#88bf47] text-white'
                           : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
                       }`}
                     >

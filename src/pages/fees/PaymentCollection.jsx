@@ -144,14 +144,14 @@ function PaymentCollection() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by inspection ID, plate, or receipt number..."
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             />
           </div>
           <div>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Status</option>
               {PAYMENT_STATUSES.map(status => (
@@ -230,7 +230,7 @@ function PaymentCollection() {
                       {payment.payment_status === 'Unpaid' && (
                         <button
                           onClick={() => setSelectedPayment(payment)}
-                          className="px-3 py-1.5 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition text-xs"
+                          className="px-3 py-1.5 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition text-xs"
                         >
                           Collect Payment
                         </button>
@@ -271,7 +271,7 @@ function PaymentCollection() {
                 <select
                   value={paymentForm.payment_method}
                   onChange={(e) => setPaymentForm({ ...paymentForm, payment_method: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {PAYMENT_METHODS.map(method => (
                     <option key={method} value={method}>{method}</option>
@@ -288,7 +288,7 @@ function PaymentCollection() {
                   step="0.01"
                   value={paymentForm.amount_paid}
                   onChange={(e) => setPaymentForm({ ...paymentForm, amount_paid: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder={selectedPayment.amount_due.toString()}
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -305,7 +305,7 @@ function PaymentCollection() {
                     type="text"
                     value={paymentForm.provider_txn_id}
                     onChange={(e) => setPaymentForm({ ...paymentForm, provider_txn_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     placeholder="TeleBirr transaction ID"
                   />
                 </div>
@@ -331,7 +331,7 @@ function PaymentCollection() {
               </button>
               <button
                 onClick={() => handleCollectPayment(selectedPayment)}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Confirm Payment
               </button>
@@ -344,6 +344,12 @@ function PaymentCollection() {
 }
 
 export default PaymentCollection;
+
+
+
+
+
+
 
 
 

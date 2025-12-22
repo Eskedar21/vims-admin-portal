@@ -150,7 +150,7 @@ function InspectionDetail() {
         </button>
         <button
           onClick={() => window.print()}
-              className="px-6 py-2 rounded-lg bg-[#009639] text-white font-semibold hover:bg-[#007c2d] flex items-center gap-2"
+              className="px-6 py-2 rounded-lg bg-[#88bf47] text-white font-semibold hover:bg-[#007c2d] flex items-center gap-2"
         >
           <Printer className="h-4 w-4" />
               Print Report

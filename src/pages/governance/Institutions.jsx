@@ -95,7 +95,7 @@ function Institutions() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Institution
@@ -243,7 +243,7 @@ function Institutions() {
                 <select
                   value={formData.institution_type}
                   onChange={(e) => setFormData({ ...formData, institution_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {INSTITUTION_TYPES.map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -260,7 +260,7 @@ function Institutions() {
                     type="text"
                     value={formData.institution_name_en}
                     onChange={(e) => setFormData({ ...formData, institution_name_en: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -271,7 +271,7 @@ function Institutions() {
                     type="text"
                     value={formData.institution_name_am}
                     onChange={(e) => setFormData({ ...formData, institution_name_am: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -285,7 +285,7 @@ function Institutions() {
                     type="text"
                     value={formData.institution_short_name}
                     onChange={(e) => setFormData({ ...formData, institution_short_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -296,7 +296,7 @@ function Institutions() {
                     type="text"
                     value={formData.registration_number}
                     onChange={(e) => setFormData({ ...formData, registration_number: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -309,7 +309,7 @@ function Institutions() {
                   type="text"
                   value={formData.contact_person_name}
                   onChange={(e) => setFormData({ ...formData, contact_person_name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -322,7 +322,7 @@ function Institutions() {
                     type="tel"
                     value={formData.contact_phone}
                     onChange={(e) => setFormData({ ...formData, contact_phone: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -333,7 +333,7 @@ function Institutions() {
                     type="email"
                     value={formData.contact_email}
                     onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -346,7 +346,7 @@ function Institutions() {
                   value={formData.address_text}
                   onChange={(e) => setFormData({ ...formData, address_text: e.target.value })}
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -357,7 +357,7 @@ function Institutions() {
                 <select
                   value={formData.region_id}
                   onChange={(e) => setFormData({ ...formData, region_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select region...</option>
                   {mockAdminUnits.filter(u => u.admin_unit_type === 'Region').map(region => (
@@ -376,7 +376,7 @@ function Institutions() {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Optional notes..."
                 />
               </div>
@@ -388,7 +388,7 @@ function Institutions() {
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>
@@ -408,7 +408,7 @@ function Institutions() {
               </button>
               <button
                 onClick={editingInstitution ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingInstitution ? 'Update' : 'Create'}
               </button>

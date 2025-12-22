@@ -235,7 +235,7 @@ function AdministrationUnits() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Unit
@@ -267,7 +267,7 @@ function AdministrationUnits() {
                 <select
                   value={formData.admin_unit_type}
                   onChange={(e) => setFormData({ ...formData, admin_unit_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {Object.values(ADMIN_UNIT_TYPES).map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -283,7 +283,7 @@ function AdministrationUnits() {
                   type="text"
                   value={formData.admin_unit_name_en}
                   onChange={(e) => setFormData({ ...formData, admin_unit_name_en: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Enter name in English"
                 />
               </div>
@@ -296,7 +296,7 @@ function AdministrationUnits() {
                   type="text"
                   value={formData.admin_unit_name_am}
                   onChange={(e) => setFormData({ ...formData, admin_unit_name_am: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Enter name in Amharic"
                 />
               </div>
@@ -309,7 +309,7 @@ function AdministrationUnits() {
                   type="text"
                   value={formData.admin_unit_code}
                   onChange={(e) => setFormData({ ...formData, admin_unit_code: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Official code if available"
                 />
               </div>
@@ -322,7 +322,7 @@ function AdministrationUnits() {
                   <select
                     value={formData.parent_admin_unit_id || ''}
                     onChange={(e) => setFormData({ ...formData, parent_admin_unit_id: e.target.value || null })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="">Select parent unit...</option>
                     {availableParents.map(parent => (
@@ -341,7 +341,7 @@ function AdministrationUnits() {
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>
@@ -357,7 +357,7 @@ function AdministrationUnits() {
                     type="date"
                     value={formData.effective_from}
                     onChange={(e) => setFormData({ ...formData, effective_from: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -368,7 +368,7 @@ function AdministrationUnits() {
                     type="date"
                     value={formData.effective_to || ''}
                     onChange={(e) => setFormData({ ...formData, effective_to: e.target.value || null })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -395,7 +395,7 @@ function AdministrationUnits() {
               </button>
               <button
                 onClick={editingUnit ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingUnit ? 'Update' : 'Create'}
               </button>

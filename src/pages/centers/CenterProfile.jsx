@@ -1,19 +1,47 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Save, MapPin, Clock, Phone, Mail, AlertCircle, CheckCircle, XCircle, Building2, FileText, Globe, DollarSign, Camera, Hash, Calendar, Map, Upload, X } from 'lucide-react';
 import { mockCentersFull, validateLatLon, getCenterJurisdictionPath } from '../../data/mockCentersInfrastructure';
 import { mockAdminUnits } from '../../data/mockGovernance';
+import { mockOperationsIncidents } from '../../data/mockOperations';
 import { useAuth } from '../../context/AuthContext';
 import MapPickerWithDrawing from '../../components/MapPickerWithDrawing';
 
 function CenterProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const [center, setCenter] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
+
+  // Check if we should show incidents view
+  const showIncidents = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('view') === 'incidents';
+  }, [location.search]);
+
+  // Get incidents for this center
+  const centerIncidents = useMemo(() => {
+    if (!center) return [];
+    return mockOperationsIncidents.filter(
+      inc => inc.scope?.centerId === center.center_id || inc.scope?.centerId === id
+    );
+  }, [center, id]);
+
+  // Scroll to incidents section when view=incidents
+  useEffect(() => {
+    if (showIncidents && centerIncidents.length > 0) {
+      setTimeout(() => {
+        const element = document.getElementById('incidents-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [showIncidents, centerIncidents.length]);
 
   useEffect(() => {
     // Check both mockCentersFull and createdCenters from context/localStorage
@@ -124,7 +152,7 @@ function CenterProfile() {
     return (
       <div className="max-w-4xl mx-auto mt-12">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#009639] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#88bf47] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading center details...</p>
         </div>
       </div>
@@ -141,7 +169,7 @@ function CenterProfile() {
           <p className="text-gray-600 mb-4">The center with ID "{id}" could not be found.</p>
           <button
             onClick={() => navigate('/center-management')}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
           >
             Back to Centers
           </button>
@@ -183,7 +211,7 @@ function CenterProfile() {
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
           >
             <Save className="h-4 w-4" />
             Edit Profile
@@ -243,7 +271,7 @@ function CenterProfile() {
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+              className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
             >
               <Save className="h-4 w-4" />
               Save Changes
@@ -258,7 +286,7 @@ function CenterProfile() {
           {/* Identity */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Building2 className="h-5 w-5 text-[#009639]" />
+              <Building2 className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Basic Information</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -271,7 +299,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.center_name_en}
                     onChange={(e) => setFormData({ ...formData, center_name_en: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-medium">{center.center_name_en || center.center_name || '-'}</p>
@@ -286,7 +314,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.center_name_am}
                     onChange={(e) => setFormData({ ...formData, center_name_am: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.center_name_am || '-'}</p>
@@ -301,7 +329,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.center_code}
                     onChange={(e) => setFormData({ ...formData, center_code: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.center_code || '-'}</p>
@@ -315,7 +343,7 @@ function CenterProfile() {
                   <select
                     value={formData.status || 'Online'}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="Online">Online</option>
                     <option value="Degraded">Degraded</option>
@@ -340,7 +368,7 @@ function CenterProfile() {
           {/* Jurisdiction */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Globe className="h-5 w-5 text-[#009639]" />
+              <Globe className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Jurisdiction</h2>
             </div>
             <div className="space-y-4">
@@ -352,7 +380,7 @@ function CenterProfile() {
                   <select
                     value={formData.region_id}
                     onChange={(e) => handleJurisdictionChange('region_id', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="">Select region...</option>
                     {regions.map(region => (
@@ -374,7 +402,7 @@ function CenterProfile() {
                     <select
                       value={formData.zone_id || ''}
                       onChange={(e) => handleJurisdictionChange('zone_id', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="">Select zone...</option>
                       {zones.map(zone => (
@@ -397,7 +425,7 @@ function CenterProfile() {
                     <select
                       value={formData.sub_city_id || ''}
                       onChange={(e) => handleJurisdictionChange('sub_city_id', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="">Select sub-city...</option>
                       {subCities.map(subCity => (
@@ -420,7 +448,7 @@ function CenterProfile() {
                     <select
                       value={formData.woreda_id || ''}
                       onChange={(e) => setFormData({ ...formData, woreda_id: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="">Select woreda...</option>
                       {woredas.map(woreda => (
@@ -442,7 +470,7 @@ function CenterProfile() {
           {/* Contact */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Phone className="h-5 w-5 text-[#009639]" />
+              <Phone className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Contact Information</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -455,7 +483,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.general_manager_name || formData.manager_name || ''}
                     onChange={(e) => setFormData({ ...formData, general_manager_name: e.target.value, manager_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.general_manager_name || center.generalManagerName || center.manager_name || '-'}</p>
@@ -470,7 +498,7 @@ function CenterProfile() {
                       type="tel"
                     value={formData.telephone || formData.phone || ''}
                     onChange={(e) => setFormData({ ...formData, telephone: e.target.value, phone: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   ) : (
                   <div className="flex items-center gap-2">
@@ -488,7 +516,7 @@ function CenterProfile() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   ) : (
                   <div className="flex items-center gap-2">
@@ -506,7 +534,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.fax || ''}
                     onChange={(e) => setFormData({ ...formData, fax: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.fax || '-'}</p>
@@ -521,7 +549,7 @@ function CenterProfile() {
                     value={formData.address_text}
                     onChange={(e) => setFormData({ ...formData, address_text: e.target.value })}
                     rows={2}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.address_text || '-'}</p>
@@ -533,7 +561,7 @@ function CenterProfile() {
           {/* Business Registration Information */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <FileText className="h-5 w-5 text-[#009639]" />
+              <FileText className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Business Registration Information</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -546,7 +574,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.tin || ''}
                     onChange={(e) => setFormData({ ...formData, tin: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.tin || '-'}</p>
@@ -559,7 +587,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.vat || ''}
                     onChange={(e) => setFormData({ ...formData, vat: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.vat || '-'}</p>
@@ -574,7 +602,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.principal_registration_no || ''}
                     onChange={(e) => setFormData({ ...formData, principal_registration_no: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.principal_registration_no || center.principalRegistrationNo || '-'}</p>
@@ -589,7 +617,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.business_license_no || ''}
                     onChange={(e) => setFormData({ ...formData, business_license_no: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.business_license_no || center.businessLicenseNo || '-'}</p>
@@ -604,7 +632,7 @@ function CenterProfile() {
                     type="date"
                     value={formData.business_license_date_of_issuance || ''}
                     onChange={(e) => setFormData({ ...formData, business_license_date_of_issuance: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <div className="flex items-center gap-2">
@@ -622,7 +650,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.place_of_issue || ''}
                     onChange={(e) => setFormData({ ...formData, place_of_issue: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.place_of_issue || center.placeOfIssue || '-'}</p>
@@ -637,7 +665,7 @@ function CenterProfile() {
                     type="date"
                     value={formData.date_of_issue || ''}
                     onChange={(e) => setFormData({ ...formData, date_of_issue: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <div className="flex items-center gap-2">
@@ -653,7 +681,7 @@ function CenterProfile() {
                     value={formData.commercial_registration_procedure || ''}
                     onChange={(e) => setFormData({ ...formData, commercial_registration_procedure: e.target.value })}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     placeholder="Enter commercial registration and business license procedure details"
                   />
                 ) : (
@@ -666,7 +694,7 @@ function CenterProfile() {
           {/* Owner/Company Information */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Building2 className="h-5 w-5 text-[#009639]" />
+              <Building2 className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Owner/Company Information</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -679,7 +707,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.owner_company_name || ''}
                     onChange={(e) => setFormData({ ...formData, owner_company_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-medium">{center.owner_company_name || center.ownerCompanyName || '-'}</p>
@@ -694,7 +722,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.nationality || ''}
                     onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <div className="flex items-center gap-2">
@@ -710,7 +738,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.trade_name || ''}
                     onChange={(e) => setFormData({ ...formData, trade_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.trade_name || center.tradeName || '-'}</p>
@@ -725,7 +753,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.general_manager_name || ''}
                     onChange={(e) => setFormData({ ...formData, general_manager_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.general_manager_name || center.generalManagerName || '-'}</p>
@@ -737,7 +765,7 @@ function CenterProfile() {
           {/* Location Details */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <MapPin className="h-5 w-5 text-[#009639]" />
+              <MapPin className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Location Details</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -750,7 +778,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.zone_id || formData.sub_city_id || ''}
                     onChange={(e) => setFormData({ ...formData, zone_id: e.target.value, sub_city_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">
@@ -768,7 +796,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.woreda_id || ''}
                     onChange={(e) => setFormData({ ...formData, woreda_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">
@@ -785,7 +813,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.kebele || ''}
                     onChange={(e) => setFormData({ ...formData, kebele: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900">{center.kebele || '-'}</p>
@@ -800,7 +828,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.house_no || ''}
                     onChange={(e) => setFormData({ ...formData, house_no: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.house_no || center.houseNo || '-'}</p>
@@ -812,7 +840,7 @@ function CenterProfile() {
           {/* Business Details */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <DollarSign className="h-5 w-5 text-[#009639]" />
+              <DollarSign className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Business Details</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -825,7 +853,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.field_of_business || ''}
                     onChange={(e) => setFormData({ ...formData, field_of_business: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-medium">{center.field_of_business || center.fieldOfBusiness || '-'}</p>
@@ -840,7 +868,7 @@ function CenterProfile() {
                     type="number"
                     value={formData.capital_in_etb || ''}
                     onChange={(e) => setFormData({ ...formData, capital_in_etb: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <div className="flex items-center gap-2">
@@ -855,7 +883,7 @@ function CenterProfile() {
           {/* Additional Information */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Hash className="h-5 w-5 text-[#009639]" />
+              <Hash className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Additional Information</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -866,7 +894,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.telebirr_number || ''}
                     onChange={(e) => setFormData({ ...formData, telebirr_number: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.telebirr_number || center.telebirrNumber || '-'}</p>
@@ -879,7 +907,7 @@ function CenterProfile() {
                     type="text"
                     value={formData.camera_configuration || ''}
                     onChange={(e) => setFormData({ ...formData, camera_configuration: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 ) : (
                   <div className="flex items-center gap-2">
@@ -894,7 +922,7 @@ function CenterProfile() {
           {/* Location */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <MapPin className="h-5 w-5 text-[#009639]" />
+              <MapPin className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Geographic Location</h2>
             </div>
             {validationErrors.location && (
@@ -923,7 +951,7 @@ function CenterProfile() {
                           setValidationErrors({ ...validationErrors, location: null });
                         }
                       }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   ) : (
                     <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.geo_lat || center.latitude || center.lat || '-'}</p>
@@ -948,7 +976,7 @@ function CenterProfile() {
                           setValidationErrors({ ...validationErrors, location: null });
                         }
                       }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   ) : (
                     <p className="text-sm text-gray-900 font-mono bg-gray-50 px-2 py-1 rounded">{center.geo_lon || center.longitude || center.lng || '-'}</p>
@@ -987,7 +1015,7 @@ function CenterProfile() {
           {/* Geofence */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Map className="h-5 w-5 text-[#009639]" />
+              <Map className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Geofence Configuration</h2>
             </div>
             <div className="space-y-4">
@@ -997,7 +1025,7 @@ function CenterProfile() {
                   <select
                     value={formData.geofence_type || 'circle'}
                     onChange={(e) => setFormData({ ...formData, geofence_type: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="circle">Circle (Radius)</option>
                     <option value="polygon">Polygon (Custom Area)</option>
@@ -1018,7 +1046,7 @@ function CenterProfile() {
                       min="100"
                       value={formData.geofence_radius || 500}
                       onChange={(e) => setFormData({ ...formData, geofence_radius: Number(e.target.value) })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   ) : (
                     <p className="text-sm text-gray-900 font-semibold">{center.geofence_radius || center.radius || 500} m</p>
@@ -1040,7 +1068,7 @@ function CenterProfile() {
           {(center.documents || (center.businessLicense || center.registrationCertificate || center.taxCertificate)) && (
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center gap-2 mb-6">
-                <FileText className="h-5 w-5 text-[#009639]" />
+                <FileText className="h-5 w-5 text-[#88bf47]" />
                 <h2 className="text-lg font-semibold text-gray-900">Document Attachments</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1090,10 +1118,103 @@ function CenterProfile() {
             </div>
           )}
 
+          {/* Incidents Section */}
+          {(showIncidents || centerIncidents.length > 0) && (
+            <div id="incidents-section" className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="h-5 w-5 text-red-500" />
+                  <h2 className="text-lg font-semibold text-gray-900">Incidents</h2>
+                  <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
+                    {centerIncidents.length}
+                  </span>
+                </div>
+                {showIncidents && (
+                  <button
+                    onClick={() => navigate(`/center-management/${id}`)}
+                    className="text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    Hide incidents
+                  </button>
+                )}
+              </div>
+              
+              {centerIncidents.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-2" />
+                  <p className="text-sm">No incidents for this center</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {centerIncidents
+                    .sort((a, b) => {
+                      const severityOrder = { Critical: 4, High: 3, Medium: 2, Low: 1 };
+                      return severityOrder[b.severity] - severityOrder[a.severity];
+                    })
+                    .map((incident) => (
+                      <div
+                        key={incident.id || incident.incident_id}
+                        className={`p-4 rounded-lg border ${
+                          incident.severity === 'Critical' ? 'bg-red-50 border-red-200' :
+                          incident.severity === 'High' ? 'bg-orange-50 border-orange-200' :
+                          incident.severity === 'Medium' ? 'bg-yellow-50 border-yellow-200' :
+                          'bg-blue-50 border-blue-200'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
+                                incident.severity === 'Critical' ? 'bg-red-200 text-red-900' :
+                                incident.severity === 'High' ? 'bg-orange-200 text-orange-900' :
+                                incident.severity === 'Medium' ? 'bg-yellow-200 text-yellow-900' :
+                                'bg-blue-200 text-blue-900'
+                              }`}>
+                                {incident.severity}
+                              </span>
+                              <span className="text-xs text-gray-500">•</span>
+                              <span className="text-xs text-gray-600">{incident.type?.replace(/_/g, ' ')}</span>
+                            </div>
+                            <p className="text-sm font-medium text-gray-900 mb-1">{incident.title || incident.description}</p>
+                            {incident.description && incident.title && (
+                              <p className="text-xs text-gray-600 mb-2">{incident.description}</p>
+                            )}
+                            <div className="flex items-center gap-3 text-xs text-gray-500">
+                              <span>First detected: {new Date(incident.firstDetectedAt || incident.created_at).toLocaleString('en-ET')}</span>
+                              {incident.impactMetrics?.inspectionsAffectedCount > 0 && (
+                                <>
+                                  <span>•</span>
+                                  <span>Affected: {incident.impactMetrics.inspectionsAffectedCount} inspections</span>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                          <span className={`text-xs px-2 py-1 rounded font-medium ${
+                            incident.status === 'Open' ? 'bg-red-100 text-red-700' :
+                            incident.status === 'Resolved' ? 'bg-green-100 text-green-700' :
+                            'bg-gray-100 text-gray-700'
+                          }`}>
+                            {incident.status}
+                          </span>
+                        </div>
+                        {incident.resolutionNotes && (
+                          <div className="mt-2 pt-2 border-t border-gray-200">
+                            <p className="text-xs text-gray-600">
+                              <strong>Resolution:</strong> {incident.resolutionNotes}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Operating Hours */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Clock className="h-5 w-5 text-[#009639]" />
+              <Clock className="h-5 w-5 text-[#88bf47]" />
               <h2 className="text-lg font-semibold text-gray-900">Operating Hours</h2>
             </div>
             <div>
@@ -1105,7 +1226,7 @@ function CenterProfile() {
                   value={formData.hours_text}
                   onChange={(e) => setFormData({ ...formData, hours_text: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="e.g., Mon–Fri 8:00–17:00; Sat 8:00–12:00"
                 />
               ) : (

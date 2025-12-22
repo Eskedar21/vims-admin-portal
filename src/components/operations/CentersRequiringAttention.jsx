@@ -110,14 +110,16 @@ function CentersRequiringAttention({ centers, onCenterClick }) {
             {center.top_reasons && center.top_reasons.length > 0 && (
               <div className="mt-2">
                 <div className="flex flex-wrap gap-1">
-                  {center.top_reasons.map((reason, i) => (
-                    <span
-                      key={i}
-                      className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-white/80 text-gray-700 border border-gray-200"
-                    >
-                      {reason}
-                    </span>
-                  ))}
+                  {center.top_reasons
+                    .filter(reason => !reason.includes('machine(s) offline'))
+                    .map((reason, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-white/80 text-gray-700 border border-gray-200"
+                      >
+                        {reason}
+                      </span>
+                    ))}
                 </div>
               </div>
             )}

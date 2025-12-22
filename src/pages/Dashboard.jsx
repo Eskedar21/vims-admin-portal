@@ -227,7 +227,6 @@ function Dashboard() {
       },
       passCount,
       failCount,
-      retestDue: filteredInspections.filter((i) => i.type === "Re-inspection" && i.status === "Failed").length,
       passRate: parseFloat(passRate),
       avgCycleTime,
       revenue: {
@@ -620,21 +619,13 @@ function Dashboard() {
       </div>
 
       {/* Additional KPIs Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-medium text-gray-600">AVG CYCLE TIME</p>
             <Clock className="h-5 w-5 text-gray-600" />
           </div>
           <p className="text-2xl font-bold text-gray-900">{kpis.avgCycleTime} min</p>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-medium text-gray-600">RETEST DUE</p>
-            <AlertTriangle className="h-5 w-5 text-yellow-600" />
-          </div>
-          <p className="text-2xl font-bold text-yellow-600">{kpis.retestDue}</p>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">

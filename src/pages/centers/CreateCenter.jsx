@@ -356,7 +356,7 @@ function CreateCenter() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition whitespace-nowrap ${
                     isActive
-                      ? 'border-[#009639] text-[#009639]'
+                      ? 'border-[#88bf47] text-[#88bf47]'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >
@@ -389,7 +389,7 @@ function CreateCenter() {
                     setForm({ ...form, name: e.target.value });
                     if (formErrors.name) setFormErrors({ ...formErrors, name: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.name ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter center name"
@@ -414,7 +414,7 @@ function CreateCenter() {
                     setForm({ ...form, region: e.target.value, zoneSubCity: '', woreda: '' });
                     if (formErrors.region) setFormErrors({ ...formErrors, region: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.region ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -441,7 +441,7 @@ function CreateCenter() {
                   required
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                 >
                   <option value="Online">Online</option>
                   <option value="Offline">Offline</option>
@@ -469,7 +469,7 @@ function CreateCenter() {
                     setForm({ ...form, tin: e.target.value });
                     if (formErrors.tin) setFormErrors({ ...formErrors, tin: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.tin ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter TIN"
@@ -490,7 +490,7 @@ function CreateCenter() {
                   type="text"
                   value={form.vat}
                   onChange={(e) => setForm({ ...form, vat: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter VAT number"
                 />
               </div>
@@ -507,7 +507,7 @@ function CreateCenter() {
                     setForm({ ...form, principalRegistrationNo: e.target.value });
                     if (formErrors.principalRegistrationNo) setFormErrors({ ...formErrors, principalRegistrationNo: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.principalRegistrationNo ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter principal registration number"
@@ -533,7 +533,7 @@ function CreateCenter() {
                     setForm({ ...form, businessLicenseNo: e.target.value });
                     if (formErrors.businessLicenseNo) setFormErrors({ ...formErrors, businessLicenseNo: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.businessLicenseNo ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter business license number"
@@ -559,7 +559,7 @@ function CreateCenter() {
                     setForm({ ...form, businessLicenseDateOfIssuance: e.target.value });
                     if (formErrors.businessLicenseDateOfIssuance) setFormErrors({ ...formErrors, businessLicenseDateOfIssuance: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.businessLicenseDateOfIssuance ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                 />
@@ -583,7 +583,7 @@ function CreateCenter() {
                     setForm({ ...form, placeOfIssue: e.target.value });
                     if (formErrors.placeOfIssue) setFormErrors({ ...formErrors, placeOfIssue: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.placeOfIssue ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter place of issue"
@@ -604,7 +604,7 @@ function CreateCenter() {
                   type="date"
                   value={form.dateOfIssue}
                   onChange={(e) => setForm({ ...form, dateOfIssue: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                 />
               </div>
             </div>
@@ -628,7 +628,7 @@ function CreateCenter() {
                     setForm({ ...form, ownerCompanyName: e.target.value });
                     if (formErrors.ownerCompanyName) setFormErrors({ ...formErrors, ownerCompanyName: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.ownerCompanyName ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter owner/company name"
@@ -649,7 +649,7 @@ function CreateCenter() {
                   type="text"
                   value={form.nationality}
                   onChange={(e) => setForm({ ...form, nationality: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter nationality"
                 />
               </div>
@@ -662,7 +662,7 @@ function CreateCenter() {
                   type="text"
                   value={form.tradeName}
                   onChange={(e) => setForm({ ...form, tradeName: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter trade name"
                 />
               </div>
@@ -675,7 +675,7 @@ function CreateCenter() {
                   type="text"
                   value={form.generalManagerName}
                   onChange={(e) => setForm({ ...form, generalManagerName: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter general manager name"
                 />
               </div>
@@ -700,7 +700,7 @@ function CreateCenter() {
                     if (formErrors.zoneSubCity) setFormErrors({ ...formErrors, zoneSubCity: '' });
                   }}
                   disabled={!form.region}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors disabled:bg-gray-50 disabled:text-gray-500 ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors disabled:bg-gray-50 disabled:text-gray-500 ${
                     formErrors.zoneSubCity ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -731,7 +731,7 @@ function CreateCenter() {
                     if (formErrors.woreda) setFormErrors({ ...formErrors, woreda: '' });
                   }}
                   disabled={!form.zoneSubCity}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors disabled:bg-gray-50 disabled:text-gray-500 ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors disabled:bg-gray-50 disabled:text-gray-500 ${
                     formErrors.woreda ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -758,7 +758,7 @@ function CreateCenter() {
                   type="text"
                   value={form.kebele}
                   onChange={(e) => setForm({ ...form, kebele: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter kebele"
                 />
               </div>
@@ -771,7 +771,7 @@ function CreateCenter() {
                   type="text"
                   value={form.houseNo}
                   onChange={(e) => setForm({ ...form, houseNo: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter house number"
                 />
               </div>
@@ -796,7 +796,7 @@ function CreateCenter() {
                     setForm({ ...form, telephone: e.target.value });
                     if (formErrors.telephone) setFormErrors({ ...formErrors, telephone: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.telephone ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter telephone number"
@@ -817,7 +817,7 @@ function CreateCenter() {
                   type="text"
                   value={form.fax}
                   onChange={(e) => setForm({ ...form, fax: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter fax number"
                 />
               </div>
@@ -834,7 +834,7 @@ function CreateCenter() {
                     setForm({ ...form, email: e.target.value });
                     if (formErrors.email) setFormErrors({ ...formErrors, email: '' });
                   }}
-                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors ${
+                  className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                     formErrors.email ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter email address"
@@ -863,7 +863,7 @@ function CreateCenter() {
                   type="text"
                   value={form.fieldOfBusiness}
                   onChange={(e) => setForm({ ...form, fieldOfBusiness: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter field of business"
                 />
               </div>
@@ -876,7 +876,7 @@ function CreateCenter() {
                   type="number"
                   value={form.capitalInETB}
                   onChange={(e) => setForm({ ...form, capitalInETB: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter capital amount"
                 />
               </div>
@@ -897,7 +897,7 @@ function CreateCenter() {
                   type="text"
                   value={form.telebirrNumber}
                   onChange={(e) => setForm({ ...form, telebirrNumber: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter TeleBirr number"
                 />
               </div>
@@ -910,7 +910,7 @@ function CreateCenter() {
                   type="text"
                   value={form.cameraConfiguration}
                   onChange={(e) => setForm({ ...form, cameraConfiguration: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter camera configuration"
                 />
               </div>
@@ -923,7 +923,7 @@ function CreateCenter() {
                   value={form.commercialRegistrationProcedure}
                   onChange={(e) => setForm({ ...form, commercialRegistrationProcedure: e.target.value })}
                   rows={4}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent transition-colors"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                   placeholder="Enter commercial registration procedure details"
                 />
               </div>
@@ -963,9 +963,9 @@ function CreateCenter() {
                     </button>
                   </div>
                 ) : (
-                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#009639] hover:bg-[#009639]/5 transition-colors group">
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#88bf47] hover:bg-[#88bf47]/5 transition-colors group">
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <Paperclip className="h-10 w-10 text-gray-400 group-hover:text-[#009639] mb-2" />
+                      <Paperclip className="h-10 w-10 text-gray-400 group-hover:text-[#88bf47] mb-2" />
                       <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">Click to upload</span> or drag and drop
                       </p>
@@ -1007,9 +1007,9 @@ function CreateCenter() {
                     </button>
                   </div>
                 ) : (
-                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#009639] hover:bg-[#009639]/5 transition-colors group">
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#88bf47] hover:bg-[#88bf47]/5 transition-colors group">
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <Paperclip className="h-10 w-10 text-gray-400 group-hover:text-[#009639] mb-2" />
+                      <Paperclip className="h-10 w-10 text-gray-400 group-hover:text-[#88bf47] mb-2" />
                       <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">Click to upload</span> or drag and drop
                       </p>
@@ -1051,9 +1051,9 @@ function CreateCenter() {
                     </button>
                   </div>
                 ) : (
-                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#009639] hover:bg-[#009639]/5 transition-colors group">
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#88bf47] hover:bg-[#88bf47]/5 transition-colors group">
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <Paperclip className="h-10 w-10 text-gray-400 group-hover:text-[#009639] mb-2" />
+                      <Paperclip className="h-10 w-10 text-gray-400 group-hover:text-[#88bf47] mb-2" />
                       <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">Click to upload</span> or drag and drop
                       </p>
@@ -1099,9 +1099,9 @@ function CreateCenter() {
                     ))}
                   </div>
                 )}
-                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#009639] hover:bg-[#009639]/5 transition-colors group">
+                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#88bf47] hover:bg-[#88bf47]/5 transition-colors group">
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <Upload className="h-10 w-10 text-gray-400 group-hover:text-[#009639] mb-2" />
+                    <Upload className="h-10 w-10 text-gray-400 group-hover:text-[#88bf47] mb-2" />
                     <p className="mb-2 text-sm text-gray-500">
                       <span className="font-semibold">Click to upload</span> or drag and drop
                     </p>
@@ -1142,7 +1142,7 @@ function CreateCenter() {
                         setGeofencePolygon([]);
                         if (formErrors.geofence) setFormErrors({ ...formErrors, geofence: '' });
                       }}
-                      className="w-4 h-4 text-[#009639] focus:ring-[#009639]"
+                      className="w-4 h-4 text-[#88bf47] focus:ring-[#88bf47]"
                     />
                     <span className="text-sm text-gray-700">Circle</span>
                   </label>
@@ -1156,7 +1156,7 @@ function CreateCenter() {
                         setForm({ ...form, radius: 500 });
                         if (formErrors.geofence) setFormErrors({ ...formErrors, geofence: '' });
                       }}
-                      className="w-4 h-4 text-[#009639] focus:ring-[#009639]"
+                      className="w-4 h-4 text-[#88bf47] focus:ring-[#88bf47]"
                     />
                     <span className="text-sm text-gray-700">Polygon</span>
                   </label>
@@ -1179,7 +1179,7 @@ function CreateCenter() {
                         setForm({ ...form, radius: Number(e.target.value) });
                         if (formErrors.radius) setFormErrors({ ...formErrors, radius: '' });
                       }}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#009639]"
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#88bf47]"
                     />
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">100 m</span>
@@ -1233,7 +1233,7 @@ function CreateCenter() {
           </button>
           <button
             type="submit"
-            className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-[#009639] rounded-lg hover:bg-[#007c2d] transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-[#88bf47] rounded-lg hover:bg-[#007c2d] transition-colors shadow-sm"
           >
             <Save className="h-4 w-4" />
             Create Center

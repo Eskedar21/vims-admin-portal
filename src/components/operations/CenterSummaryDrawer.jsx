@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, ExternalLink, AlertCircle, CheckCircle, Camera, HardDrive, Activity } from 'lucide-react';
 import { mockCameras, mockGeofenceCompliance } from '../../data/mockOperations';
 
 function CenterSummaryDrawer({ center, onClose, onViewDetail, filters }) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
 
   // Get center cameras
@@ -63,7 +65,7 @@ function CenterSummaryDrawer({ center, onClose, onViewDetail, filters }) {
           <div className="flex items-center gap-2">
             <button
               onClick={onViewDetail}
-              className="px-3 py-1.5 text-sm font-medium text-[#009639] hover:bg-green-50 rounded-lg transition"
+              className="px-3 py-1.5 text-sm font-medium text-[#88bf47] hover:bg-green-50 rounded-lg transition"
             >
               <ExternalLink className="h-4 w-4 inline mr-1" />
               View Detail
@@ -86,7 +88,7 @@ function CenterSummaryDrawer({ center, onClose, onViewDetail, filters }) {
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-3 text-sm font-medium border-b-2 transition ${
                   activeTab === tab
-                    ? 'border-[#009639] text-[#009639]'
+                    ? 'border-[#88bf47] text-[#88bf47]'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
@@ -206,8 +208,11 @@ function CenterSummaryDrawer({ center, onClose, onViewDetail, filters }) {
                       </div>
                     </div>
                     <button
-                      onClick={onViewDetail}
-                      className="w-full text-sm text-[#009639] hover:underline"
+                      onClick={() => {
+                        onClose();
+                        navigate(`/center-management/${center.center_id}?view=incidents`);
+                      }}
+                      className="w-full text-sm text-[#88bf47] hover:underline"
                     >
                       View all incidents →
                     </button>

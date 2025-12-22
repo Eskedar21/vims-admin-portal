@@ -84,7 +84,7 @@ function VehicleClassMapping() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Mapping
@@ -185,7 +185,7 @@ function VehicleClassMapping() {
                 <select
                   value={formData.inspection_type_id}
                   onChange={(e) => setFormData({ ...formData, inspection_type_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select inspection type...</option>
                   {mockInspectionTypes.map(type => (
@@ -203,7 +203,7 @@ function VehicleClassMapping() {
                 <select
                   value={formData.vehicle_class_id}
                   onChange={(e) => setFormData({ ...formData, vehicle_class_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select vehicle class...</option>
                   {mockVehicleClasses.map(vc => (
@@ -224,7 +224,7 @@ function VehicleClassMapping() {
                     ...formData,
                     rules: { ...formData.rules, weight_range: e.target.value }
                   })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
                 <input
                   type="text"
@@ -234,7 +234,7 @@ function VehicleClassMapping() {
                     ...formData,
                     rules: { ...formData.rules, axle_count: e.target.value }
                   })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
                 <input
                   type="text"
@@ -244,7 +244,7 @@ function VehicleClassMapping() {
                     ...formData,
                     rules: { ...formData.rules, fuel_type: e.target.value }
                   })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -254,7 +254,7 @@ function VehicleClassMapping() {
                     type="checkbox"
                     checked={formData.enabled}
                     onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Enabled</span>
                 </label>
@@ -272,7 +272,7 @@ function VehicleClassMapping() {
               </button>
               <button
                 onClick={handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Create Mapping
               </button>
@@ -285,6 +285,12 @@ function VehicleClassMapping() {
 }
 
 export default VehicleClassMapping;
+
+
+
+
+
+
 
 
 

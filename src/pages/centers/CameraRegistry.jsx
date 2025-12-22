@@ -68,7 +68,7 @@ function CameraRegistry() {
             <select
               value={centerFilter}
               onChange={(e) => setCenterFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Centers</option>
               {mockCentersFull.map(center => (
@@ -83,7 +83,7 @@ function CameraRegistry() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Cameras</option>
               <option value="down">Down</option>

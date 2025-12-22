@@ -122,7 +122,7 @@ function Security() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                     activeTab === tab.id
-                      ? "border-[#005f40] text-[#005f40]"
+                      ? "border-[#88bf47] text-[#88bf47]"
                       : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
                   }`}
                 >
@@ -147,7 +147,7 @@ function Security() {
                       placeholder="Search audit logs..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -342,7 +342,7 @@ function Security() {
                           passwordPolicy: { ...settings.passwordPolicy, minLength: Number(e.target.value) },
                         })
                       }
-                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -356,7 +356,7 @@ function Security() {
                           passwordPolicy: { ...settings.passwordPolicy, requireUppercase: e.target.checked },
                         })
                       }
-                      className="h-4 w-4 text-[#005f40] focus:ring-[#005f40] border-gray-300 rounded"
+                      className="h-4 w-4 text-[#88bf47] focus:ring-[#88bf47] border-gray-300 rounded"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -370,7 +370,7 @@ function Security() {
                           passwordPolicy: { ...settings.passwordPolicy, requireLowercase: e.target.checked },
                         })
                       }
-                      className="h-4 w-4 text-[#005f40] focus:ring-[#005f40] border-gray-300 rounded"
+                      className="h-4 w-4 text-[#88bf47] focus:ring-[#88bf47] border-gray-300 rounded"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -384,7 +384,7 @@ function Security() {
                           passwordPolicy: { ...settings.passwordPolicy, requireNumbers: e.target.checked },
                         })
                       }
-                      className="h-4 w-4 text-[#005f40] focus:ring-[#005f40] border-gray-300 rounded"
+                      className="h-4 w-4 text-[#88bf47] focus:ring-[#88bf47] border-gray-300 rounded"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -398,7 +398,7 @@ function Security() {
                           passwordPolicy: { ...settings.passwordPolicy, requireSpecialChars: e.target.checked },
                         })
                       }
-                      className="h-4 w-4 text-[#005f40] focus:ring-[#005f40] border-gray-300 rounded"
+                      className="h-4 w-4 text-[#88bf47] focus:ring-[#88bf47] border-gray-300 rounded"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -414,7 +414,7 @@ function Security() {
                           passwordPolicy: { ...settings.passwordPolicy, expirationDays: Number(e.target.value) },
                         })
                       }
-                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -437,7 +437,7 @@ function Security() {
                           sessionSettings: { ...settings.sessionSettings, timeoutMinutes: Number(e.target.value) },
                         })
                       }
-                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -453,7 +453,7 @@ function Security() {
                           sessionSettings: { ...settings.sessionSettings, maxConcurrentSessions: Number(e.target.value) },
                         })
                       }
-                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent"
+                      className="w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -467,7 +467,7 @@ function Security() {
                           sessionSettings: { ...settings.sessionSettings, requireMFA: e.target.checked },
                         })
                       }
-                      className="h-4 w-4 text-[#005f40] focus:ring-[#005f40] border-gray-300 rounded"
+                      className="h-4 w-4 text-[#88bf47] focus:ring-[#88bf47] border-gray-300 rounded"
                     />
                   </div>
                 </div>

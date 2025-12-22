@@ -1,15 +1,36 @@
 import { useState, useMemo } from 'react';
-import { Bell, Filter, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Bell, Filter, AlertCircle, CheckCircle, Clock, XCircle } from 'lucide-react';
 import { filterIncidentsByScope } from '../../utils/scopeFilter';
 
 function AlertInbox({ alerts, scope, filters }) {
+  const navigate = useNavigate();
   const [severityFilter, setSeverityFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  // Filter alerts by scope
+  // Filter alerts by scope and merge with updated incidents from localStorage
   const scopedAlerts = useMemo(() => {
-    return filterIncidentsByScope(alerts, scope);
+    let mergedAlerts = [...alerts];
+    
+    // Merge with updated incidents from localStorage
+    try {
+      const stored = localStorage.getItem('updatedIncidents');
+      if (stored) {
+        const updated = JSON.parse(stored);
+        mergedAlerts = mergedAlerts.map(alert => {
+          const alertId = alert.id || alert.incident_id || alert.alert_id;
+          if (updated[alertId]) {
+            return { ...alert, ...updated[alertId] };
+          }
+          return alert;
+        });
+      }
+    } catch (e) {
+      console.error('Failed to load updated incidents:', e);
+    }
+    
+    return filterIncidentsByScope(mergedAlerts, scope);
   }, [alerts, scope]);
 
   // Apply filters
@@ -42,12 +63,16 @@ function AlertInbox({ alerts, scope, filters }) {
 
   const getStatusBadge = (status) => {
     const config = {
+      Open: { bg: 'bg-blue-100', text: 'text-blue-800', icon: AlertCircle },
       New: { bg: 'bg-blue-100', text: 'text-blue-800', icon: Bell },
-      Acknowledged: { bg: 'bg-yellow-100', text: 'text-yellow-800', icon: CheckCircle },
+      Acknowledged: { bg: 'bg-yellow-100', text: 'text-yellow-800', icon: Clock },
+      'In Progress': { bg: 'bg-purple-100', text: 'text-purple-800', icon: Clock },
+      Resolved: { bg: 'bg-green-100', text: 'text-green-800', icon: CheckCircle },
+      'False Positive': { bg: 'bg-gray-100', text: 'text-gray-800', icon: XCircle },
       ConvertedToIncident: { bg: 'bg-green-100', text: 'text-green-800', icon: CheckCircle },
       Suppressed: { bg: 'bg-gray-100', text: 'text-gray-800', icon: CheckCircle },
     };
-    const c = config[status] || config.New;
+    const c = config[status] || config.Open;
     const Icon = c.icon;
     
     return (
@@ -104,7 +129,7 @@ function AlertInbox({ alerts, scope, filters }) {
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="px-2 py-1.5 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#009639]"
+            className="px-2 py-1.5 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#88bf47]"
           >
             <option value="all">All Severity</option>
             <option value="Critical">Critical</option>
@@ -115,7 +140,7 @@ function AlertInbox({ alerts, scope, filters }) {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-2 py-1.5 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#009639]"
+            className="px-2 py-1.5 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#88bf47]"
           >
             <option value="all">All Types</option>
             {Array.from(new Set(scopedAlerts.map(a => a.type))).map(type => (
@@ -125,13 +150,15 @@ function AlertInbox({ alerts, scope, filters }) {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-2 py-1.5 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#009639]"
+            className="px-2 py-1.5 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#88bf47]"
           >
             <option value="all">All Status</option>
+            <option value="Open">Open</option>
             <option value="New">New</option>
             <option value="Acknowledged">Acknowledged</option>
-            <option value="ConvertedToIncident">Converted</option>
-            <option value="Suppressed">Suppressed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+            <option value="False Positive">False Positive</option>
           </select>
         </div>
       </div>
@@ -147,6 +174,7 @@ function AlertInbox({ alerts, scope, filters }) {
           filteredAlerts.slice(0, 20).map(alert => (
             <div
               key={alert.alert_id || alert.id}
+              onClick={() => navigate(`/operations/incidents/${alert.id || alert.incident_id || alert.alert_id}`)}
               className="px-6 py-4 hover:bg-gray-50 transition cursor-pointer"
             >
               <div className="flex items-start justify-between mb-2">

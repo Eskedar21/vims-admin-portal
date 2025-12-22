@@ -98,7 +98,7 @@ function InspectionTypes() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Type
@@ -240,7 +240,7 @@ function InspectionTypes() {
                     type="text"
                     value={formData.name_en}
                     onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -251,7 +251,7 @@ function InspectionTypes() {
                     type="text"
                     value={formData.name_am}
                     onChange={(e) => setFormData({ ...formData, name_am: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -263,7 +263,7 @@ function InspectionTypes() {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {INSPECTION_CATEGORIES.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -294,7 +294,7 @@ function InspectionTypes() {
                             });
                           }
                         }}
-                        className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                        className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                       />
                       <span className="text-sm text-gray-700 capitalize">{test}</span>
                     </label>
@@ -311,7 +311,7 @@ function InspectionTypes() {
                     type="number"
                     value={formData.validity_period_days}
                     onChange={(e) => setFormData({ ...formData, validity_period_days: parseInt(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -321,7 +321,7 @@ function InspectionTypes() {
                   <select
                     value={formData.approval_status}
                     onChange={(e) => setFormData({ ...formData, approval_status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {APPROVAL_STATUSES.map(status => (
                       <option key={status} value={status}>{status}</option>
@@ -336,7 +336,7 @@ function InspectionTypes() {
                     type="checkbox"
                     checked={formData.requires_payment}
                     onChange={(e) => setFormData({ ...formData, requires_payment: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Requires Payment</span>
                 </label>
@@ -345,7 +345,7 @@ function InspectionTypes() {
                     type="checkbox"
                     checked={formData.requires_visual_check}
                     onChange={(e) => setFormData({ ...formData, requires_visual_check: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Requires Visual Check</span>
                 </label>
@@ -354,7 +354,7 @@ function InspectionTypes() {
                     type="checkbox"
                     checked={formData.requires_certificate}
                     onChange={(e) => setFormData({ ...formData, requires_certificate: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Requires Certificate</span>
                 </label>
@@ -363,7 +363,7 @@ function InspectionTypes() {
                     type="checkbox"
                     checked={formData.enabled}
                     onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Enabled</span>
                 </label>
@@ -382,7 +382,7 @@ function InspectionTypes() {
               </button>
               <button
                 onClick={editingType ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingType ? 'Update' : 'Create'}
               </button>
@@ -395,6 +395,12 @@ function InspectionTypes() {
 }
 
 export default InspectionTypes;
+
+
+
+
+
+
 
 
 

@@ -195,7 +195,7 @@ function InspectionSearch() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by plate number, VIN, certificate number, inspection ID, or center name..."
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
           />
         </div>
         <div className="flex items-center justify-between">
@@ -211,7 +211,7 @@ function InspectionSearch() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="newest">Newest</option>
               <option value="expiry">Expiry Date</option>
@@ -229,7 +229,7 @@ function InspectionSearch() {
                 type="text"
                 value={filters.plate_number}
                 onChange={(e) => setFilters({ ...filters, plate_number: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
             <div>
@@ -238,7 +238,7 @@ function InspectionSearch() {
                 type="text"
                 value={filters.vin}
                 onChange={(e) => setFilters({ ...filters, vin: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
             <div>
@@ -247,7 +247,7 @@ function InspectionSearch() {
                 type="text"
                 value={filters.certificate_number}
                 onChange={(e) => setFilters({ ...filters, certificate_number: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
             <div>
@@ -256,7 +256,7 @@ function InspectionSearch() {
                 type="text"
                 value={filters.inspection_id}
                 onChange={(e) => setFilters({ ...filters, inspection_id: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
             <div>
@@ -264,7 +264,7 @@ function InspectionSearch() {
               <select
                 value={filters.inspection_type}
                 onChange={(e) => setFilters({ ...filters, inspection_type: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="all">All Types</option>
                 {INSPECTION_TYPES.map(type => (
@@ -277,7 +277,7 @@ function InspectionSearch() {
               <select
                 value={filters.vehicle_class}
                 onChange={(e) => setFilters({ ...filters, vehicle_class: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="all">All Classes</option>
                 {VEHICLE_CLASSES.map(vc => (
@@ -290,7 +290,7 @@ function InspectionSearch() {
               <select
                 value={filters.overall_result}
                 onChange={(e) => setFilters({ ...filters, overall_result: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="all">All Results</option>
                 {RESULTS.map(result => (
@@ -303,7 +303,7 @@ function InspectionSearch() {
               <select
                 value={filters.certificate_status}
                 onChange={(e) => setFilters({ ...filters, certificate_status: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="all">All Status</option>
                 {CERTIFICATE_STATUSES.map(status => (
@@ -317,7 +317,7 @@ function InspectionSearch() {
                 type="date"
                 value={filters.date_from}
                 onChange={(e) => setFilters({ ...filters, date_from: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
             <div>
@@ -326,7 +326,7 @@ function InspectionSearch() {
                 type="date"
                 value={filters.date_to}
                 onChange={(e) => setFilters({ ...filters, date_to: e.target.value })}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
           </div>
@@ -401,7 +401,7 @@ function InspectionSearch() {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => handleViewInspection(inspection)}
-                      className="text-[#009639] hover:text-[#007A2F] hover:underline"
+                      className="text-[#88bf47] hover:text-[#0fa84a] hover:underline"
                     >
                       View Details
                     </button>
@@ -417,6 +417,12 @@ function InspectionSearch() {
 }
 
 export default InspectionSearch;
+
+
+
+
+
+
 
 
 

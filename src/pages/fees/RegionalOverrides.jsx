@@ -89,7 +89,7 @@ function RegionalOverrides() {
           <button
             onClick={() => setShowCreateModal(true)}
             disabled={!policy.allowed}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <Plus className="h-5 w-5" />
             Create Override
@@ -220,7 +220,7 @@ function RegionalOverrides() {
                 <select
                   value={formData.admin_unit_id}
                   onChange={(e) => setFormData({ ...formData, admin_unit_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select region...</option>
                   {regions.map(region => (
@@ -245,7 +245,7 @@ function RegionalOverrides() {
                       override_fee_amount: schedule ? schedule.base_fee_amount : 0,
                     });
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select fee schedule...</option>
                   {activeFeeSchedules.map(schedule => (
@@ -265,7 +265,7 @@ function RegionalOverrides() {
                   step="0.01"
                   value={formData.override_fee_amount}
                   onChange={(e) => setFormData({ ...formData, override_fee_amount: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
                 {formData.fee_schedule_id && (
                   <p className="text-xs text-gray-500 mt-1">
@@ -282,7 +282,7 @@ function RegionalOverrides() {
                 <select
                   value={formData.approval_status}
                   onChange={(e) => setFormData({ ...formData, approval_status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="Draft">Draft</option>
                   <option value="Approved">Approved</option>
@@ -306,7 +306,7 @@ function RegionalOverrides() {
               </button>
               <button
                 onClick={handleCreateOverride}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Create Override
               </button>
@@ -329,7 +329,7 @@ function RegionalOverrides() {
                     type="checkbox"
                     checked={policy.allowed}
                     onChange={(e) => setPolicy({ ...policy, allowed: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm font-medium text-gray-700">Allow Regional Overrides</span>
                 </label>
@@ -345,7 +345,7 @@ function RegionalOverrides() {
                       type="number"
                       value={policy.max_variance_percent || ''}
                       onChange={(e) => setPolicy({ ...policy, max_variance_percent: parseFloat(e.target.value) || null })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                       placeholder="e.g., 20"
                     />
                   </div>
@@ -356,7 +356,7 @@ function RegionalOverrides() {
                         type="checkbox"
                         checked={policy.requires_federal_approval}
                         onChange={(e) => setPolicy({ ...policy, requires_federal_approval: e.target.checked })}
-                        className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                        className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                       />
                       <span className="text-sm text-gray-700">Requires Federal Approval</span>
                     </label>
@@ -373,7 +373,7 @@ function RegionalOverrides() {
               </button>
               <button
                 onClick={handleUpdatePolicy}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Save Policy
               </button>

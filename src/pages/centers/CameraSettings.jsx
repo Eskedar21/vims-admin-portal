@@ -178,7 +178,7 @@ function CameraSettings() {
                   type="text"
                   value={formData.camera_label}
                   onChange={(e) => setFormData({ ...formData, camera_label: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -188,7 +188,7 @@ function CameraSettings() {
                     type="checkbox"
                     checked={formData.gps_supported}
                     onChange={(e) => setFormData({ ...formData, gps_supported: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm font-medium text-gray-700">GPS Supported <span className="text-red-500">*</span></span>
                 </label>
@@ -206,7 +206,7 @@ function CameraSettings() {
                     type="text"
                     value={formData.gps_device_id}
                     onChange={(e) => setFormData({ ...formData, gps_device_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               )}
@@ -219,7 +219,7 @@ function CameraSettings() {
                   type="text"
                   value={formData.stream_url_ref}
                   onChange={(e) => setFormData({ ...formData, stream_url_ref: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="secure://streams/camera-001"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -236,7 +236,7 @@ function CameraSettings() {
                     type="number"
                     value={formData.storage_total_gb}
                     onChange={(e) => setFormData({ ...formData, storage_total_gb: parseInt(e.target.value) || 500 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -247,7 +247,7 @@ function CameraSettings() {
                     type="number"
                     value={formData.retention_policy_days}
                     onChange={(e) => setFormData({ ...formData, retention_policy_days: parseInt(e.target.value) || 90 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -258,7 +258,7 @@ function CameraSettings() {
                     type="checkbox"
                     checked={formData.supports_snapshots}
                     onChange={(e) => setFormData({ ...formData, supports_snapshots: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Supports Snapshots (Start/End/Fail/Retest)</span>
                 </label>
@@ -267,7 +267,7 @@ function CameraSettings() {
                     type="checkbox"
                     checked={formData.supports_video_clips}
                     onChange={(e) => setFormData({ ...formData, supports_video_clips: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Supports Video Clips (optional)</span>
                 </label>
@@ -289,7 +289,7 @@ function CameraSettings() {
               <button
                 onClick={handleUpdate}
                 disabled={!formData.gps_supported}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Save Settings
               </button>
@@ -302,6 +302,12 @@ function CameraSettings() {
 }
 
 export default CameraSettings;
+
+
+
+
+
+
 
 
 

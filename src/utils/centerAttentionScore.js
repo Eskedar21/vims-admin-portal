@@ -19,11 +19,11 @@ export function calculateAttentionScore(center, incidents = []) {
     reasons.push("Center degraded");
   }
 
-  // Machine downtime (20 points)
+  // Machine downtime (20 points) - removed from display but still contributes to score
   const machineDowntime = calculateMachineDowntime(center.machineStatus);
   if (machineDowntime > 0) {
     score += Math.min(20, machineDowntime * 5);
-    reasons.push(`${machineDowntime} machine(s) offline`);
+    // Machine status removed from reasons display
   }
 
   // Geofence breaches (15 points per breach)

@@ -76,7 +76,7 @@ function TestStandards() {
                   onClick={() => setSelectedClassId(vehicleClass.id)}
                   className={`w-full px-4 py-3 text-left transition-colors ${
                     selectedClassId === vehicleClass.id
-                      ? "bg-[#009639]/10 text-[#009639] border-l-4 border-[#009639] font-semibold"
+                      ? "bg-[#88bf47]/10 text-[#88bf47] border-l-4 border-[#88bf47] font-semibold"
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -160,7 +160,7 @@ function TestStandards() {
                   <button
                     type="button"
                     onClick={handlePublish}
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#009639] text-white px-5 py-2.5 text-sm font-medium hover:bg-[#007c2d] transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white px-5 py-2.5 text-sm font-medium hover:bg-[#007c2d] transition-colors shadow-sm"
                   >
                     <Send className="h-4 w-4" />
                     Save & Publish

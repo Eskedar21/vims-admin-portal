@@ -164,7 +164,7 @@ function AuditLogs() {
         </div>
         <button
           onClick={() => setShowExportModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Download className="h-5 w-5" />
           Export Logs
@@ -179,7 +179,7 @@ function AuditLogs() {
               onClick={() => navigate('/security/all')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
                 logSource === 'all'
-                  ? 'border-[#009639] text-[#009639]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -189,7 +189,7 @@ function AuditLogs() {
               onClick={() => navigate('/security/desktop-app')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
                 logSource === 'desktop-app'
-                  ? 'border-[#009639] text-[#009639]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -200,7 +200,7 @@ function AuditLogs() {
               onClick={() => navigate('/security/admin-portal')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition ${
                 logSource === 'admin-portal'
-                  ? 'border-[#009639] text-[#009639]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -234,7 +234,7 @@ function AuditLogs() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by event ID, actor, target, or event type..."
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             />
           </div>
           <button
@@ -251,7 +251,7 @@ function AuditLogs() {
             <select
               value={filters.event_type}
               onChange={(e) => setFilters({ ...filters, event_type: e.target.value })}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Types</option>
               {EVENT_TYPES.map(type => (
@@ -264,7 +264,7 @@ function AuditLogs() {
             <select
               value={filters.action}
               onChange={(e) => setFilters({ ...filters, action: e.target.value })}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Actions</option>
               {ACTIONS.map(action => (
@@ -277,7 +277,7 @@ function AuditLogs() {
             <select
               value={filters.result}
               onChange={(e) => setFilters({ ...filters, result: e.target.value })}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Results</option>
               {RESULTS.map(result => (
@@ -290,7 +290,7 @@ function AuditLogs() {
             <select
               value={filters.data_classification}
               onChange={(e) => setFilters({ ...filters, data_classification: e.target.value })}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Classifications</option>
               {DATA_CLASSIFICATIONS.map(classification => (
@@ -304,7 +304,7 @@ function AuditLogs() {
               type="date"
               value={filters.date_from}
               onChange={(e) => setFilters({ ...filters, date_from: e.target.value })}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             />
           </div>
           <div>
@@ -313,7 +313,7 @@ function AuditLogs() {
               type="date"
               value={filters.date_to}
               onChange={(e) => setFilters({ ...filters, date_to: e.target.value })}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             />
           </div>
         </div>
@@ -374,7 +374,7 @@ function AuditLogs() {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => setSelectedEvent(event)}
-                      className="text-[#009639] hover:text-[#007A2F] hover:underline"
+                      className="text-[#88bf47] hover:text-[#0fa84a] hover:underline"
                     >
                       View Details
                     </button>
@@ -481,7 +481,7 @@ function AuditLogs() {
                   value={exportPurpose}
                   onChange={(e) => setExportPurpose(e.target.value)}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Explain why you need to export these audit logs..."
                 />
               </div>
@@ -503,7 +503,7 @@ function AuditLogs() {
               <button
                 onClick={handleExport}
                 disabled={!exportPurpose.trim()}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Export
               </button>

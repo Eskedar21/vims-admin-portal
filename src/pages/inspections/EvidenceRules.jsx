@@ -89,7 +89,7 @@ function EvidenceRules() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Rule
@@ -277,7 +277,7 @@ function EvidenceRules() {
                   <select
                     value={formData.inspection_type_id}
                     onChange={(e) => setFormData({ ...formData, inspection_type_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="">Select...</option>
                     {mockInspectionTypes.map(type => (
@@ -294,7 +294,7 @@ function EvidenceRules() {
                   <select
                     value={formData.vehicle_class_id}
                     onChange={(e) => setFormData({ ...formData, vehicle_class_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="">Select...</option>
                     {mockVehicleClasses.map(vc => (
@@ -314,7 +314,7 @@ function EvidenceRules() {
                   type="text"
                   value={formData.checklist_item_id}
                   onChange={(e) => setFormData({ ...formData, checklist_item_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -324,7 +324,7 @@ function EvidenceRules() {
                     type="checkbox"
                     checked={formData.photo_required_on_fail}
                     onChange={(e) => setFormData({ ...formData, photo_required_on_fail: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Photo Required on Fail</span>
                 </label>
@@ -333,7 +333,7 @@ function EvidenceRules() {
                     type="checkbox"
                     checked={formData.mandatory}
                     onChange={(e) => setFormData({ ...formData, mandatory: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Mandatory</span>
                 </label>
@@ -342,7 +342,7 @@ function EvidenceRules() {
                     type="checkbox"
                     checked={formData.incident_on_gap}
                     onChange={(e) => setFormData({ ...formData, incident_on_gap: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Generate Incident on Gap</span>
                 </label>
@@ -355,7 +355,7 @@ function EvidenceRules() {
                 <select
                   value={formData.gap_severity}
                   onChange={(e) => setFormData({ ...formData, gap_severity: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
@@ -376,7 +376,7 @@ function EvidenceRules() {
               </button>
               <button
                 onClick={handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Create Rule
               </button>
@@ -389,6 +389,12 @@ function EvidenceRules() {
 }
 
 export default EvidenceRules;
+
+
+
+
+
+
 
 
 

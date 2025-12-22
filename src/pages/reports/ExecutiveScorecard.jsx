@@ -77,7 +77,7 @@ function ExecutiveScorecard() {
           <select
             value={scope}
             onChange={(e) => setScope(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
           >
             <option value="National">National</option>
             <option value="Region">Region</option>
@@ -87,7 +87,7 @@ function ExecutiveScorecard() {
           <select
             value={timeWindow}
             onChange={(e) => setTimeWindow(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
           >
             {TIME_WINDOWS.map(window => (
               <option key={window} value={window}>{window}</option>
@@ -114,7 +114,7 @@ function ExecutiveScorecard() {
       <div>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Volume Metrics</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {scorecard.widgets.filter(w => ['total_inspections', 'pass_rate', 'fail_count', 'retest_due'].includes(w.widget_id)).map(getWidgetCard)}
+          {scorecard.widgets.filter(w => ['total_inspections', 'pass_rate', 'fail_count'].includes(w.widget_id)).map(getWidgetCard)}
         </div>
       </div>
 

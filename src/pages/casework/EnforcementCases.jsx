@@ -157,7 +157,7 @@ function EnforcementCases() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Case
@@ -172,7 +172,7 @@ function EnforcementCases() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Status</option>
               {STATUSES.map(status => (
@@ -185,7 +185,7 @@ function EnforcementCases() {
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Priorities</option>
               {PRIORITIES.map(priority => (
@@ -248,7 +248,7 @@ function EnforcementCases() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         onClick={() => setSelectedCase(caseItem)}
-                        className="text-[#009639] hover:text-[#007A2F] hover:underline"
+                        className="text-[#88bf47] hover:text-[#0fa84a] hover:underline"
                       >
                         View Details
                       </button>
@@ -284,7 +284,7 @@ function EnforcementCases() {
                     type="text"
                     value={formData.plate_number}
                     onChange={(e) => setFormData({ ...formData, plate_number: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -295,7 +295,7 @@ function EnforcementCases() {
                     type="text"
                     value={formData.vin}
                     onChange={(e) => setFormData({ ...formData, vin: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -306,7 +306,7 @@ function EnforcementCases() {
                     type="text"
                     value={formData.certificate_number}
                     onChange={(e) => setFormData({ ...formData, certificate_number: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -317,7 +317,7 @@ function EnforcementCases() {
                     type="text"
                     value={formData.inspection_id}
                     onChange={(e) => setFormData({ ...formData, inspection_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -330,7 +330,7 @@ function EnforcementCases() {
                   <select
                     value={formData.case_type}
                     onChange={(e) => setFormData({ ...formData, case_type: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {CASE_TYPES.map(type => (
                       <option key={type} value={type}>{type}</option>
@@ -344,7 +344,7 @@ function EnforcementCases() {
                   <select
                     value={formData.priority}
                     onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {PRIORITIES.map(priority => (
                       <option key={priority} value={priority}>{priority}</option>
@@ -361,7 +361,7 @@ function EnforcementCases() {
                   value={formData.summary}
                   onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Brief summary of the case..."
                 />
               </div>
@@ -374,7 +374,7 @@ function EnforcementCases() {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Additional notes..."
                 />
               </div>
@@ -391,7 +391,7 @@ function EnforcementCases() {
               </button>
               <button
                 onClick={handleCreateCase}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Create Case
               </button>
@@ -519,6 +519,12 @@ function EnforcementCases() {
 }
 
 export default EnforcementCases;
+
+
+
+
+
+
 
 
 

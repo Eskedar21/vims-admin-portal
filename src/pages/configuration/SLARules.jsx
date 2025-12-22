@@ -52,7 +52,7 @@ function SLARules() {
                 </div>
                 <button
                   onClick={() => setEditingRule(editingRule === idx ? null : idx)}
-                  className="px-4 py-2 text-sm font-medium text-[#009639] hover:bg-green-50 rounded-lg transition"
+                  className="px-4 py-2 text-sm font-medium text-[#88bf47] hover:bg-green-50 rounded-lg transition"
                 >
                   {editingRule === idx ? 'Cancel' : 'Edit'}
                 </button>
@@ -73,7 +73,7 @@ function SLARules() {
                           updated[idx].ack_due_minutes = parseInt(e.target.value);
                           setRules(updated);
                         }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                       />
                     </div>
                     <div>
@@ -88,7 +88,7 @@ function SLARules() {
                           updated[idx].resolve_due_minutes = parseInt(e.target.value);
                           setRules(updated);
                         }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                       />
                     </div>
                   </div>
@@ -103,7 +103,7 @@ function SLARules() {
                         updated[idx].working_hours_policy = e.target.value;
                         setRules(updated);
                       }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="24/7">24/7</option>
                       <option value="business_hours">Business Hours</option>
@@ -112,7 +112,7 @@ function SLARules() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleSave(rule)}
-                      className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition text-sm font-medium flex items-center gap-2"
+                      className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition text-sm font-medium flex items-center gap-2"
                     >
                       <Save className="h-4 w-4" />
                       Save Changes

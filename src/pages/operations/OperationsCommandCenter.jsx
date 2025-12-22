@@ -173,7 +173,7 @@ function OperationsCommandCenter() {
               onClick={() => setViewMode('MAP')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition ${
                 viewMode === 'MAP'
-                  ? 'bg-[#009639] text-white'
+                  ? 'bg-[#88bf47] text-white'
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -184,7 +184,7 @@ function OperationsCommandCenter() {
               onClick={() => setViewMode('LIST')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition ${
                 viewMode === 'LIST'
-                  ? 'bg-[#009639] text-white'
+                  ? 'bg-[#88bf47] text-white'
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -216,7 +216,7 @@ function OperationsCommandCenter() {
               <select
                 value={filters.jurisdiction}
                 onChange={(e) => setFilters({ ...filters, jurisdiction: e.target.value })}
-                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="all">All Jurisdictions</option>
                 {Array.from(new Set(scopedCenters.map(c => c.region))).map(region => (
@@ -226,7 +226,7 @@ function OperationsCommandCenter() {
               <select
                 value={filters.status}
                 onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="all">All Status</option>
                 <option value="Online">Online</option>
@@ -236,7 +236,7 @@ function OperationsCommandCenter() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="attention_score">Sort by Attention</option>
                 <option value="last_seen">Sort by Last Seen</option>
@@ -246,7 +246,7 @@ function OperationsCommandCenter() {
               <select
                 value={filters.dateWindow}
                 onChange={(e) => setFilters({ ...filters, dateWindow: e.target.value })}
-                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               >
                 <option value="today">Today</option>
                 <option value="7d">Last 7 Days</option>

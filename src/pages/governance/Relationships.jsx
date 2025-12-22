@@ -105,7 +105,7 @@ function Relationships() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Relationship
@@ -238,7 +238,7 @@ function Relationships() {
                 <select
                   value={formData.institution_id}
                   onChange={(e) => setFormData({ ...formData, institution_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select institution...</option>
                   {activeInstitutions.map(inst => (
@@ -256,7 +256,7 @@ function Relationships() {
                 <select
                   value={formData.admin_unit_id}
                   onChange={(e) => setFormData({ ...formData, admin_unit_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select admin unit...</option>
                   {activeAdminUnits.map(unit => (
@@ -274,7 +274,7 @@ function Relationships() {
                 <select
                   value={formData.relationship_type}
                   onChange={(e) => setFormData({ ...formData, relationship_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {RELATIONSHIP_TYPES.map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -289,7 +289,7 @@ function Relationships() {
                 <select
                   value={formData.scope_level}
                   onChange={(e) => setFormData({ ...formData, scope_level: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {SCOPE_LEVELS.map(level => (
                     <option key={level} value={level}>{level}</option>
@@ -305,7 +305,7 @@ function Relationships() {
                   type="text"
                   value={formData.permissions_profile_id}
                   onChange={(e) => setFormData({ ...formData, permissions_profile_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="e.g., PAYMENT-PROFILE-001"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -322,7 +322,7 @@ function Relationships() {
                     type="date"
                     value={formData.effective_from}
                     onChange={(e) => setFormData({ ...formData, effective_from: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -332,7 +332,7 @@ function Relationships() {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -353,7 +353,7 @@ function Relationships() {
               </button>
               <button
                 onClick={editingRelationship ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingRelationship ? 'Update' : 'Create'}
               </button>

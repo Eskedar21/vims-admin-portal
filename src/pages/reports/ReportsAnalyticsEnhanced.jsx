@@ -68,7 +68,7 @@ function TrendAnalysis() {
                 <Line
                   type="monotone"
                   dataKey={metric}
-                  stroke="#009639"
+                  stroke="#88bf47"
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   name={metric === 'inspections' ? 'Inspections' : metric === 'passRate' ? 'Pass Rate (%)' : metric === 'revenue' ? 'Revenue (ETB)' : 'Cycle Time (min)'}
@@ -236,7 +236,7 @@ function OperationalReports() {
                 <YAxis stroke="#6b7280" fontSize={12} />
                 <Tooltip contentStyle={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: "8px" }} />
                 <Legend />
-                <Line type="monotone" dataKey="inspections" stroke="#009639" strokeWidth={2} dot={{ r: 4 }} name="Inspections/Day" />
+                <Line type="monotone" dataKey="inspections" stroke="#88bf47" strokeWidth={2} dot={{ r: 4 }} name="Inspections/Day" />
                 <Line type="monotone" dataKey="cycleTime" stroke="#3b82f6" strokeWidth={2} dot={{ r: 4 }} name="Cycle Time (min)" />
               </LineChart>
             </ResponsiveContainer>
@@ -379,7 +379,7 @@ function EvidenceCompletenessReports() {
               <YAxis yAxisId="right" orientation="right" stroke="#6b7280" fontSize={12} />
               <Tooltip contentStyle={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: "8px" }} />
               <Legend />
-              <Line yAxisId="left" type="monotone" dataKey="completeness" stroke="#009639" strokeWidth={2} dot={{ r: 4 }} name="Completeness %" />
+              <Line yAxisId="left" type="monotone" dataKey="completeness" stroke="#88bf47" strokeWidth={2} dot={{ r: 4 }} name="Completeness %" />
               <Line yAxisId="right" type="monotone" dataKey="gaps" stroke="#ef4444" strokeWidth={2} dot={{ r: 4 }} name="Gaps" />
             </LineChart>
           </ResponsiveContainer>
@@ -533,7 +533,7 @@ function ComplianceIntegrityReports() {
               <Legend />
               <Line yAxisId="left" type="monotone" dataKey="breaches" stroke="#ef4444" strokeWidth={2} dot={{ r: 4 }} name="Geofence Breaches" />
               <Line yAxisId="left" type="monotone" dataKey="fraudFlags" stroke="#f59e0b" strokeWidth={2} dot={{ r: 4 }} name="Fraud Flags" />
-              <Line yAxisId="right" type="monotone" dataKey="cameraUptime" stroke="#009639" strokeWidth={2} dot={{ r: 4 }} name="Camera Uptime %" />
+              <Line yAxisId="right" type="monotone" dataKey="cameraUptime" stroke="#88bf47" strokeWidth={2} dot={{ r: 4 }} name="Camera Uptime %" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -630,7 +630,7 @@ function ReportsAnalyticsEnhanced() {
                   onClick={() => navigate(tab.route)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition whitespace-nowrap ${
                     isActive
-                      ? 'border-[#009639] text-[#009639]'
+                      ? 'border-[#88bf47] text-[#88bf47]'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >

@@ -26,7 +26,7 @@ function Login() {
   if (isAuthenticated) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-[#009639] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-[#88bf47] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -78,8 +78,8 @@ function Login() {
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#009639]/10 rounded-full mb-4">
-            <Shield className="h-10 w-10 text-[#009639]" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#88bf47]/10 rounded-full mb-4">
+            <Shield className="h-10 w-10 text-[#88bf47]" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">VIMS Admin Portal</h1>
           <p className="text-gray-600 text-sm">Vehicle Inspection Management System</p>
@@ -100,7 +100,7 @@ function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter your username"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                 required
                 autoComplete="username"
               />
@@ -116,7 +116,7 @@ function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                   required
                   autoComplete="current-password"
                 />
@@ -145,7 +145,7 @@ function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#009639] text-white py-3 rounded-lg font-semibold hover:bg-[#007c2d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-[#88bf47] text-white py-3 rounded-lg font-semibold hover:bg-[#007c2d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>

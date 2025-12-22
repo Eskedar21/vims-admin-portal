@@ -98,7 +98,7 @@ function TestStandards() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Standard
@@ -227,7 +227,7 @@ function TestStandards() {
                 <select
                   value={formData.vehicle_class_id}
                   onChange={(e) => setFormData({ ...formData, vehicle_class_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select vehicle class...</option>
                   {mockVehicleClasses.map(vc => (
@@ -245,7 +245,7 @@ function TestStandards() {
                 <select
                   value={formData.test_type}
                   onChange={(e) => setFormData({ ...formData, test_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {TEST_TYPES.map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -266,7 +266,7 @@ function TestStandards() {
                       parameter_name_en: e.target.value,
                       parameter_name: e.target.value.toLowerCase().replace(/\s+/g, '_'),
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -277,7 +277,7 @@ function TestStandards() {
                     type="text"
                     value={formData.parameter_name_am}
                     onChange={(e) => setFormData({ ...formData, parameter_name_am: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               </div>
@@ -291,7 +291,7 @@ function TestStandards() {
                     type="text"
                     value={formData.unit}
                     onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     placeholder="%, ppm, N, etc."
                   />
                 </div>
@@ -302,7 +302,7 @@ function TestStandards() {
                   <select
                     value={formData.pass_logic}
                     onChange={(e) => setFormData({ ...formData, pass_logic: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {PASS_LOGIC_TYPES.map(logic => (
                       <option key={logic} value={logic}>{logic.replace('_', ' ')}</option>
@@ -322,7 +322,7 @@ function TestStandards() {
                       step="any"
                       value={formData.min_value || ''}
                       onChange={(e) => setFormData({ ...formData, min_value: parseFloat(e.target.value) || null })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   </div>
                   <div>
@@ -334,7 +334,7 @@ function TestStandards() {
                       step="any"
                       value={formData.max_value || ''}
                       onChange={(e) => setFormData({ ...formData, max_value: parseFloat(e.target.value) || null })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                   </div>
                 </div>
@@ -356,7 +356,7 @@ function TestStandards() {
                         setFormData({ ...formData, max_value: parseFloat(e.target.value) || null });
                       }
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
               )}
@@ -370,7 +370,7 @@ function TestStandards() {
                   step="any"
                   value={formData.tolerance}
                   onChange={(e) => setFormData({ ...formData, tolerance: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 />
               </div>
 
@@ -381,7 +381,7 @@ function TestStandards() {
                 <select
                   value={formData.approval_status}
                   onChange={(e) => setFormData({ ...formData, approval_status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   {APPROVAL_STATUSES.map(status => (
                     <option key={status} value={status}>{status}</option>
@@ -402,7 +402,7 @@ function TestStandards() {
               </button>
               <button
                 onClick={editingStandard ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingStandard ? 'Update' : 'Create'}
               </button>
@@ -415,6 +415,12 @@ function TestStandards() {
 }
 
 export default TestStandards;
+
+
+
+
+
+
 
 
 

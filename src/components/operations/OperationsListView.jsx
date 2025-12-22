@@ -174,7 +174,7 @@ function OperationsListView({ centers, onCenterClick, sortBy, filters }) {
                         e.stopPropagation();
                         onCenterClick(center);
                       }}
-                      className="text-[#009639] hover:text-[#007A2F]"
+                      className="text-[#88bf47] hover:text-[#0fa84a]"
                     >
                       View Details
                     </button>

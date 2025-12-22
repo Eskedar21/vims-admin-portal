@@ -209,7 +209,7 @@ function FeeStructure() {
               onClick={() => setActiveSection("base-fees")}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeSection === "base-fees"
-                  ? "border-[#009639] text-[#009639]"
+                  ? "border-[#88bf47] text-[#88bf47]"
                   : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
               }`}
             >
@@ -220,7 +220,7 @@ function FeeStructure() {
               onClick={() => setActiveSection("regional-overrides")}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeSection === "regional-overrides"
-                  ? "border-[#009639] text-[#009639]"
+                  ? "border-[#88bf47] text-[#88bf47]"
                   : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
               }`}
             >
@@ -245,7 +245,7 @@ function FeeStructure() {
           </div>
           <button
             onClick={handleAddFee}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#009639] text-white text-sm font-medium px-4 py-2 hover:bg-[#007c2d] transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white text-sm font-medium px-4 py-2 hover:bg-[#007c2d] transition-colors shadow-sm"
           >
             <Plus className="h-4 w-4" />
             Add Fee
@@ -277,7 +277,7 @@ function FeeStructure() {
                     <select
                       value={fee.inspectionType}
                       onChange={(e) => handleFeeChange(fee.id, "inspectionType", e.target.value)}
-                      className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                      className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     >
                       {INSPECTION_TYPES.map((type) => (
                         <option key={type} value={type}>
@@ -290,7 +290,7 @@ function FeeStructure() {
                     <select
                       value={fee.vehicleClass}
                       onChange={(e) => handleFeeChange(fee.id, "vehicleClass", e.target.value)}
-                      className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                      className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                     >
                       {VEHICLE_CLASSES.map((cls) => (
                         <option key={cls} value={cls}>
@@ -307,7 +307,7 @@ function FeeStructure() {
                         step="10"
                         value={fee.amount}
                         onChange={(e) => handleFeeChange(fee.id, "amount", e.target.value)}
-                        className="w-32 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                        className="w-32 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                       />
                       <span className="text-sm text-gray-600">ETB</span>
                       <span className="text-sm font-medium text-gray-900">
@@ -360,7 +360,7 @@ function FeeStructure() {
                   step="10"
                   value={rule.fee}
                   onChange={(e) => handleRuleFeeChange(rule.id, e.target.value)}
-                  className="w-24 rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                  className="w-24 rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
                 />
                 <span className="text-sm text-gray-600">ETB</span>
                 <span className="text-sm font-medium text-gray-900">
@@ -385,7 +385,7 @@ function FeeStructure() {
             <select
               value={newRule.component}
               onChange={(e) => setNewRule({ ...newRule, component: e.target.value })}
-              className="px-3 py-1.5 rounded-lg bg-white border border-gray-300 text-sm font-medium text-gray-900 min-w-[120px] focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+              className="px-3 py-1.5 rounded-lg bg-white border border-gray-300 text-sm font-medium text-gray-900 min-w-[120px] focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
             >
               <option value="">Select component</option>
               {COMPONENTS.filter(
@@ -405,14 +405,14 @@ function FeeStructure() {
                 value={newRule.fee}
                 onChange={(e) => setNewRule({ ...newRule, fee: e.target.value })}
                 placeholder="Amount"
-                className="w-24 rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+                className="w-24 rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
               />
               <span className="text-sm text-gray-600">ETB</span>
             </div>
             <button
               onClick={handleAddRule}
               disabled={!newRule.component || !newRule.fee}
-              className="ml-auto inline-flex items-center gap-2 rounded-lg bg-[#009639] text-white text-sm font-medium px-4 py-1.5 hover:bg-[#007c2d] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="ml-auto inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white text-sm font-medium px-4 py-1.5 hover:bg-[#007c2d] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <Plus className="h-4 w-4" />
               Add Rule
@@ -438,7 +438,7 @@ function FeeStructure() {
               step="0.1"
               value={fees.taxSettings.vatPercent}
               onChange={(e) => handleVATChange(e.target.value)}
-              className="w-32 rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#009639] focus:border-transparent"
+              className="w-32 rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent"
             />
             <span className="text-sm text-gray-600">%</span>
             <span className="text-sm text-gray-500">
@@ -452,7 +452,7 @@ function FeeStructure() {
           <div className="flex justify-end">
             <button
               onClick={handleSave}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#009639] text-white px-6 py-2.5 text-sm font-medium hover:bg-[#007c2d] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white px-6 py-2.5 text-sm font-medium hover:bg-[#007c2d] transition-colors shadow-sm"
             >
               <Save className="h-4 w-4" />
               Save Fee Structure
@@ -481,7 +481,7 @@ function FeeStructure() {
               <button
                 onClick={() => setShowCreateModal(true)}
                 disabled={!policy.allowed}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007c2d] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#007c2d] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 <Plus className="h-5 w-5" />
                 Create Override
@@ -612,7 +612,7 @@ function FeeStructure() {
                     <select
                       value={overrideFormData.admin_unit_id}
                       onChange={(e) => setOverrideFormData({ ...overrideFormData, admin_unit_id: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="">Select region...</option>
                       {regions.map(region => (
@@ -637,7 +637,7 @@ function FeeStructure() {
                           override_fee_amount: schedule ? schedule.base_fee_amount : 0,
                         });
                       }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="">Select fee schedule...</option>
                       {activeFeeSchedules.map(schedule => (
@@ -657,7 +657,7 @@ function FeeStructure() {
                       step="0.01"
                       value={overrideFormData.override_fee_amount}
                       onChange={(e) => setOverrideFormData({ ...overrideFormData, override_fee_amount: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     />
                     {overrideFormData.fee_schedule_id && (
                       <p className="text-xs text-gray-500 mt-1">
@@ -674,7 +674,7 @@ function FeeStructure() {
                     <select
                       value={overrideFormData.approval_status}
                       onChange={(e) => setOverrideFormData({ ...overrideFormData, approval_status: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     >
                       <option value="Draft">Draft</option>
                       <option value="Approved">Approved</option>
@@ -705,7 +705,7 @@ function FeeStructure() {
                   </button>
                   <button
                     onClick={handleCreateOverride}
-                    className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007c2d] transition"
+                    className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#007c2d] transition"
                   >
                     Create Override
                   </button>
@@ -728,7 +728,7 @@ function FeeStructure() {
                         type="checkbox"
                         checked={policy.allowed}
                         onChange={(e) => setPolicy({ ...policy, allowed: e.target.checked })}
-                        className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                        className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                       />
                       <span className="text-sm font-medium text-gray-700">Allow Regional Overrides</span>
                     </label>
@@ -744,7 +744,7 @@ function FeeStructure() {
                           type="number"
                           value={policy.max_variance_percent || ""}
                           onChange={(e) => setPolicy({ ...policy, max_variance_percent: parseFloat(e.target.value) || null })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                           placeholder="e.g., 20"
                         />
                       </div>
@@ -755,7 +755,7 @@ function FeeStructure() {
                             type="checkbox"
                             checked={policy.requires_federal_approval}
                             onChange={(e) => setPolicy({ ...policy, requires_federal_approval: e.target.checked })}
-                            className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                            className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                           />
                           <span className="text-sm text-gray-700">Requires Federal Approval</span>
                         </label>
@@ -772,7 +772,7 @@ function FeeStructure() {
                   </button>
                   <button
                     onClick={handleUpdatePolicy}
-                    className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007c2d] transition"
+                    className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#007c2d] transition"
                   >
                     Save Policy
                   </button>

@@ -402,3 +402,9 @@ export function calculateRetestFee(failedComponents, vehicleClassId) {
 
 
 
+
+
+
+
+
+

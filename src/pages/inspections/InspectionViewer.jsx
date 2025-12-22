@@ -39,7 +39,7 @@ function InspectionViewer() {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Inspection Not Found</h2>
           <button
             onClick={() => navigate('/inspections')}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
           >
             Back to Inspections
           </button>
@@ -126,7 +126,7 @@ function InspectionViewer() {
             </button>
           <button
             onClick={() => {/* Handle download */}}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#005f40] text-white hover:bg-[#004d33] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#88bf47] text-white hover:bg-[#0fa84a] transition-colors"
           >
               <Download className="h-4 w-4" />
               Export
@@ -142,7 +142,7 @@ function InspectionViewer() {
               onClick={() => setActiveTab('overview')}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'overview'
-                  ? 'border-[#005f40] text-[#005f40]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -152,7 +152,7 @@ function InspectionViewer() {
               onClick={() => setActiveTab('evidence')}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'evidence'
-                  ? 'border-[#005f40] text-[#005f40]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -162,7 +162,7 @@ function InspectionViewer() {
               onClick={() => setActiveTab('report')}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'report'
-                  ? 'border-[#005f40] text-[#005f40]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >

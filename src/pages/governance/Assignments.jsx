@@ -122,7 +122,7 @@ function Assignments() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Create Assignment
@@ -289,7 +289,7 @@ function Assignments() {
                 <select
                   value={formData.admin_unit_id}
                   onChange={(e) => setFormData({ ...formData, admin_unit_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select admin unit...</option>
                   {activeAdminUnits.map(unit => (
@@ -307,7 +307,7 @@ function Assignments() {
                 <select
                   value={formData.office_id}
                   onChange={(e) => setFormData({ ...formData, office_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="">Select office...</option>
                   {activeInstitutions.map(inst => (
@@ -325,7 +325,7 @@ function Assignments() {
                 <select
                   value={formData.assignment_type}
                   onChange={(e) => setFormData({ ...formData, assignment_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                 >
                   <option value="Owner">Owner</option>
                   <option value="Oversight">Oversight</option>
@@ -342,7 +342,7 @@ function Assignments() {
                   type="text"
                   value={formData.primary_admin_user_id}
                   onChange={(e) => setFormData({ ...formData, primary_admin_user_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="Enter user ID"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -373,7 +373,7 @@ function Assignments() {
                             });
                           }
                         }}
-                        className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                        className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                       />
                       <span className="text-sm text-gray-700">{resp}</span>
                     </label>
@@ -390,7 +390,7 @@ function Assignments() {
                     type="date"
                     value={formData.effective_from}
                     onChange={(e) => setFormData({ ...formData, effective_from: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   />
                 </div>
                 <div>
@@ -400,7 +400,7 @@ function Assignments() {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -421,7 +421,7 @@ function Assignments() {
               </button>
               <button
                 onClick={editingAssignment ? handleUpdate : handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 {editingAssignment ? 'Update' : 'Create'}
               </button>

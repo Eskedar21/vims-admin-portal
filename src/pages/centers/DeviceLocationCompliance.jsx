@@ -134,7 +134,7 @@ function DeviceLocationCompliance() {
             <select
               value={centerFilter}
               onChange={(e) => setCenterFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Centers</option>
               {mockCentersFull.map(center => (
@@ -149,7 +149,7 @@ function DeviceLocationCompliance() {
             <select
               value={deviceTypeFilter}
               onChange={(e) => setDeviceTypeFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Types</option>
               <option value="camera">Camera</option>
@@ -163,7 +163,7 @@ function DeviceLocationCompliance() {
             <select
               value={bandFilter}
               onChange={(e) => setBandFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Bands</option>
               <option value="GREEN">Green (≤50m)</option>

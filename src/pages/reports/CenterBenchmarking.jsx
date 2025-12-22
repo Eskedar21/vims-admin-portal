@@ -71,7 +71,7 @@ function CenterBenchmarking() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               {SORT_OPTIONS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
@@ -83,7 +83,7 @@ function CenterBenchmarking() {
             <select
               value={jurisdictionFilter}
               onChange={(e) => setJurisdictionFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Jurisdictions</option>
               <option value="Addis Ababa">Addis Ababa</option>
@@ -96,7 +96,7 @@ function CenterBenchmarking() {
                 type="checkbox"
                 checked={highlightOutliers}
                 onChange={(e) => setHighlightOutliers(e.target.checked)}
-                className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
               />
               <span className="text-sm text-gray-700">Highlight Outliers</span>
             </label>
@@ -189,7 +189,7 @@ function CenterBenchmarking() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         onClick={() => handleViewCenter(benchmark.center_id)}
-                        className="text-[#009639] hover:text-[#007A2F] hover:underline"
+                        className="text-[#88bf47] hover:text-[#0fa84a] hover:underline"
                       >
                         View Center
                       </button>

@@ -11,16 +11,118 @@ function IncidentDetail() {
   const [selectedRootCause, setSelectedRootCause] = useState(null);
   const [resolutionNotes, setResolutionNotes] = useState('');
   const [assignedTo, setAssignedTo] = useState(null);
+  const [currentStatus, setCurrentStatus] = useState(null);
 
   useEffect(() => {
-    const found = mockOperationsIncidents.find(inc => inc.id === id || inc.incident_id === id);
+    let found = mockOperationsIncidents.find(inc => inc.id === id || inc.incident_id === id);
+    
+    // Check for updated incident in localStorage
+    try {
+      const stored = localStorage.getItem('updatedIncidents');
+      if (stored) {
+        const updated = JSON.parse(stored);
+        if (updated[id] && found) {
+          found = { ...found, ...updated[id] };
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load updated incident:', e);
+    }
+    
     if (found) {
       setIncident(found);
+      setCurrentStatus(found.status);
       setSelectedRootCause(found.root_cause_tag_id);
       setResolutionNotes(found.resolution_notes || '');
       setAssignedTo(found.assignedToUserId);
     }
   }, [id]);
+
+  const handleStatusChange = (newStatus) => {
+    if (!incident) return;
+    
+    // Update local state
+    setCurrentStatus(newStatus);
+    
+    // Update incident object
+    const updatedIncident = {
+      ...incident,
+      status: newStatus,
+      // Add timeline event for status change
+      timeline_events: [
+        ...(incident.timeline_events || []),
+        {
+          at: new Date().toISOString(),
+          actor: 'current_user', // In real app, use actual user
+          event_type: 'status_changed',
+          details: `Status changed from ${incident.status} to ${newStatus}`,
+        },
+      ],
+    };
+    
+    setIncident(updatedIncident);
+    
+    // In real app, this would be an API call
+    // For now, update the mock data in localStorage or context
+    try {
+      const stored = localStorage.getItem('updatedIncidents') || '{}';
+      const updated = JSON.parse(stored);
+      updated[id] = updatedIncident;
+      localStorage.setItem('updatedIncidents', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Failed to save status update:', e);
+    }
+  };
+
+  const handleAcknowledge = () => {
+    handleStatusChange('Acknowledged');
+  };
+
+  const handleAssign = () => {
+    // In real app, this would open a user picker modal
+    const userId = prompt('Enter user ID to assign:');
+    if (userId) {
+      setAssignedTo(userId);
+      handleStatusChange('In Progress');
+      // Update incident with assignment
+      const updatedIncident = {
+        ...incident,
+        assignedToUserId: userId,
+        timeline_events: [
+          ...(incident.timeline_events || []),
+          {
+            at: new Date().toISOString(),
+            actor: 'current_user',
+            event_type: 'assigned',
+            details: `Assigned to user ${userId}`,
+          },
+        ],
+      };
+      setIncident(updatedIncident);
+    }
+  };
+
+  const handleEscalate = () => {
+    // In real app, this would open escalation dialog
+    if (confirm('Escalate this incident to higher priority?')) {
+      const updatedIncident = {
+        ...incident,
+        severity: incident.severity === 'Low' ? 'Medium' :
+                  incident.severity === 'Medium' ? 'High' :
+                  incident.severity === 'High' ? 'Critical' : incident.severity,
+        timeline_events: [
+          ...(incident.timeline_events || []),
+          {
+            at: new Date().toISOString(),
+            actor: 'current_user',
+            event_type: 'escalated',
+            details: 'Incident escalated',
+          },
+        ],
+      };
+      setIncident(updatedIncident);
+    }
+  };
 
   if (!incident) {
     return (
@@ -31,7 +133,7 @@ function IncidentDetail() {
           <p className="text-gray-600 mb-4">The incident you're looking for doesn't exist.</p>
           <button
             onClick={() => navigate('/operations')}
-            className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+            className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
           >
             Back to Operations
           </button>
@@ -133,7 +235,7 @@ function IncidentDetail() {
         </div>
         <div className="flex items-center gap-3">
           {getSeverityBadge(incident.severity)}
-          {getStatusBadge(incident.status)}
+          {getStatusBadge(currentStatus || incident.status)}
         </div>
       </div>
 
@@ -218,7 +320,7 @@ function IncidentDetail() {
                 incident.timeline_events.map((event, idx) => (
                   <div key={idx} className="flex gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="w-3 h-3 rounded-full bg-[#009639]"></div>
+                      <div className="w-3 h-3 rounded-full bg-[#88bf47]"></div>
                       {idx < incident.timeline_events.length - 1 && (
                         <div className="w-0.5 h-full bg-gray-200 mt-1"></div>
                       )}
@@ -242,24 +344,58 @@ function IncidentDetail() {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* Status Change */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Status</h2>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Current Status
+              </label>
+              <select
+                value={currentStatus || incident.status}
+                onChange={(e) => handleStatusChange(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
+              >
+                <option value="Open">Open</option>
+                <option value="Acknowledged">Acknowledged</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+                <option value="False Positive">False Positive</option>
+              </select>
+            </div>
+          </div>
+
           {/* Actions */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Actions</h2>
             <div className="space-y-3">
-              <button className="w-full px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 transition text-sm font-medium">
-                Acknowledge
-              </button>
-              <button className="w-full px-4 py-2 bg-purple-100 text-purple-800 rounded-lg hover:bg-purple-200 transition text-sm font-medium">
+              {currentStatus !== 'Acknowledged' && currentStatus !== 'In Progress' && currentStatus !== 'Resolved' && (
+                <button
+                  onClick={handleAcknowledge}
+                  className="w-full px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 transition text-sm font-medium"
+                >
+                  Acknowledge
+                </button>
+              )}
+              <button
+                onClick={handleAssign}
+                className="w-full px-4 py-2 bg-purple-100 text-purple-800 rounded-lg hover:bg-purple-200 transition text-sm font-medium"
+              >
                 Assign
               </button>
-              <button className="w-full px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition text-sm font-medium">
-                Escalate
-              </button>
+              {incident.severity !== 'Critical' && (
+                <button
+                  onClick={handleEscalate}
+                  className="w-full px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition text-sm font-medium"
+                >
+                  Escalate
+                </button>
+              )}
             </div>
           </div>
 
           {/* Resolution */}
-          {incident.status !== 'Resolved' && incident.status !== 'False Positive' && (
+          {currentStatus !== 'Resolved' && currentStatus !== 'False Positive' && (
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Resolve Incident</h2>
               <div className="space-y-4">
@@ -270,7 +406,7 @@ function IncidentDetail() {
                   <select
                     value={selectedRootCause || ''}
                     onChange={(e) => setSelectedRootCause(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     <option value="">Select root cause...</option>
                     {allRootCauseTags.map(tag => (
@@ -288,13 +424,13 @@ function IncidentDetail() {
                     value={resolutionNotes}
                     onChange={(e) => setResolutionNotes(e.target.value)}
                     rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                     placeholder="Describe how the incident was resolved..."
                   />
                 </div>
                 <button
                   onClick={handleResolve}
-                  className="w-full px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition text-sm font-medium"
+                  className="w-full px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition text-sm font-medium"
                 >
                   Resolve Incident
                 </button>

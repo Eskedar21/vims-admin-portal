@@ -89,7 +89,7 @@ function IntegrationRegistry() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition flex items-center gap-2"
+          className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition flex items-center gap-2"
         >
           <Plus className="h-5 w-5" />
           Register Integration
@@ -189,7 +189,7 @@ function IntegrationRegistry() {
                   type="text"
                   value={formData.integration_name}
                   onChange={(e) => setFormData({ ...formData, integration_name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="e.g., TeleBirr Payment Gateway"
                 />
               </div>
@@ -202,7 +202,7 @@ function IntegrationRegistry() {
                   <select
                     value={formData.integration_type}
                     onChange={(e) => setFormData({ ...formData, integration_type: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {INTEGRATION_TYPES.map(type => (
                       <option key={type} value={type}>{type}</option>
@@ -216,7 +216,7 @@ function IntegrationRegistry() {
                   <select
                     value={formData.scope_supported}
                     onChange={(e) => setFormData({ ...formData, scope_supported: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   >
                     {SCOPE_SUPPORTED.map(scope => (
                       <option key={scope} value={scope}>{scope}</option>
@@ -233,7 +233,7 @@ function IntegrationRegistry() {
                   type="text"
                   value={formData.data_contract_version}
                   onChange={(e) => setFormData({ ...formData, data_contract_version: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
                   placeholder="v1.0"
                 />
               </div>
@@ -244,7 +244,7 @@ function IntegrationRegistry() {
                     type="checkbox"
                     checked={formData.change_control_required}
                     onChange={(e) => setFormData({ ...formData, change_control_required: e.target.checked })}
-                    className="rounded border-gray-300 text-[#009639] focus:ring-[#009639]"
+                    className="rounded border-gray-300 text-[#88bf47] focus:ring-[#88bf47]"
                   />
                   <span className="text-sm text-gray-700">Change Control Required</span>
                 </label>
@@ -262,7 +262,7 @@ function IntegrationRegistry() {
               </button>
               <button
                 onClick={handleCreate}
-                className="px-4 py-2 bg-[#009639] text-white rounded-lg hover:bg-[#007A2F] transition"
+                className="px-4 py-2 bg-[#88bf47] text-white rounded-lg hover:bg-[#0fa84a] transition"
               >
                 Register
               </button>
@@ -341,6 +341,12 @@ function IntegrationRegistry() {
 }
 
 export default IntegrationRegistry;
+
+
+
+
+
+
 
 
 

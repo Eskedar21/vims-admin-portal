@@ -902,7 +902,7 @@ function CentersListEnhanced() {
           <button
             type="button"
             onClick={() => navigate('/center-management/create')}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#005f40] text-white text-sm font-medium px-5 py-2.5 hover:bg-[#004d33] transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#88bf47] text-white text-sm font-medium px-5 py-2.5 hover:bg-[#0fa84a] transition-colors shadow-sm"
           >
             <Plus className="h-4 w-4" />
             Create New Center
@@ -923,7 +923,7 @@ function CentersListEnhanced() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by name or code..."
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               />
             </div>
           </div>
@@ -933,7 +933,7 @@ function CentersListEnhanced() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Status</option>
               <option value="Online">Online</option>
@@ -947,7 +947,7 @@ function CentersListEnhanced() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="attention_score">Sort by Attention</option>
               <option value="status">Sort by Status</option>
@@ -964,7 +964,7 @@ function CentersListEnhanced() {
             <select
               value={jurisdictionFilter.region}
               onChange={(e) => setJurisdictionFilter({ ...jurisdictionFilter, region: e.target.value, zone: 'all', subCity: 'all', woreda: 'all' })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All Regions</option>
               {regions.map(region => (
@@ -979,7 +979,7 @@ function CentersListEnhanced() {
             <select
               value={jurisdictionFilter.zone}
               onChange={(e) => setJurisdictionFilter({ ...jurisdictionFilter, zone: e.target.value, subCity: 'all', woreda: 'all' })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               disabled={jurisdictionFilter.region === 'all'}
             >
               <option value="all">All Zones</option>
@@ -997,7 +997,7 @@ function CentersListEnhanced() {
             <select
               value={jurisdictionFilter.subCity}
               onChange={(e) => setJurisdictionFilter({ ...jurisdictionFilter, subCity: e.target.value, woreda: 'all' })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               disabled={jurisdictionFilter.region === 'all'}
             >
               <option value="all">All Sub-cities</option>
@@ -1015,7 +1015,7 @@ function CentersListEnhanced() {
             <select
               value={jurisdictionFilter.woreda}
               onChange={(e) => setJurisdictionFilter({ ...jurisdictionFilter, woreda: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
               disabled={jurisdictionFilter.zone === 'all' && jurisdictionFilter.subCity === 'all'}
             >
               <option value="all">All Woredas</option>
@@ -1040,7 +1040,7 @@ function CentersListEnhanced() {
             <select
               value={hasIncidentsFilter}
               onChange={(e) => setHasIncidentsFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All</option>
               <option value="yes">Yes</option>
@@ -1053,7 +1053,7 @@ function CentersListEnhanced() {
             <select
               value={deviceHealthFilter}
               onChange={(e) => setDeviceHealthFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#009639]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#88bf47]"
             >
               <option value="all">All</option>
               <option value="camera_down">Camera Down</option>
@@ -1084,7 +1084,7 @@ function CentersListEnhanced() {
               onClick={() => setActiveTab('centers')}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'centers'
-                  ? 'border-[#005f40] text-[#005f40]'
+                  ? 'border-[#88bf47] text-[#88bf47]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -1224,7 +1224,7 @@ function CentersListEnhanced() {
                           e.stopPropagation();
                           navigate(`/center-management/${center.center_id}`);
                         }}
-                        className="text-[#009639] hover:text-[#007A2F]"
+                        className="text-[#88bf47] hover:text-[#0fa84a]"
                       >
                         View Details
                       </button>
@@ -1270,7 +1270,7 @@ function CentersListEnhanced() {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                           currentPage === pageNum
-                            ? 'bg-[#005f40] text-white'
+                            ? 'bg-[#88bf47] text-white'
                             : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
                         }`}
                       >
@@ -1550,7 +1550,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, name: e.target.value });
                         if (formErrors.name) setFormErrors({ ...formErrors, name: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.name ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter center name"
@@ -1575,7 +1575,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, region: e.target.value });
                         if (formErrors.region) setFormErrors({ ...formErrors, region: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.region ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                     >
@@ -1602,7 +1602,7 @@ function CentersListEnhanced() {
                       required
                       value={form.status}
                       onChange={(e) => setForm({ ...form, status: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                     >
                       <option value="Online">Online</option>
                       <option value="Offline">Offline</option>
@@ -1621,7 +1621,7 @@ function CentersListEnhanced() {
                         step="50"
                         value={form.radius}
                         onChange={(e) => setForm({ ...form, radius: Number(e.target.value) })}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#005f40]"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#88bf47]"
                       />
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray-500">100 m</span>
@@ -1650,7 +1650,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, tin: e.target.value });
                         if (formErrors.tin) setFormErrors({ ...formErrors, tin: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.tin ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter TIN"
@@ -1671,7 +1671,7 @@ function CentersListEnhanced() {
                       type="text"
                       value={form.vat}
                       onChange={(e) => setForm({ ...form, vat: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter VAT number"
                     />
                   </div>
@@ -1688,7 +1688,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, principalRegistrationNo: e.target.value });
                         if (formErrors.principalRegistrationNo) setFormErrors({ ...formErrors, principalRegistrationNo: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.principalRegistrationNo ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter principal registration number"
@@ -1714,7 +1714,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, businessLicenseNo: e.target.value });
                         if (formErrors.businessLicenseNo) setFormErrors({ ...formErrors, businessLicenseNo: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.businessLicenseNo ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter business license number"
@@ -1740,7 +1740,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, businessLicenseDateOfIssuance: e.target.value });
                         if (formErrors.businessLicenseDateOfIssuance) setFormErrors({ ...formErrors, businessLicenseDateOfIssuance: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.businessLicenseDateOfIssuance ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -1764,7 +1764,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, placeOfIssue: e.target.value });
                         if (formErrors.placeOfIssue) setFormErrors({ ...formErrors, placeOfIssue: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.placeOfIssue ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter place of issue"
@@ -1789,7 +1789,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, dateOfIssue: e.target.value });
                         if (formErrors.dateOfIssue) setFormErrors({ ...formErrors, dateOfIssue: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.dateOfIssue ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -1809,7 +1809,7 @@ function CentersListEnhanced() {
                       value={form.commercialRegistrationProcedure}
                       onChange={(e) => setForm({ ...form, commercialRegistrationProcedure: e.target.value })}
                       rows={3}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter commercial registration and business license procedure details"
                     />
                   </div>
@@ -1833,7 +1833,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, ownerCompanyName: e.target.value });
                         if (formErrors.ownerCompanyName) setFormErrors({ ...formErrors, ownerCompanyName: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.ownerCompanyName ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter owner or company name"
@@ -1858,7 +1858,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, nationality: e.target.value });
                         if (formErrors.nationality) setFormErrors({ ...formErrors, nationality: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.nationality ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter nationality"
@@ -1879,7 +1879,7 @@ function CentersListEnhanced() {
                       type="text"
                       value={form.tradeName}
                       onChange={(e) => setForm({ ...form, tradeName: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter trade name"
                     />
                   </div>
@@ -1896,7 +1896,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, generalManagerName: e.target.value });
                         if (formErrors.generalManagerName) setFormErrors({ ...formErrors, generalManagerName: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.generalManagerName ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter general manager name"
@@ -1928,7 +1928,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, zoneSubCity: e.target.value });
                         if (formErrors.zoneSubCity) setFormErrors({ ...formErrors, zoneSubCity: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.zoneSubCity ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter zone or sub city"
@@ -1954,7 +1954,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, woreda: e.target.value });
                         if (formErrors.woreda) setFormErrors({ ...formErrors, woreda: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.woreda ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter woreda"
@@ -1979,7 +1979,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, kebele: e.target.value });
                         if (formErrors.kebele) setFormErrors({ ...formErrors, kebele: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.kebele ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter kebele"
@@ -2004,7 +2004,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, houseNo: e.target.value });
                         if (formErrors.houseNo) setFormErrors({ ...formErrors, houseNo: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.houseNo ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter house number"
@@ -2036,7 +2036,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, telephone: e.target.value });
                         if (formErrors.telephone) setFormErrors({ ...formErrors, telephone: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.telephone ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter telephone number"
@@ -2057,7 +2057,7 @@ function CentersListEnhanced() {
                       type="text"
                       value={form.fax}
                       onChange={(e) => setForm({ ...form, fax: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter fax number"
                     />
                   </div>
@@ -2075,7 +2075,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, email: e.target.value });
                         if (formErrors.email) setFormErrors({ ...formErrors, email: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.email ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter email address"
@@ -2107,7 +2107,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, fieldOfBusiness: e.target.value });
                         if (formErrors.fieldOfBusiness) setFormErrors({ ...formErrors, fieldOfBusiness: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.fieldOfBusiness ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter field of business"
@@ -2134,7 +2134,7 @@ function CentersListEnhanced() {
                         setForm({ ...form, capitalInETB: e.target.value });
                         if (formErrors.capitalInETB) setFormErrors({ ...formErrors, capitalInETB: '' });
                       }}
-                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors ${
+                      className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors ${
                         formErrors.capitalInETB ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter capital in ETB"
@@ -2161,7 +2161,7 @@ function CentersListEnhanced() {
                       type="text"
                       value={form.telebirrNumber}
                       onChange={(e) => setForm({ ...form, telebirrNumber: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter Telebirr number"
                     />
                   </div>
@@ -2174,7 +2174,7 @@ function CentersListEnhanced() {
                       type="text"
                       value={form.cameraConfiguration}
                       onChange={(e) => setForm({ ...form, cameraConfiguration: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter camera configuration details"
                     />
                   </div>
@@ -2337,7 +2337,7 @@ function CentersListEnhanced() {
                         value="circle"
                         checked={geofenceType === 'circle'}
                         onChange={(e) => setGeofenceType(e.target.value)}
-                        className="w-4 h-4 text-[#005f40] focus:ring-[#005f40]"
+                        className="w-4 h-4 text-[#88bf47] focus:ring-[#88bf47]"
                       />
                       <span className="text-sm text-gray-700">Circle (Radius)</span>
                     </label>
@@ -2348,7 +2348,7 @@ function CentersListEnhanced() {
                         value="polygon"
                         checked={geofenceType === 'polygon'}
                         onChange={(e) => setGeofenceType(e.target.value)}
-                        className="w-4 h-4 text-[#005f40] focus:ring-[#005f40]"
+                        className="w-4 h-4 text-[#88bf47] focus:ring-[#88bf47]"
                       />
                       <span className="text-sm text-gray-700">Polygon (Custom Area)</span>
                     </label>
@@ -2415,7 +2415,7 @@ function CentersListEnhanced() {
                       required
                       value={form.lat}
                       onChange={(e) => setForm({ ...form, lat: Number(e.target.value) })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter latitude"
                     />
                   </div>
@@ -2429,7 +2429,7 @@ function CentersListEnhanced() {
                       required
                       value={form.lng}
                       onChange={(e) => setForm({ ...form, lng: Number(e.target.value) })}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#005f40] focus:border-transparent transition-colors"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88bf47] focus:border-transparent transition-colors"
                       placeholder="Enter longitude"
                     />
                   </div>
@@ -2452,7 +2452,7 @@ function CentersListEnhanced() {
                           setForm({ ...form, radius: Number(e.target.value) });
                           if (formErrors.radius) setFormErrors({ ...formErrors, radius: '' });
                         }}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#005f40]"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#88bf47]"
                       />
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray-500">100 m</span>
@@ -2484,7 +2484,7 @@ function CentersListEnhanced() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-lg bg-[#005f40] text-white px-5 py-2.5 text-sm font-medium hover:bg-[#004d33] transition-colors shadow-sm"
+                  className="rounded-lg bg-[#88bf47] text-white px-5 py-2.5 text-sm font-medium hover:bg-[#0fa84a] transition-colors shadow-sm"
                 >
                   Create Center
                 </button>
