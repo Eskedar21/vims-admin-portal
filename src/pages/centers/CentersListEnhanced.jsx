@@ -1,13 +1,12 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, Filter, AlertCircle, CheckCircle, XCircle, TrendingUp, Plus, Upload, FileText, X, ChevronLeft, ChevronRight, RotateCcw, UserPlus, Settings } from 'lucide-react';
+import { Search, Filter, AlertCircle, CheckCircle, XCircle, TrendingUp, Plus, Upload, FileText, X, ChevronLeft, ChevronRight, RotateCcw, Settings } from 'lucide-react';
 import { mockCentersFull, getCenterJurisdictionPath, mockDevices } from '../../data/mockCentersInfrastructure';
 import { mockAdminUnits } from '../../data/mockGovernance';
 import { filterCentersByScope, getUserScope } from '../../utils/scopeFilter';
 import { useAuth } from '../../context/AuthContext';
 import { calculateAttentionScore } from '../../utils/centerAttentionScore';
 import { mockOperationsIncidents } from '../../data/mockOperations';
-import { mockUsers } from '../../data/mockUsers';
 import MapPickerWithDrawing from '../../components/MapPickerWithDrawing';
 
 const REGIONS = ["Addis Ababa", "Oromia", "Amhara", "Tigray", "SNNPR", "Afar", "Somali", "Gambela", "Harari", "Dire Dawa"];
@@ -23,12 +22,10 @@ function CentersListEnhanced() {
   const [hasIncidentsFilter, setHasIncidentsFilter] = useState('all');
   const [deviceHealthFilter, setDeviceHealthFilter] = useState('all');
   const [sortBy, setSortBy] = useState('attention_score');
-  const [activeTab, setActiveTab] = useState('centers'); // 'centers', 'users', 'machines'
+  const [activeTab, setActiveTab] = useState('centers'); // 'centers', 'machines'
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [isMachineModalOpen, setIsMachineModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [userPage, setUserPage] = useState(1);
   const [machinePage, setMachinePage] = useState(1);
   const [createdCenters, setCreatedCenters] = useState(() => {
     // Load from localStorage (database) on mount
@@ -43,14 +40,6 @@ function CentersListEnhanced() {
       });
     } catch (e) {
       console.error('Failed to load centers from database:', e);
-      return [];
-    }
-  });
-  const [createdUsers, setCreatedUsers] = useState(() => {
-    try {
-      const stored = localStorage.getItem('createdUsers');
-      return stored ? JSON.parse(stored) : [];
-    } catch (e) {
       return [];
     }
   });
@@ -107,10 +96,6 @@ function CentersListEnhanced() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  // Persist to localStorage whenever createdUsers changes
-  useEffect(() => {
-    localStorage.setItem('createdUsers', JSON.stringify(createdUsers));
-  }, [createdUsers]);
   
   // Persist to localStorage whenever createdMachines changes
   useEffect(() => {
@@ -119,7 +104,6 @@ function CentersListEnhanced() {
   const [geofenceType, setGeofenceType] = useState('circle'); // 'circle' or 'polygon'
   const [geofencePolygon, setGeofencePolygon] = useState([]);
   const [formErrors, setFormErrors] = useState({});
-  const [userFormErrors, setUserFormErrors] = useState({});
   const [machineFormErrors, setMachineFormErrors] = useState({});
   const [form, setForm] = useState({
     // Basic Information
@@ -176,27 +160,11 @@ function CentersListEnhanced() {
 
   const userScope = useMemo(() => getUserScope(user), [user]);
 
-  // Combine mock users with created users
-  const allUsers = useMemo(() => {
-    return [...mockUsers, ...createdUsers];
-  }, [createdUsers]);
-
   // Combine mock machines with created machines (filter for machine type only)
   const allMachines = useMemo(() => {
     const mockMachines = mockDevices.filter(d => d.device_type === 'machine');
     return [...mockMachines, ...createdMachines];
   }, [createdMachines]);
-
-  // User form state
-  const [userForm, setUserForm] = useState({
-    fullName: "",
-    email: "",
-    role: "Inspector",
-    centerId: "",
-    status: "Active",
-    password: "",
-    confirmPassword: "",
-  });
 
   // Machine form state
   const [machineForm, setMachineForm] = useState({
@@ -409,64 +377,6 @@ function CentersListEnhanced() {
     setDeviceHealthFilter('all');
     setSortBy('attention_score');
     setCurrentPage(1);
-  };
-
-  // Handle user creation
-  const handleOpenUserModal = () => {
-    setUserFormErrors({});
-    setUserForm({
-      fullName: "",
-      email: "",
-      role: "Inspector",
-      centerId: "",
-      status: "Active",
-      password: "",
-      confirmPassword: "",
-    });
-    setIsUserModalOpen(true);
-  };
-
-  const handleUserSubmit = (e) => {
-    e.preventDefault();
-    
-    const errors = {};
-    if (!userForm.fullName.trim()) errors.fullName = 'Full name is required';
-    if (!userForm.email.trim()) errors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userForm.email)) {
-      errors.email = 'Please enter a valid email address';
-    }
-    if (!userForm.centerId) errors.centerId = 'Center is required';
-    if (!userForm.password) errors.password = 'Password is required';
-    else if (userForm.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters';
-    }
-    if (userForm.password !== userForm.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setUserFormErrors(errors);
-      return;
-    }
-
-    const selectedCenter = [...mockCentersFull, ...createdCenters].find(c => c.center_id === userForm.centerId);
-    const newUser = {
-      id: `U-${String(createdUsers.length + 100).padStart(3, "0")}`,
-      fullName: userForm.fullName,
-      email: userForm.email,
-      role: userForm.role,
-      scopeType: "Center",
-      scopeValue: selectedCenter?.center_name_en || userForm.centerId,
-      centerId: userForm.centerId,
-      status: userForm.status,
-      password: userForm.password, // In real app, this would be hashed
-      created_at: new Date().toISOString(),
-    };
-
-    setCreatedUsers(prev => [...prev, newUser]);
-    setUserFormErrors({});
-    setIsUserModalOpen(false);
-    alert(`User "${userForm.fullName}" has been created successfully!`);
   };
 
   // Handle machine creation
@@ -885,14 +795,6 @@ function CentersListEnhanced() {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={handleOpenUserModal}
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#00a86b] to-[#00c97a] text-white text-sm font-medium px-5 py-2.5 hover:from-[#00965a] hover:to-[#00b86a] transition-all shadow-sm"
-          >
-            <UserPlus className="h-4 w-4" />
-            Create User
-          </button>
-          <button
-            type="button"
             onClick={handleOpenMachineModal}
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#00965a] to-[#00a86b] text-white text-sm font-medium px-5 py-2.5 hover:from-[#008550] hover:to-[#00965a] transition-all shadow-sm"
           >
@@ -1091,16 +993,6 @@ function CentersListEnhanced() {
               Centers ({filteredCenters.length})
             </button>
             <button
-              onClick={() => setActiveTab('users')}
-              className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === 'users'
-                  ? 'border-[#00c97a] text-[#00c97a]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              Users ({allUsers.length})
-            </button>
-            <button
               onClick={() => setActiveTab('machines')}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'machines'
@@ -1291,98 +1183,6 @@ function CentersListEnhanced() {
             </div>
           </div>
         )}
-        </div>
-      )}
-
-      {/* Users Tab Content */}
-      {activeTab === 'users' && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Users ({allUsers.length} total)
-            </h2>
-            <div className="text-sm text-gray-600">
-              Showing {((userPage - 1) * ITEMS_PER_PAGE) + 1} - {Math.min(userPage * ITEMS_PER_PAGE, allUsers.length)} of {allUsers.length}
-            </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">#</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Full Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Role</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Scope</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Center</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {allUsers.slice((userPage - 1) * ITEMS_PER_PAGE, userPage * ITEMS_PER_PAGE).map((user, index) => {
-                  const center = allCenters.find(c => c.center_id === user.centerId || c.center_name_en === user.scopeValue);
-                  return (
-                    <tr key={user.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-semibold text-gray-900">
-                          {((userPage - 1) * ITEMS_PER_PAGE) + index + 1}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{user.fullName}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{user.email || `${user.fullName.toLowerCase().replace(/\s+/g, '.')}@rsifs.gov.et`}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{user.role}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{user.scopeType}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{center?.center_name_en || user.scopeValue || '-'}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                          user.status === 'Active' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {user.status}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          {Math.ceil(allUsers.length / ITEMS_PER_PAGE) > 1 && (
-            <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                Page {userPage} of {Math.ceil(allUsers.length / ITEMS_PER_PAGE)}
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setUserPage(prev => Math.max(1, prev - 1))}
-                  disabled={userPage === 1}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  Previous
-                </button>
-                <button
-                  onClick={() => setUserPage(prev => Math.min(Math.ceil(allUsers.length / ITEMS_PER_PAGE), prev + 1))}
-                  disabled={userPage >= Math.ceil(allUsers.length / ITEMS_PER_PAGE)}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Next
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
@@ -2487,217 +2287,6 @@ function CentersListEnhanced() {
                   className="rounded-lg bg-[#88bf47] text-white px-5 py-2.5 text-sm font-medium hover:bg-[#0fa84a] transition-colors shadow-sm"
                 >
                   Create Center
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Create User Modal */}
-      {isUserModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-2xl rounded-xl bg-white shadow-2xl border border-gray-200 max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 sticky top-0 bg-white z-10">
-              <h2 className="text-xl font-semibold text-gray-900">Create New User</h2>
-              <button
-                type="button"
-                onClick={() => setIsUserModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-1 hover:bg-gray-100"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Modal Form */}
-            <form onSubmit={handleUserSubmit} className="p-6 space-y-6">
-              {Object.keys(userFormErrors).length > 0 && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <h4 className="text-sm font-semibold text-red-900 mb-2">Please fix the following errors:</h4>
-                      <ul className="list-disc list-inside space-y-1 text-sm text-red-800">
-                        {Object.entries(userFormErrors).map(([field, error]) => (
-                          <li key={field}>{error}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={userForm.fullName}
-                    onChange={(e) => {
-                      setUserForm({ ...userForm, fullName: e.target.value });
-                      if (userFormErrors.fullName) setUserFormErrors({ ...userFormErrors, fullName: '' });
-                    }}
-                    className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      userFormErrors.fullName ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter full name"
-                  />
-                  {userFormErrors.fullName && (
-                    <p className="text-xs text-red-600 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {userFormErrors.fullName}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    value={userForm.email}
-                    onChange={(e) => {
-                      setUserForm({ ...userForm, email: e.target.value });
-                      if (userFormErrors.email) setUserFormErrors({ ...userFormErrors, email: '' });
-                    }}
-                    className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      userFormErrors.email ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter email address"
-                  />
-                  {userFormErrors.email && (
-                    <p className="text-xs text-red-600 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {userFormErrors.email}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Role <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    value={userForm.role}
-                    onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  >
-                    <option value="Inspector">Inspector</option>
-                    <option value="Center Manager">Center Manager</option>
-                    <option value="Regional Admin">Regional Admin</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Center <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    value={userForm.centerId}
-                    onChange={(e) => {
-                      setUserForm({ ...userForm, centerId: e.target.value });
-                      if (userFormErrors.centerId) setUserFormErrors({ ...userFormErrors, centerId: '' });
-                    }}
-                    className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      userFormErrors.centerId ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
-                    }`}
-                  >
-                    <option value="">Select center</option>
-                    {[...mockCentersFull, ...createdCenters].map(center => (
-                      <option key={center.center_id} value={center.center_id}>
-                        {center.center_name_en} ({center.center_code})
-                      </option>
-                    ))}
-                  </select>
-                  {userFormErrors.centerId && (
-                    <p className="text-xs text-red-600 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {userFormErrors.centerId}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Status <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    value={userForm.status}
-                    onChange={(e) => setUserForm({ ...userForm, status: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Suspended">Suspended</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Password <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="password"
-                    value={userForm.password}
-                    onChange={(e) => {
-                      setUserForm({ ...userForm, password: e.target.value });
-                      if (userFormErrors.password) setUserFormErrors({ ...userFormErrors, password: '' });
-                    }}
-                    className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      userFormErrors.password ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter password"
-                  />
-                  {userFormErrors.password && (
-                    <p className="text-xs text-red-600 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {userFormErrors.password}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Confirm Password <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="password"
-                    value={userForm.confirmPassword}
-                    onChange={(e) => {
-                      setUserForm({ ...userForm, confirmPassword: e.target.value });
-                      if (userFormErrors.confirmPassword) setUserFormErrors({ ...userFormErrors, confirmPassword: '' });
-                    }}
-                    className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      userFormErrors.confirmPassword ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Confirm password"
-                  />
-                  {userFormErrors.confirmPassword && (
-                    <p className="text-xs text-red-600 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {userFormErrors.confirmPassword}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Modal Footer */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-                <button
-                  type="button"
-                  onClick={() => setIsUserModalOpen(false)}
-                  className="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="rounded-lg bg-gradient-to-r from-[#00a86b] to-[#00c97a] text-white px-5 py-2.5 text-sm font-medium hover:from-[#00965a] hover:to-[#00b86a] transition-all shadow-sm"
-                >
-                  Create User
                 </button>
               </div>
             </form>

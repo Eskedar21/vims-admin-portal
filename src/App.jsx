@@ -23,7 +23,6 @@ import InspectionOperations from "./pages/operations/InspectionOperations";
 import OperationsCommandCenter from "./pages/operations/OperationsCommandCenter";
 import IncidentDetail from "./pages/operations/IncidentDetail";
 import Governance from "./pages/governance/Governance";
-import FeesPayments from "./pages/fees/FeesPayments";
 import ReportsAnalytics from "./pages/reports/ReportsAnalytics";
 import ReportsAnalyticsEnhanced from "./pages/reports/ReportsAnalyticsEnhanced";
 import Security from "./pages/security/Security";
@@ -76,7 +75,6 @@ function App() {
                       <Route path="/governance/assignments" element={<Governance />} />
                       <Route path="/governance/institutions" element={<Governance />} />
                       <Route path="/governance/relationships" element={<Governance />} />
-                      <Route path="/fees-payments/*" element={<FeesPayments />} />
                       <Route path="/administration" element={<UserManagementEnhanced />} />
                       <Route path="/administration/legacy" element={<UserManagement />} />
                       <Route path="/security" element={<Navigate to="/security/all" replace />} />

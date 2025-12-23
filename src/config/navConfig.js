@@ -93,7 +93,6 @@ export const PRIMARY_TOP_NAV = [
     children: [
       { id: 'config.standards', label: 'Test Standards', route: '/configuration', roles: ADMIN_ROLES },
       { id: 'config.checklists', label: 'Visual Checklists', route: '/configuration/visual-checklists', roles: ADMIN_ROLES },
-      { id: 'config.fees', label: 'Fee & Payment', route: '/configuration/fee-structure', roles: ADMIN_ROLES },
     ],
   },
   {

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Routes, Route, useNavigate, useLocation, NavLink } from "react-router-dom";
 import TestStandards from "./TestStandards";
 import VisualChecklists from "./VisualChecklists";
-import FeeStructure from "./FeeStructure";
-import { Settings, FileText, ListChecks, DollarSign } from "lucide-react";
+import { Settings, FileText, ListChecks } from "lucide-react";
 
 function Configuration() {
   const location = useLocation();
@@ -16,12 +15,6 @@ function Configuration() {
       label: "Visual Checklists",
       path: "/configuration/visual-checklists",
       icon: ListChecks,
-    },
-    {
-      id: "fee-structure",
-      label: "Fee & Payment",
-      path: "/configuration/fee-structure",
-      icon: DollarSign,
     },
   ];
 
@@ -81,7 +74,6 @@ function Configuration() {
       <Routes>
         <Route path="/" element={<TestStandards />} />
         <Route path="/visual-checklists" element={<VisualChecklists />} />
-        <Route path="/fee-structure" element={<FeeStructure />} />
       </Routes>
     </div>
   );
